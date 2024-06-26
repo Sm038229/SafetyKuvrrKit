@@ -8,7 +8,7 @@
 import Foundation
 
 public struct SKTesting {
-    public func logMessage() {
+    public static func logMessage() {
         print("Hello this is testing message...")
     }
 }
