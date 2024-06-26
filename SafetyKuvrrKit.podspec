@@ -8,7 +8,7 @@ Pod::Spec.new do |spec|
   spec.license     = "MIT"
   spec.author       = { "Sachin Mishra" => "sachinmishrahp@gmail.com" }
   spec.ios.deployment_target = '15.0'
-  spec.platform     = :ios, "15.0"
+  spec.platform     = :ios, "12.0"
   spec.source       = { :git => "https://github.com/Sm038229/SafetyKuvrrKit.git", :tag => spec.version.to_s }
   # spec.framework = "UIKit", "Foundation", "CoreBluetooth", "ExternalAccessory", "CoreLocation"
   # spec.dependency 'AFNetworking' # , '~> 0.1.0'
