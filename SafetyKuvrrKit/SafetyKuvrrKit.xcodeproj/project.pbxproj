@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F685777FD26D83718473467 /* Pods_SafetyKuvrrKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B73F03C75D28EE952EE6FC /* Pods_SafetyKuvrrKit.framework */; };
 		15572B872C2C2D0B0057318D /* SafetyKuvrrKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 15572B862C2C2D0B0057318D /* SafetyKuvrrKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		15572B8E2C2C2D690057318D /* SKTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15572B8D2C2C2D690057318D /* SKTesting.swift */; };
 /* End PBXBuildFile section */
@@ -15,6 +16,9 @@
 		15572B832C2C2D0B0057318D /* SafetyKuvrrKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SafetyKuvrrKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		15572B862C2C2D0B0057318D /* SafetyKuvrrKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafetyKuvrrKit.h; sourceTree = "<group>"; };
 		15572B8D2C2C2D690057318D /* SKTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKTesting.swift; sourceTree = "<group>"; };
+		79B73F03C75D28EE952EE6FC /* Pods_SafetyKuvrrKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafetyKuvrrKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4766CE3755548F26DB78358 /* Pods-SafetyKuvrrKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafetyKuvrrKit.debug.xcconfig"; path = "Target Support Files/Pods-SafetyKuvrrKit/Pods-SafetyKuvrrKit.debug.xcconfig"; sourceTree = "<group>"; };
+		CDEBB67EA7DBA284FA32E4C4 /* Pods-SafetyKuvrrKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafetyKuvrrKit.release.xcconfig"; path = "Target Support Files/Pods-SafetyKuvrrKit/Pods-SafetyKuvrrKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -22,6 +26,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F685777FD26D83718473467 /* Pods_SafetyKuvrrKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +38,8 @@
 			children = (
 				15572B852C2C2D0B0057318D /* SafetyKuvrrKit */,
 				15572B842C2C2D0B0057318D /* Products */,
+				450639F7FD13B71704253863 /* Pods */,
+				9296C828AD2D911870079C70 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,6 +60,23 @@
 			path = SafetyKuvrrKit;
 			sourceTree = "<group>";
 		};
+		450639F7FD13B71704253863 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A4766CE3755548F26DB78358 /* Pods-SafetyKuvrrKit.debug.xcconfig */,
+				CDEBB67EA7DBA284FA32E4C4 /* Pods-SafetyKuvrrKit.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		9296C828AD2D911870079C70 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				79B73F03C75D28EE952EE6FC /* Pods_SafetyKuvrrKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -71,6 +95,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 15572B8A2C2C2D0B0057318D /* Build configuration list for PBXNativeTarget "SafetyKuvrrKit" */;
 			buildPhases = (
+				1289054727EE672A9EBCBABA /* [CP] Check Pods Manifest.lock */,
 				15572B7E2C2C2D0B0057318D /* Headers */,
 				15572B7F2C2C2D0B0057318D /* Sources */,
 				15572B802C2C2D0B0057318D /* Frameworks */,
@@ -127,6 +152,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1289054727EE672A9EBCBABA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SafetyKuvrrKit-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		15572B7F2C2C2D0B0057318D /* Sources */ = {
@@ -193,7 +243,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -253,7 +303,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -267,6 +317,7 @@
 		};
 		15572B8B2C2C2D0B0057318D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A4766CE3755548F26DB78358 /* Pods-SafetyKuvrrKit.debug.xcconfig */;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -306,6 +357,7 @@
 		};
 		15572B8C2C2C2D0B0057318D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDEBB67EA7DBA284FA32E4C4 /* Pods-SafetyKuvrrKit.release.xcconfig */;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
