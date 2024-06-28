@@ -10,13 +10,13 @@ import Alamofire
 import ProgressHUD
 
 struct SKService {
-    static func apiCall<T: Decodable>(with urlString: String, method: HTTPMethod = .get, parameters: Parameters? = nil, responseModel: T.Type, success: @escaping((T?)-> Void), failure: @escaping((String)-> Void)) {
+    static func apiCall<T: Decodable>(with urlString: String, method: HTTPMethod = .get, parameters: Parameters? = nil, responseModel: T.Type, success: @escaping((T?)-> Void), failure: @escaping((String?)-> Void)) {
         ProgressHUD.animate()
         let headers: HTTPHeaders = [
-            //.authorization(username: "test@email.com", password: "testpassword"),
+            //.authorization(bearerToken: ""),
             .accept("application/json")
         ]
-        AF.request(urlString, method: method, parameters: parameters, headers: headers).responseDecodable(of: T.self) { response in
+        AF.request(urlString, method: method, parameters: parameters, headers: headers).responseDecodable(of: responseModel) { response in
             if let json = response.value {
                 print("Response: \(String(describing: json))") // serialized json response
             }
@@ -27,6 +27,7 @@ struct SKService {
             
             switch response.result {
             case .success(let count):
+                print(count)
                 ProgressHUD.success()
                 success(response.value)
             case .failure(let error):
