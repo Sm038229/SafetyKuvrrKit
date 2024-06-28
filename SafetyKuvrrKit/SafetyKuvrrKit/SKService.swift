@@ -10,30 +10,29 @@ import Alamofire
 import ProgressHUD
 
 struct SKService {
-    static func apiCall() {
+    static func apiCall<T: Decodable>(with urlString: String, method: HTTPMethod = .get, parameters: Parameters? = nil, responseModel: T.Type, success: @escaping((T?)-> Void), failure: @escaping((String)-> Void)) {
         ProgressHUD.animate()
-        AF.request("https://jsonplaceholder.typicode.com/todos/1").responseData { response in
-
-             print("Request: \(String(describing: response.request))")   // original url request
-             print("Response: \(String(describing: response.response))") // http url response
-             print("Result: \(response.result)")                         // response serialization result
-
-//            if let json = response.result.value {
-//                print("JSON: \(json)") // serialized json response
-//             }
+        let headers: HTTPHeaders = [
+            //.authorization(username: "test@email.com", password: "testpassword"),
+            .accept("application/json")
+        ]
+        AF.request(urlString, method: method, parameters: parameters, headers: headers).responseDecodable(of: T.self) { response in
+            if let json = response.value {
+                print("Response: \(String(describing: json))") // serialized json response
+            }
+            
+            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                print("Data: \(utf8Text)") // original server data as UTF8 string
+            }
             
             switch response.result {
             case .success(let count):
-                print("\(count) unread messages.")
                 ProgressHUD.success()
+                success(response.value)
             case .failure(let error):
-                print(error.localizedDescription)
                 ProgressHUD.failed()
+                failure(error.localizedDescription)
             }
-            
-             if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-               print("Data: \(utf8Text)") // original server data as UTF8 string
-             }
         }
     }
 }
