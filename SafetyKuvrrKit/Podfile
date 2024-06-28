@@ -2,10 +2,11 @@
 platform :ios, '13.0'
 
 target 'SafetyKuvrrKit' do
-  xcodeproj 'SafetyKuvrrKit'
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
+  workspace 'SafetyKuvrrKit.xcworkspace'
+  project 'SafetyKuvrrKit.xcodeproj'
   # Pods for SafetyKuvrrKit
-
+#  pod 'Alamofire'
+#  pod 'ProgressHUD'
 end

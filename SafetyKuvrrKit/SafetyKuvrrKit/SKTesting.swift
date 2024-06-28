@@ -10,5 +10,6 @@ import Foundation
 public struct SKTesting {
     public static func logMessage() {
         print("Hello this is testing message...")
+        SKService.apiCall()
     }
 }
