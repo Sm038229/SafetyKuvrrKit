@@ -9,41 +9,96 @@ import Foundation
 import INTULocationManager
 
 public struct SKTesting {
-    private static var csrfToken: String?
-    public static func logMessage() {
-        print("Hello this is testing message...")
-        sessionAPI()
+    static let shared = SKTesting()
+    private init() {
+        SKTesting.sessionAPI(success: {
+            
+        }, failure: {
+            
+        })
     }
     
-    private static func sessionAPI() {
-        SKService.apiCall(with: "https://safety-red5.kuvrr.com/api/v1/session_init/", responseModel: SKCSRFToken.self) { response in
-            guard let response = response else { return }
-            SKTesting.csrfToken = response.token
-            print("Success: \(response)")
-        } failure: { error in
-            guard let error = error else { return }
-            print("Failure: \(error)")
+    public static func logMessage() {
+        print("Hello this is testing message...")
+    }
+    
+    private static func sessionAPI(success: @escaping(() -> Void), failure: @escaping(()-> Void)) {
+        if SKUserDefaults.getCSRFToken() == nil {
+            SKService.apiCall(with: "https://safety-red5.kuvrr.com/api/v1/session_init/", responseModel: SKCSRFToken.self) { response in
+                guard let response = response, let token = response.token else { return }
+                SKUserDefaults.saveCSRFToken(token)
+                print("Session Success: \(response)")
+                success()
+            } failure: { error in
+                guard let error = error else { return }
+                print("Failure: \(error)")
+                failure()
+            }
+            return
         }
     }
     
-    public static func call911() {
+    public static func callLogin(forMoble mobile: String, country: String = "IN", success: @escaping(() -> Void), failure: @escaping(()-> Void)) {
+        let loginRequest = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile)
+        SKService.apiCall(with: "https://safety-red5.kuvrr.com/api/v1/otp/login/", method: .post, parameters: loginRequest.dictionary, responseModel: SKMessage.self) { response in
+            guard let response = response else { return }
+            print("Login Success: \(response)")
+            success()
+        } failure: { error in
+            guard let error = error else { return }
+            print("Failure: \(error)")
+            failure()
+        }
+    }
+    
+    public static func callVerifyOTP(mobile: String, country: String = "IN", otp: String, success: @escaping(() -> Void), failure: @escaping(()-> Void)) {
+        if SKUserDefaults.getOTPVerification() != true {
+            let loginRequest = SKPhoneOTPRequest(countryCode: country, mobileNumber: mobile, otp: otp)
+            SKService.apiCall(with: "https://safety-red5.kuvrr.com/api/v1/otp/verify/", method: .post, parameters: loginRequest.dictionary, responseModel: SKMessage.self) { response in
+                guard let response = response else { return }
+                print("OTP Verify Success: \(response)")
+                SKUserDefaults.saveOTPVerification(true)
+                success()
+            } failure: { error in
+                guard let error = error else { return }
+                print("Failure: \(error)")
+                failure()
+            }
+        }
+    }
+    
+    public static func callResendOTP(forMoble mobile: String, country: String = "IN", success: @escaping(() -> Void), failure: @escaping(()-> Void)) {
+        if SKUserDefaults.getOTPVerification() == false {
+            let loginRequest = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile)
+            SKService.apiCall(with: "https://safety-red5.kuvrr.com/api/v1/otp/resend/", method: .post, parameters: loginRequest.dictionary, responseModel: SKMessage.self) { response in
+                guard let response = response else { return }
+                print("OTP Verify Success: \(response)")
+                SKUserDefaults.saveOTPVerification(true)
+                success()
+            } failure: { error in
+                guard let error = error else { return }
+                print("Failure: \(error)")
+                failure()
+            }
+        }
+    }
+    
+    public static func call911(success: @escaping(() -> Void), failure: @escaping(()-> Void)) {
         let locationManager = INTULocationManager.sharedInstance()
         locationManager.requestLocation(withDesiredAccuracy: .city,
                                         timeout: 10.0,
                                         delayUntilAuthorized: true) { (currentLocation, achievedAccuracy, status) in
             if (status == INTULocationStatus.success) {
                 let myLocation = SKLocation(latitude: currentLocation?.coordinate.latitude ?? 0.0, longitude: currentLocation?.coordinate.longitude ?? 0.0, altitude: currentLocation?.altitude ?? 0.0, verticalAccuracy: currentLocation?.verticalAccuracy ?? 0.0, horizontalAccuracy: currentLocation?.horizontalAccuracy ?? 0.0)
-                print("Current Location: \(myLocation)")
-                
-                if let params = myLocation.dictionary() {
-                    print("Current Location: \(params)")
-                    SKService.apiCall(with: "https://safety-red5.kuvrr.com/api/v1/incident/", method: .post, parameters: params, responseModel: SKCSRFToken.self) { response in
-                        guard let response = response else { return }
-                        print("Success: \(response)")
-                    } failure: { error in
-                        guard let error = error else { return }
-                        print("Failure: \(error)")
-                    }
+                print("Current Location: \(myLocation.dictionary)")
+                SKService.apiCall(with: "https://safety-red5.kuvrr.com/api/v1/incident/", method: .post, parameters: myLocation.dictionary, responseModel: SKMessage.self, token: SKUserDefaults.getCSRFToken()) { response in
+                    guard let response = response else { return }
+                    print("Success: \(response)")
+                    success()
+                } failure: { error in
+                    guard let error = error else { return }
+                    print("Failure: \(error)")
+                    failure()
                 }
             }
             else if (status == INTULocationStatus.timedOut) {
@@ -71,70 +126,4 @@ struct SKDataResponse: Decodable {
     let id: Int
     let userId: Int
     let title: String
-}
-
-struct SKCSRFToken: Decodable {
-    let token: String?
-    let message: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case token = "csrf_token"
-        case message = "message"
-    }
-}
-
-struct SKLocation: Codable, DictionaryEncodable {
-    let latitude: Double
-    let longitude: Double
-    let altitude: Double
-    let verticalAccuracy: Double
-    let horizontalAccuracy: Double
-    
-    enum CodingKeys: String, CodingKey {
-        case latitude
-        case longitude
-        case altitude
-        case verticalAccuracy
-        case horizontalAccuracy
-    }
-
-//    init(latitude: Double, longitude: Double, altitude: Double, verticalAccuracy: Double, horizontalAccuracy: Double) {
-//        self.latitude = latitude
-//        self.longitude = longitude
-//        self.altitude = altitude
-//        self.verticalAccuracy = verticalAccuracy
-//        self.horizontalAccuracy = horizontalAccuracy
-//    }
-//
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(latitude, forKey: .latitude)
-//        try container.encode(longitude, forKey: .longitude)
-//        try container.encode(altitude, forKey: .altitude)
-//        try container.encode(verticalAccuracy, forKey: .verticalAccuracy)
-//        try container.encode(horizontalAccuracy, forKey: .horizontalAccuracy)
-//    }
-//
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        latitude = try container.decode(Double.self, forKey: .latitude)
-//        longitude = try container.decode(Double.self, forKey: .longitude)
-//        altitude = try container.decode(Double.self, forKey: .altitude)
-//        verticalAccuracy = try container.decode(Double.self, forKey: .verticalAccuracy)
-//        horizontalAccuracy = try container.decode(Double.self, forKey: .horizontalAccuracy)
-//    }
-}
-
-protocol DictionaryEncodable: Encodable {}
-
-extension DictionaryEncodable {
-    func dictionary() -> [String: Any]? {
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .millisecondsSince1970
-        guard let json = try? encoder.encode(self),
-            let dict = try? JSONSerialization.jsonObject(with: json, options: []) as? [String: Any] else {
-                return nil
-        }
-        return dict
-    }
 }
