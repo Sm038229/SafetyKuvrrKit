@@ -59,6 +59,48 @@ struct SKEmailLoginRequest: Codable {
     }
 }
 
+struct SKVerifyOTPResponse: Decodable {
+    let phoneInfo: SKVerifyOTPPhoneInfo
+    let style: SKVerifyOTPStyleInfo
+    let hasOrg: Bool
+    let blootoothPermission: Bool
+    let bucket: String
+    let userUUID: String
+    
+    enum CodingKeys: String, CodingKey {
+        case phoneInfo = "phone_info"
+        case style = "style"
+        case hasOrg = "has_org"
+        case blootoothPermission = "ble_permission"
+        case bucket = "bucket"
+        case userUUID = "user_uuid"
+    }
+    //
+    
+    struct SKVerifyOTPPhoneInfo: Decodable {
+        let countryCode: String
+        let phone: String
+        let message: String
+        let verified: Bool
+        
+        enum CodingKeys: String, CodingKey {
+            case countryCode = "country_code"
+            case phone = "phone"
+            case message = "message"
+            case verified = "verified"
+        }
+    }
+    //
+    
+    struct SKVerifyOTPStyleInfo: Decodable {
+        let backGroundColor: String
+        
+        enum CodingKeys: String, CodingKey {
+            case backGroundColor = "backGroundColor"
+        }
+    }
+}
+
 struct SKPhoneOTPRequest: Codable {
     let countryCode: String
     let mobileNumber: String
@@ -78,5 +120,45 @@ struct SKEmailOTPRequest: Codable {
     enum CodingKeys: String, CodingKey {
         case email = "email"
         case otp = "otp"
+    }
+}
+
+struct SKUserDeviceDetailResponse: Codable {
+    let uuid: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case uuid = "uuid"
+    }
+}
+
+struct SKEMSRequest: Codable {
+    let altitude: Double
+    let appLocationOnly: Bool
+    let deviceUUID: String
+    let directionDegrees: Double?
+    let ems: Bool
+    let horizontalAccuracy: Double
+    let incidentUUID: String?
+    let latitude: Double
+    let longitude: Double
+    let mediaType: String
+    let pbTrigger: Bool
+    let responderType: String
+    let verticalAccuracy: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case altitude = "altitude"
+        case appLocationOnly = "app_location_only"
+        case deviceUUID = "device_uuid"
+        case directionDegrees = "direction_degrees"
+        case ems = "ems"
+        case horizontalAccuracy = "horizontal_accuracy"
+        case incidentUUID = "incident_uuid"
+        case latitude = "lat"
+        case longitude = "lng"
+        case mediaType = "media_type"
+        case pbTrigger = "pb_trigger"
+        case responderType = "responder_type"
+        case verticalAccuracy = "vertical_accuracy"
     }
 }

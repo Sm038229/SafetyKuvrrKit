@@ -1,3 +1,24 @@
-PODFILE CHECKSUM: ef7cec62ffcf75a090016392eecbb2177559bdaf
+PODS:
+  - Alamofire (5.9.1)
+  - INTULocationManager (4.4.0)
+  - ProgressHUD (14.1.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - INTULocationManager
+  - ProgressHUD
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - INTULocationManager
+    - ProgressHUD
+
+SPEC CHECKSUMS:
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  INTULocationManager: b5a0422782f0b87af0b8db14e0826fb38dbecd19
+  ProgressHUD: abb9136ae23c85204236828562cb9a8ec98efb44
+
+PODFILE CHECKSUM: c84c13e3dde401a5884a2e9ccf3ee5d07ee36fb9
 
 COCOAPODS: 1.15.2

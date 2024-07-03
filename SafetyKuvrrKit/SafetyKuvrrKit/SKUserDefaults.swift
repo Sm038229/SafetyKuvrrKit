@@ -8,7 +8,11 @@
 import Foundation
 
 struct SKUserDefaults {
-    private static let csrfToken = "kSKCsrfToken"
+    private struct Key {
+        static let csrfToken = "kSKCsrfToken"
+        static let deviceUUID = "kSKDeviceUUID"
+        static let userUUID = "kSKUserUUID"
+    }
     
     private static func saveData(_ data: Any, forKey key: String) {
         UserDefaults.standard.setValue(data, forKey: key)
@@ -24,16 +28,43 @@ struct SKUserDefaults {
 }
 
 extension SKUserDefaults {
-    static func saveCSRFToken(_ token: String) {
-        SKUserDefaults.saveData(token, forKey: SKUserDefaults.csrfToken)
-    }
-    
-    static func getCSRFToken() -> String? {
-        return SKUserDefaults.getData(forKey: SKUserDefaults.csrfToken) as? String
+    static var csrfToken: String? {
+        get {
+            return SKUserDefaults.getData(forKey: SKUserDefaults.Key.csrfToken) as? String
+        }
+        set {
+            SKUserDefaults.saveData(newValue as Any, forKey: SKUserDefaults.Key.csrfToken)
+        }
     }
     
     static func removeCSRFToken() {
-        return SKUserDefaults.removeData(forKey: SKUserDefaults.csrfToken)
+        return SKUserDefaults.removeData(forKey: SKUserDefaults.Key.csrfToken)
+    }
+    //
+    static var deviceUUID: String? {
+        get {
+            return SKUserDefaults.getData(forKey: SKUserDefaults.Key.deviceUUID) as? String
+        }
+        set {
+            SKUserDefaults.saveData(newValue as Any, forKey: SKUserDefaults.Key.deviceUUID)
+        }
+    }
+    
+    static func removeDeviceUUID() {
+        return SKUserDefaults.removeData(forKey: SKUserDefaults.Key.deviceUUID)
+    }
+    //
+    static var userUUID: String? {
+        get {
+            return SKUserDefaults.getData(forKey: SKUserDefaults.Key.userUUID) as? String
+        }
+        set {
+            SKUserDefaults.saveData(newValue as Any, forKey: SKUserDefaults.Key.userUUID)
+        }
+    }
+    
+    static func removeuserUUID() {
+        return SKUserDefaults.removeData(forKey: SKUserDefaults.Key.userUUID)
     }
     //
 }

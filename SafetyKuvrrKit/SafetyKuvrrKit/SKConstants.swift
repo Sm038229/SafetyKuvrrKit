@@ -10,6 +10,7 @@ import Foundation
 struct SKConstants {
     struct API {
         static let sessionInit = "session_init/"
+        static let userDevice = "user_device/"
         static let login = "otp/login/"
         static let otpVerify = "otp/verify/"
         static let otpResend = "otp/resend/"
