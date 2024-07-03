@@ -9,7 +9,6 @@ import Foundation
 
 struct SKUserDefaults {
     private static let csrfToken = "kSKCsrfToken"
-    private static let otpVerification = "kOTPVerification"
     
     private static func saveData(_ data: Any, forKey key: String) {
         UserDefaults.standard.setValue(data, forKey: key)
@@ -37,15 +36,4 @@ extension SKUserDefaults {
         return SKUserDefaults.removeData(forKey: SKUserDefaults.csrfToken)
     }
     //
-    static func saveOTPVerification(_ token: Bool) {
-        SKUserDefaults.saveData(token, forKey: SKUserDefaults.otpVerification)
-    }
-    
-    static func getOTPVerification() -> Bool? {
-        return SKUserDefaults.getData(forKey: SKUserDefaults.otpVerification) as? Bool
-    }
-    
-    static func removeOTPVerification() {
-        return SKUserDefaults.removeData(forKey: SKUserDefaults.otpVerification)
-    }
 }

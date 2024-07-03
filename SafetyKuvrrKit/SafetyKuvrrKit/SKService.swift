@@ -10,17 +10,18 @@ import Alamofire
 import ProgressHUD
 
 struct SKService {
-    static func apiCall<T: Decodable>(with urlString: String, method: HTTPMethod = .get, parameters: Parameters? = nil, responseModel: T.Type, token: String? = nil, success: @escaping((T?)-> Void), failure: @escaping((String?)-> Void)) {
+    private static let baseURL = "https://safety-red5.kuvrr.com/api/v1/"
+    
+    static func apiCall<T: Decodable>(with urlString: String, method: HTTPMethod = .get, parameters: Parameters? = nil, responseModel: T.Type, success: @escaping((T?)-> Void), failure: @escaping((String?)-> Void)) {
         ProgressHUD.animate()
-        var headers: HTTPHeaders = [
-            .authorization(bearerToken: token ?? ""),
-            .accept("application/json")
+        let headers: HTTPHeaders = [
+            "X-CSRFToken": SKUserDefaults.getCSRFToken() ?? "",
+            "Accept": "application/json",
+            "Referer": SKService.baseURL
         ]
-        if let token = token {
-            headers.add(name: "X-CSRFToken", value: token)
-            headers.add(name: "Referer", value: "https://safety-red5.kuvrr.com/api/v1/")
-        }
-        AF.request(urlString, method: method, parameters: parameters, headers: headers).responseDecodable(of: responseModel) { response in
+        AF.sessionConfiguration.timeoutIntervalForRequest = 20
+        AF.sessionConfiguration.headers = headers
+        AF.request(SKService.baseURL + urlString, method: method, parameters: parameters, headers: headers).responseDecodable(of: responseModel) { response in
             if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
                 print("Data: \(utf8Text)") // original server data as UTF8 string
             }
