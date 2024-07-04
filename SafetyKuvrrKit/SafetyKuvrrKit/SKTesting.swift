@@ -9,23 +9,24 @@ import Foundation
 import INTULocationManager
 
 public struct SKTesting {
-    static let shared = SKTesting()
     private init() {}
     
     public static func initialize() {
-        SKTesting.sessionAPI(success: {
-            
-        }, failure: {
-            
-        })
+        if SKTesting.isUserLoggedIn == true {
+            SKTesting.updateUserDeviceDetailAPI(success: {
+                
+            }, failure: {
+                
+            })
+        }
     }
     
     public static var isUserLoggedIn: Bool {
         get {
-            if SKUserDefaults.userUUID != nil && SKUserDefaults.deviceUUID != nil {
-                return true
-            } else {
+            if SKUserDefaults.userUUID == nil {
                 return false
+            } else {
+                return true
             }
         }
     }
@@ -35,13 +36,6 @@ public struct SKTesting {
             guard let response = response, let token = response.token else { return }
             SKUserDefaults.csrfToken = token
             print("Session Success: \(response)")
-            if SKUserDefaults.userUUID != nil {
-                SKTesting.updateUserDeviceDetailAPI(success: {
-                    
-                }, failure: {
-                    
-                })
-            }
             success()
         } failure: { error in
             guard let error = error else { return }
@@ -51,30 +45,39 @@ public struct SKTesting {
     }
     
     private static func updateUserDeviceDetailAPI(success: @escaping(() -> Void), failure: @escaping(()-> Void)) {
-        guard let userUUID = SKUserDefaults.userUUID else {return}
-        var methodTypePost = true
-        if SKUserDefaults.deviceUUID == nil {
-            methodTypePost = true
-        } else {
-            methodTypePost = false
-        }
-        //
-        let params: [String: Any] = [
-            "os_type" : "iOS",
-            "device_type" : "Phone",
-            "user_uuid" : userUUID
-        ]
-        SKService.apiCall(with: SKConstants.API.userDevice, method: methodTypePost == true ? .post : .put, parameters: params, responseModel: SKUserDeviceDetailResponse.self) { response in
-            guard let response = response, let uuid = response.uuid else { return }
-            SKUserDefaults.deviceUUID = uuid
-            print("Update User Device Detail Success: \(response)")
-            success()
-        } failure: { error in
-            guard let error = error else { return }
-            print("Failure: \(error)")
+        guard let userUUID = SKUserDefaults.userUUID, SKPermission.isLocationAuthorized == true else { return }
+        print("Authorization Success")
+        SKTesting.sessionAPI(success: {
+            let params = SKUserDevicedetailRequest(
+                appCurrentVersion: UIDevice.current.appVersionWithBuildNumber,
+                appVersionMajor: UIDevice.current.appVersionMajor,
+                appVersionMinor: UIDevice.current.appVersionMinor,
+                appVersionPoint: UIDevice.current.appVersionPoint,
+                osVersionMajor: UIDevice.current.osVersionMajor,
+                osVersionMinor: UIDevice.current.osVersionMinor,
+                osVersionPoint: UIDevice.current.osVersionPoint,
+                deviceType: UIDevice.current.deviceType,
+                osType: UIDevice.current.osType,
+                deviceModel: UIDevice.current.deviceModel,
+                userUUID: userUUID,
+                pushEnabled: false,
+                nativeDeviceID: nil,
+                pushID: nil,
+                voipPushID: nil
+            )
+            SKService.apiCall(with: SKConstants.API.userDevice, method: SKUserDefaults.deviceUUID == nil ? .post : .put, parameters: params.dictionary, responseModel: SKUserDeviceDetailResponse.self) { response in
+                guard let response = response, let uuid = response.uuid else { return }
+                SKUserDefaults.deviceUUID = uuid
+                print("Update User Device Detail Success: \(response)")
+                success()
+            } failure: { error in
+                guard let error = error else { return }
+                print("Failure: \(error)")
+                failure()
+            }
+        }, failure: {
             failure()
-        }
-            
+        })
     }
     
     public static func callLogin(forMoble mobile: String, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping(()-> Void)) {
@@ -90,7 +93,7 @@ public struct SKTesting {
                 failure()
             }
         }, failure: {
-            
+            failure()
         })
     }
     
@@ -102,13 +105,20 @@ public struct SKTesting {
                 print("OTP Verify Success: \(response)")
                 SKUserDefaults.userUUID = response.userUUID
                 success()
+                //
+                SKPermission.requestLocation()
+                SKTesting.updateUserDeviceDetailAPI(success: {
+                    
+                }, failure: {
+                    
+                })
             } failure: { error in
                 guard let error = error else { return }
                 print("Failure: \(error)")
                 failure()
             }
         }, failure: {
-            
+            failure()
         })
     }
     
@@ -125,7 +135,7 @@ public struct SKTesting {
                 failure()
             }
         }, failure: {
-            
+            failure()
         })
     }
     
@@ -136,19 +146,21 @@ public struct SKTesting {
                                         delayUntilAuthorized: true) { (currentLocation, achievedAccuracy, status) in
             if (status == INTULocationStatus.success) {
                 //let myLocation = SKLocation(latitude: currentLocation?.coordinate.latitude ?? 0.0, longitude: currentLocation?.coordinate.longitude ?? 0.0, altitude: currentLocation?.altitude ?? 0.0, verticalAccuracy: currentLocation?.verticalAccuracy ?? 0.0, horizontalAccuracy: currentLocation?.horizontalAccuracy ?? 0.0)
-                let request = SKEMSRequest(altitude: currentLocation?.altitude ?? 0.0,
-                                           appLocationOnly: false,
-                                           deviceUUID: SKUserDefaults.deviceUUID ?? "",
-                                           directionDegrees: nil,
-                                           ems: true,
-                                           horizontalAccuracy: currentLocation?.horizontalAccuracy ?? 0.0,
-                                           incidentUUID: nil,
-                                           latitude: currentLocation?.coordinate.latitude ?? 0.0,
-                                           longitude: currentLocation?.coordinate.longitude ?? 0.0,
-                                           mediaType: "",
-                                           pbTrigger: false,
-                                           responderType: "911",
-                                           verticalAccuracy: currentLocation?.verticalAccuracy ?? 0.0)
+                let request = SKEMSRequest(
+                    altitude: currentLocation?.altitude ?? 0.0,
+                    appLocationOnly: false,
+                    deviceUUID: SKUserDefaults.deviceUUID ?? "",
+                    directionDegrees: nil,
+                    ems: true,
+                    horizontalAccuracy: currentLocation?.horizontalAccuracy ?? 0.0,
+                    incidentUUID: nil,
+                    latitude: currentLocation?.coordinate.latitude ?? 0.0,
+                    longitude: currentLocation?.coordinate.longitude ?? 0.0,
+                    mediaType: "",
+                    pbTrigger: false,
+                    responderType: "911",
+                    verticalAccuracy: currentLocation?.verticalAccuracy ?? 0.0
+                )
                 print("Current Location: \(request.dictionary)")
                 SKTesting.callEMS(forData: request.dictionary, success: {
                     success()
@@ -177,7 +189,7 @@ public struct SKTesting {
                 failure()
             }
         }, failure: {
-            
+            failure()
         })
     }
 }

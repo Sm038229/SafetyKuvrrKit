@@ -13,7 +13,8 @@ Pod::Spec.new do |spec|
   spec.swift_versions = "5.0"
   spec.dependency 'Alamofire' # , '~> 0.1.0'
   spec.dependency 'INTULocationManager'
-  spec.dependency 'ProgressHUD'
+  spec.dependency 'DeviceGuru'
+  spec.dependency 'PermissionKit'
   
   spec.framework = "UIKit", "Foundation", "CoreLocation" #, "CoreBluetooth", "ExternalAccessory"
   # spec.source_files = "SafetyKuvrrKit/**/*.{swift,c,h,m}"

@@ -12,9 +12,12 @@
 		151C3B632C34072200688277 /* SKEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151C3B622C34072100688277 /* SKEncoder.swift */; };
 		151C3B652C34077800688277 /* SKDataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151C3B642C34077700688277 /* SKDataModels.swift */; };
 		151C3B672C340B2000688277 /* SKUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151C3B662C340B2000688277 /* SKUserDefaults.swift */; };
+		153F60E52C3718A9008906D0 /* DeviceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 153F60E42C3718A9008906D0 /* DeviceList.plist */; };
 		15572B872C2C2D0B0057318D /* SafetyKuvrrKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 15572B862C2C2D0B0057318D /* SafetyKuvrrKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		15572B8E2C2C2D690057318D /* SKTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15572B8D2C2C2D690057318D /* SKTesting.swift */; };
 		15B5768E2C35048A0043BDFD /* SKConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B5768D2C35048A0043BDFD /* SKConstants.swift */; };
+		15EAA5CE2C369900009D61EA /* SKPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAA5CD2C369900009D61EA /* SKPermission.swift */; };
+		15EAA5D22C36BA77009D61EA /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,10 +25,13 @@
 		151C3B622C34072100688277 /* SKEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKEncoder.swift; sourceTree = "<group>"; };
 		151C3B642C34077700688277 /* SKDataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKDataModels.swift; sourceTree = "<group>"; };
 		151C3B662C340B2000688277 /* SKUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKUserDefaults.swift; sourceTree = "<group>"; };
+		153F60E42C3718A9008906D0 /* DeviceList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DeviceList.plist; sourceTree = "<group>"; };
 		15572B832C2C2D0B0057318D /* SafetyKuvrrKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SafetyKuvrrKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		15572B862C2C2D0B0057318D /* SafetyKuvrrKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafetyKuvrrKit.h; sourceTree = "<group>"; };
 		15572B8D2C2C2D690057318D /* SKTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKTesting.swift; sourceTree = "<group>"; };
 		15B5768D2C35048A0043BDFD /* SKConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKConstants.swift; sourceTree = "<group>"; };
+		15EAA5CD2C369900009D61EA /* SKPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKPermission.swift; sourceTree = "<group>"; };
+		15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
 		79B73F03C75D28EE952EE6FC /* Pods_SafetyKuvrrKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafetyKuvrrKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4766CE3755548F26DB78358 /* Pods-SafetyKuvrrKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafetyKuvrrKit.debug.xcconfig"; path = "Target Support Files/Pods-SafetyKuvrrKit/Pods-SafetyKuvrrKit.debug.xcconfig"; sourceTree = "<group>"; };
 		CDEBB67EA7DBA284FA32E4C4 /* Pods-SafetyKuvrrKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafetyKuvrrKit.release.xcconfig"; path = "Target Support Files/Pods-SafetyKuvrrKit/Pods-SafetyKuvrrKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -71,6 +77,9 @@
 				151C3B622C34072100688277 /* SKEncoder.swift */,
 				151C3B662C340B2000688277 /* SKUserDefaults.swift */,
 				15B5768D2C35048A0043BDFD /* SKConstants.swift */,
+				15EAA5CD2C369900009D61EA /* SKPermission.swift */,
+				15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */,
+				153F60E42C3718A9008906D0 /* DeviceList.plist */,
 			);
 			path = SafetyKuvrrKit;
 			sourceTree = "<group>";
@@ -163,6 +172,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				153F60E52C3718A9008906D0 /* DeviceList.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,6 +209,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				151C3B632C34072200688277 /* SKEncoder.swift in Sources */,
+				15EAA5D22C36BA77009D61EA /* UIDevice+Extension.swift in Sources */,
+				15EAA5CE2C369900009D61EA /* SKPermission.swift in Sources */,
 				151C3B652C34077800688277 /* SKDataModels.swift in Sources */,
 				15572B8E2C2C2D690057318D /* SKTesting.swift in Sources */,
 				151C3B672C340B2000688277 /* SKUserDefaults.swift in Sources */,
@@ -352,6 +364,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Location Usage";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -393,6 +406,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Location Usage";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

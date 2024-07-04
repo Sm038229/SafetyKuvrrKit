@@ -1,24 +1,72 @@
 PODS:
   - Alamofire (5.9.1)
+  - DeviceGuru (10.0.7):
+    - DeviceGuru/DeviceGuru (= 10.0.7)
+  - DeviceGuru/DeviceGuru (10.0.7):
+    - DeviceGuru/Resources
+  - DeviceGuru/Resources (10.0.7)
   - INTULocationManager (4.4.0)
-  - ProgressHUD (14.1.1)
+  - PermissionKit (1.6.1):
+    - PermissionKit/Bluetooth (= 1.6.1)
+    - PermissionKit/Camera (= 1.6.1)
+    - PermissionKit/Contacts (= 1.6.1)
+    - PermissionKit/Core (= 1.6.1)
+    - PermissionKit/Event (= 1.6.1)
+    - PermissionKit/Location (= 1.6.1)
+    - PermissionKit/Media (= 1.6.1)
+    - PermissionKit/Motion (= 1.6.1)
+    - PermissionKit/Notification (= 1.6.1)
+    - PermissionKit/Photos (= 1.6.1)
+    - PermissionKit/Siri (= 1.6.1)
+    - PermissionKit/Speech (= 1.6.1)
+    - PermissionKit/Tracking (= 1.6.1)
+  - PermissionKit/Bluetooth (1.6.1):
+    - PermissionKit/Core
+  - PermissionKit/Camera (1.6.1):
+    - PermissionKit/Core
+  - PermissionKit/Contacts (1.6.1):
+    - PermissionKit/Core
+  - PermissionKit/Core (1.6.1):
+    - PermissionKit/Privacy
+  - PermissionKit/Event (1.6.1):
+    - PermissionKit/Core
+  - PermissionKit/Location (1.6.1):
+    - PermissionKit/Core
+  - PermissionKit/Media (1.6.1):
+    - PermissionKit/Core
+  - PermissionKit/Motion (1.6.1):
+    - PermissionKit/Core
+  - PermissionKit/Notification (1.6.1):
+    - PermissionKit/Core
+  - PermissionKit/Photos (1.6.1):
+    - PermissionKit/Core
+  - PermissionKit/Privacy (1.6.1)
+  - PermissionKit/Siri (1.6.1):
+    - PermissionKit/Core
+  - PermissionKit/Speech (1.6.1):
+    - PermissionKit/Core
+  - PermissionKit/Tracking (1.6.1):
+    - PermissionKit/Core
 
 DEPENDENCIES:
   - Alamofire
+  - DeviceGuru
   - INTULocationManager
-  - ProgressHUD
+  - PermissionKit
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - DeviceGuru
     - INTULocationManager
-    - ProgressHUD
+    - PermissionKit
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  DeviceGuru: 593a89a21c71bc1d5a039a8d6807c325c84cc091
   INTULocationManager: b5a0422782f0b87af0b8db14e0826fb38dbecd19
-  ProgressHUD: abb9136ae23c85204236828562cb9a8ec98efb44
+  PermissionKit: 5bfb53abe59cf35743f2798cc05207b305331507
 
-PODFILE CHECKSUM: c84c13e3dde401a5884a2e9ccf3ee5d07ee36fb9
+PODFILE CHECKSUM: ef076d74f9a0e626958099938b939b52b0467d11
 
 COCOAPODS: 1.15.2

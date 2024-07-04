@@ -63,7 +63,7 @@ extension SKUserDefaults {
         }
     }
     
-    static func removeuserUUID() {
+    static func removeUserUUID() {
         return SKUserDefaults.removeData(forKey: SKUserDefaults.Key.userUUID)
     }
     //

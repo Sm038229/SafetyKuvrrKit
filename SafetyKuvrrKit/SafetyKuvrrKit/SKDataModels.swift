@@ -162,3 +162,39 @@ struct SKEMSRequest: Codable {
         case verticalAccuracy = "vertical_accuracy"
     }
 }
+
+struct SKUserDevicedetailRequest: Codable {
+    let appCurrentVersion: String?
+    let appVersionMajor: String?
+    let appVersionMinor: String?
+    let appVersionPoint: String?
+    let osVersionMajor: String?
+    let osVersionMinor: String?
+    let osVersionPoint: String?
+    let deviceType: String?
+    let osType: String?
+    let deviceModel: String?
+    let userUUID: String?
+    let pushEnabled: Bool
+    let nativeDeviceID: String?
+    let pushID: String?
+    let voipPushID: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case appCurrentVersion = "current_version"
+        case appVersionMajor = "app_version_major"
+        case appVersionMinor = "app_version_minor"
+        case appVersionPoint = "app_version_point"
+        case osVersionMajor = "os_version_major"
+        case osVersionMinor = "os_version_minor"
+        case osVersionPoint = "os_version_point"
+        case deviceType = "device_type"
+        case osType = "os_type"
+        case deviceModel = "phone_model"
+        case userUUID = "user_uuid"
+        case pushEnabled = "push_enabled"
+        case nativeDeviceID = "native_device_id"
+        case pushID = "push_id"
+        case voipPushID = "voip_push_id"
+    }
+}
