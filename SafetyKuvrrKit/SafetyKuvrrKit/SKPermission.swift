@@ -6,34 +6,20 @@
 //
 
 import Foundation
-import CoreLocation
+import PermissionKit
 
 struct SKPermission {
     private init() {}
     
     static var isLocationAuthorized: Bool {
-        let status = CLLocationManager.authorizationStatus()
-        switch status {
-        case .authorizedAlways:
-            return true
-        case .authorizedWhenInUse:
-            return true
-        case .denied:
-            return false
-        case .notDetermined:
-            return false
-        case .restricted:
-            return false
-        @unknown default:
-            return false
-        }
+        return Provider.location(.alwaysAndWhenInUse).isAuthorized
     }
     //
-    static func requestLocation() {
-//        Provider.location(.alwaysAndWhenInUse).request { (result) in
-//            print("isAuthorized: \(result)")
-        
-        CLLocationManager().requestAlwaysAuthorization()
+    static func requestLocation(status : @escaping((Bool) -> Void)) {
+        Provider.location(.alwaysAndWhenInUse).request { (result) in
+            print("isAuthorized: \(result)")
+            status(result)
+        }
     }
 }
 

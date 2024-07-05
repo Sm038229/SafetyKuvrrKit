@@ -15,6 +15,14 @@ struct SKMessage: Decodable {
     }
 }
 
+struct SKErrorMessage: Decodable {
+    let errorMessage: [String]?
+    
+    enum CodingKeys: String, CodingKey {
+        case errorMessage = "errors"
+    }
+}
+
 struct SKCSRFToken: Decodable {
     let token: String?
     let message: String?

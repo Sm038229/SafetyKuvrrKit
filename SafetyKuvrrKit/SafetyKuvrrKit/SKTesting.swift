@@ -12,11 +12,17 @@ public struct SKTesting {
     private init() {}
     
     public static func initialize() {
-        if SKTesting.isUserLoggedIn == true {
+        SKPermission.requestLocation { status in
+            if status == false {
+//                failure("Check Your Location Permission.")
+            }
+        }
+        if SKTesting.isUserLoggedIn == true, SKPermission.isLocationAuthorized == true {
             SKTesting.updateUserDeviceDetailAPI(success: {
                 
-            }, failure: {
-                
+            }, failure: { error in
+                guard let error = error else { return }
+                print("Failure: \(error)")
             })
         }
     }
@@ -31,7 +37,7 @@ public struct SKTesting {
         }
     }
     
-    private static func sessionAPI(success: @escaping(() -> Void), failure: @escaping(()-> Void)) {
+    private static func sessionAPI(success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
         SKService.apiCall(with: SKConstants.API.sessionInit, responseModel: SKCSRFToken.self) { response in
             guard let response = response, let token = response.token else { return }
             SKUserDefaults.csrfToken = token
@@ -40,12 +46,12 @@ public struct SKTesting {
         } failure: { error in
             guard let error = error else { return }
             print("Failure: \(error)")
-            failure()
+            failure(error)
         }
     }
     
-    private static func updateUserDeviceDetailAPI(success: @escaping(() -> Void), failure: @escaping(()-> Void)) {
-        guard let userUUID = SKUserDefaults.userUUID, SKPermission.isLocationAuthorized == true else { return }
+    private static func updateUserDeviceDetailAPI(success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
+        guard let userUUID = SKUserDefaults.userUUID else { return }
         print("Authorization Success")
         SKTesting.sessionAPI(success: {
             let params = SKUserDevicedetailRequest(
@@ -73,14 +79,16 @@ public struct SKTesting {
             } failure: { error in
                 guard let error = error else { return }
                 print("Failure: \(error)")
-                failure()
+                failure(error)
             }
-        }, failure: {
-            failure()
+        }, failure: { error in
+            guard let error = error else { return }
+            print("Failure: \(error)")
+            failure(error)
         })
     }
     
-    public static func callLogin(forMoble mobile: String, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping(()-> Void)) {
+    public static func callLogin(forMoble mobile: String, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
         SKTesting.sessionAPI(success: {
             let loginRequest = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile)
             SKService.apiCall(with: SKConstants.API.login, method: .post, parameters: loginRequest.dictionary, responseModel: SKMessage.self) { response in
@@ -90,39 +98,37 @@ public struct SKTesting {
             } failure: { error in
                 guard let error = error else { return }
                 print("Failure: \(error)")
-                failure()
+                failure(error)
             }
-        }, failure: {
-            failure()
+        }, failure: { error in
+            guard let error = error else { return }
+            print("Failure: \(error)")
+            failure(error)
         })
     }
     
-    public static func callVerifyOTP(mobile: String, country: String = "IN", otp: String, success: @escaping(() -> Void), failure: @escaping(()-> Void)) {
+    public static func callVerifyOTP(mobile: String, country: String = "IN", otp: String, success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
         SKTesting.sessionAPI(success: {
             let loginRequest = SKPhoneOTPRequest(countryCode: country, mobileNumber: mobile, otp: otp)
             SKService.apiCall(with: SKConstants.API.otpVerify, method: .post, parameters: loginRequest.dictionary, responseModel: SKVerifyOTPResponse.self) { response in
                 guard let response = response else { return }
                 print("OTP Verify Success: \(response)")
                 SKUserDefaults.userUUID = response.userUUID
+                SKTesting.initialize()
                 success()
-                //
-                SKPermission.requestLocation()
-                SKTesting.updateUserDeviceDetailAPI(success: {
-                    
-                }, failure: {
-                    
-                })
             } failure: { error in
                 guard let error = error else { return }
                 print("Failure: \(error)")
-                failure()
+                failure(error)
             }
-        }, failure: {
-            failure()
+        }, failure: { error in
+            guard let error = error else { return }
+            print("Failure: \(error)")
+            failure(error)
         })
     }
     
-    public static func callResendOTP(forMoble mobile: String, country: String = "IN", success: @escaping(() -> Void), failure: @escaping(()-> Void)) {
+    public static func callResendOTP(forMoble mobile: String, country: String = "IN", success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
         SKTesting.sessionAPI(success: {
             let loginRequest = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile)
             SKService.apiCall(with: SKConstants.API.otpResend, method: .post, parameters: loginRequest.dictionary, responseModel: SKMessage.self) { response in
@@ -132,14 +138,21 @@ public struct SKTesting {
             } failure: { error in
                 guard let error = error else { return }
                 print("Failure: \(error)")
-                failure()
+                failure(error)
             }
-        }, failure: {
-            failure()
+        }, failure: { error in
+            guard let error = error else { return }
+            print("Failure: \(error)")
+            failure(error)
         })
     }
     
-    public static func call911(success: @escaping(() -> Void), failure: @escaping(()-> Void)) {
+    public static func call911(success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
+        SKPermission.requestLocation { status in
+            if status == false {
+                failure("Check Your Location Permission.")
+            }
+        }
         let locationManager = INTULocationManager.sharedInstance()
         locationManager.requestLocation(withDesiredAccuracy: .city,
                                         timeout: 10.0,
@@ -164,20 +177,22 @@ public struct SKTesting {
                 print("Current Location: \(request.dictionary)")
                 SKTesting.callEMS(forData: request.dictionary, success: {
                     success()
-                }, failure: {
-                    failure()
+                }, failure: { error in
+                    guard let error = error else { return }
+                    print("Failure: \(error)")
+                    failure(error)
                 })
             }
             else if (status == INTULocationStatus.timedOut) {
-                
+                failure("")
             }
             else {
-                // An error occurred, more info is available by looking at the specific status returned.
+                failure("")
             }
         }
     }
     
-    private static func callEMS(forData params: [String: Any]?, success: @escaping(() -> Void), failure: @escaping(()-> Void)) {
+    private static func callEMS(forData params: [String: Any]?, success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
         SKTesting.sessionAPI(success: {
             SKService.apiCall(with: SKConstants.API.incident, method: .post, parameters: params, responseModel: SKMessage.self) { response in
                 guard let response = response else { return }
@@ -186,10 +201,12 @@ public struct SKTesting {
             } failure: { error in
                 guard let error = error else { return }
                 print("Failure: \(error)")
-                failure()
+                failure(error)
             }
-        }, failure: {
-            failure()
+        }, failure: { error in
+            guard let error = error else { return }
+            print("Failure: \(error)")
+            failure(error)
         })
     }
 }

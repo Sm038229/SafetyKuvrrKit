@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "SafetyKuvrrKit"
-  spec.version      = "1.0.9"
+  spec.version      = "1.0.10"
   spec.summary      = "SafetyKuvrr app functionalities integration separately."
   spec.description  = "It is a separate integration for SafetyKuvrr app functionalities."
   spec.homepage     = "https://github.com/Sm038229/KuvrrKit"

@@ -22,17 +22,36 @@ struct SKService {
         print("API : \(urlString)  ======================================================================")
         print("Request: \(String(describing: parameters))")
         AF.request(SKService.baseURL + urlString, method: method, parameters: parameters, headers: headers).responseDecodable(of: responseModel) { response in
-            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                print("Data: \(utf8Text)") // original server data as UTF8 string
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                    print("Data: \(utf8Text)") // original server data as UTF8 string
+                }
+                
+                switch response.result {
+                case .success(let value):
+                    if response.response?.statusCode ?? 0 >= 200, response.response?.statusCode ?? 0 < 300 {
+                        success(value)
+                    } else {
+                        if let data = response.data {
+                            let errorMessage = SKService.getErrorResponse(forData: data)
+                            failure(errorMessage)
+                        } else {
+                            failure("Something went wrong!")
+                        }
+                    }
+                case .failure(let error):
+                    failure(error.localizedDescription)
+                }
             }
-            
-            switch response.result {
-            case .success(let value):
-                print(value)
-                success(response.value)
-            case .failure(let error):
-                failure(error.localizedDescription)
-            }
+        }
+    }
+    
+    private static func getErrorResponse(forData data: Data) -> String? {
+        do {
+            let errorModel = try JSONDecoder().decode(SKErrorMessage.self, from: data)
+            return(errorModel.errorMessage?.first)
+        } catch {
+            return(error.localizedDescription)
         }
     }
 }

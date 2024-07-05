@@ -16,14 +16,16 @@ struct SKUserDefaults {
     
     private static func saveData(_ data: Any, forKey key: String) {
         UserDefaults.standard.setValue(data, forKey: key)
+        UserDefaults.standard.synchronize()
     }
     
     private static func getData(forKey key: String) -> Any? {
-        return UserDefaults.standard.value(forKey: key)
+        return UserDefaults.standard.object(forKey: key)
     }
     
     private static func removeData(forKey key: String) {
-        return UserDefaults.standard.removeObject(forKey: key)
+        UserDefaults.standard.removeObject(forKey: key)
+        UserDefaults.standard.synchronize()
     }
 }
 
