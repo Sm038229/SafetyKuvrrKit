@@ -13,17 +13,14 @@ public struct SKTesting {
     
     public static func initialize() {
         SKPermission.requestLocation { status in
-            if status == false {
-//                failure("Check Your Location Permission.")
+            if status == true, SKTesting.isUserLoggedIn == true, SKPermission.isLocationAuthorized == true {
+                SKTesting.updateUserDeviceDetailAPI(success: {
+                    
+                }, failure: { error in
+                    guard let error = error else { return }
+                    print("Failure: \(error)")
+                })
             }
-        }
-        if SKTesting.isUserLoggedIn == true, SKPermission.isLocationAuthorized == true {
-            SKTesting.updateUserDeviceDetailAPI(success: {
-                
-            }, failure: { error in
-                guard let error = error else { return }
-                print("Failure: \(error)")
-            })
         }
     }
     
