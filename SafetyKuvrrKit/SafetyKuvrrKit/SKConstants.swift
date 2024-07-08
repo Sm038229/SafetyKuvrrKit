@@ -16,4 +16,14 @@ struct SKConstants {
         static let otpResend = "otp/resend/"
         static let incident = "incident/"
     }
+    //
+    struct ResponderType {
+        static let _911 = "911"
+        static let _sos = "sos"
+        static let _walk_safe = "safe_walk"
+        static let _timer = "timer"
+        static let _check_in = "check_in"
+        static let _check_out = "check_out"
+        static let _medical = "medical"
+    }
 }

@@ -140,33 +140,33 @@ struct SKUserDeviceDetailResponse: Codable {
 }
 
 struct SKEMSRequest: Codable {
-    let altitude: Double
-    let appLocationOnly: Bool
-    let deviceUUID: String
-    let directionDegrees: Double?
-    let ems: Bool
-    let horizontalAccuracy: Double
-    let incidentUUID: String?
-    let latitude: Double
-    let longitude: Double
+    let isEMS: Bool
     let mediaType: String
     let pbTrigger: Bool
     let responderType: String
-    let verticalAccuracy: Double
+    let appLocationOnly: Bool?
+    let deviceUUID: String?
+    let directionDegrees: Double?
+    let incidentUUID: String?
+    let latitude: Double?
+    let longitude: Double?
+    let altitude: Double?
+    let horizontalAccuracy: Double?
+    let verticalAccuracy: Double?
     
     enum CodingKeys: String, CodingKey {
-        case altitude = "altitude"
-        case appLocationOnly = "app_location_only"
-        case deviceUUID = "device_uuid"
-        case directionDegrees = "direction_degrees"
-        case ems = "ems"
-        case horizontalAccuracy = "horizontal_accuracy"
-        case incidentUUID = "incident_uuid"
-        case latitude = "lat"
-        case longitude = "lng"
+        case isEMS = "ems"
         case mediaType = "media_type"
         case pbTrigger = "pb_trigger"
         case responderType = "responder_type"
+        case appLocationOnly = "app_location_only"
+        case deviceUUID = "device_uuid"
+        case directionDegrees = "direction_degrees"
+        case incidentUUID = "incident_uuid"
+        case latitude = "lat"
+        case longitude = "lng"
+        case altitude = "altitude"
+        case horizontalAccuracy = "horizontal_accuracy"
         case verticalAccuracy = "vertical_accuracy"
     }
 }

@@ -6,6 +6,7 @@ def common_pods
   pod 'INTULocationManager'
   pod 'DeviceGuru'
   pod 'PermissionKit'
+  pod 'AgoraRtcEngine_iOS'
 end
 
 target 'SafetyKuvrrKit' do

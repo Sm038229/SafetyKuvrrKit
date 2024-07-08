@@ -13,8 +13,9 @@
 		151C3B652C34077800688277 /* SKDataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151C3B642C34077700688277 /* SKDataModels.swift */; };
 		151C3B672C340B2000688277 /* SKUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151C3B662C340B2000688277 /* SKUserDefaults.swift */; };
 		15572B872C2C2D0B0057318D /* SafetyKuvrrKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 15572B862C2C2D0B0057318D /* SafetyKuvrrKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		15572B8E2C2C2D690057318D /* SKTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15572B8D2C2C2D690057318D /* SKTesting.swift */; };
+		15572B8E2C2C2D690057318D /* SafetyKuvrr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15572B8D2C2C2D690057318D /* SafetyKuvrr.swift */; };
 		15B5768E2C35048A0043BDFD /* SKConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B5768D2C35048A0043BDFD /* SKConstants.swift */; };
+		15BA66EF2C3BEB8E00E60C4D /* SKKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BA66EE2C3BEB8E00E60C4D /* SKKit.swift */; };
 		15EAA5CE2C369900009D61EA /* SKPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAA5CD2C369900009D61EA /* SKPermission.swift */; };
 		15EAA5D22C36BA77009D61EA /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -26,8 +27,9 @@
 		151C3B662C340B2000688277 /* SKUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKUserDefaults.swift; sourceTree = "<group>"; };
 		15572B832C2C2D0B0057318D /* SafetyKuvrrKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SafetyKuvrrKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		15572B862C2C2D0B0057318D /* SafetyKuvrrKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafetyKuvrrKit.h; sourceTree = "<group>"; };
-		15572B8D2C2C2D690057318D /* SKTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKTesting.swift; sourceTree = "<group>"; };
+		15572B8D2C2C2D690057318D /* SafetyKuvrr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyKuvrr.swift; sourceTree = "<group>"; };
 		15B5768D2C35048A0043BDFD /* SKConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKConstants.swift; sourceTree = "<group>"; };
+		15BA66EE2C3BEB8E00E60C4D /* SKKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKKit.swift; sourceTree = "<group>"; };
 		15EAA5CD2C369900009D61EA /* SKPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKPermission.swift; sourceTree = "<group>"; };
 		15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
 		79B73F03C75D28EE952EE6FC /* Pods_SafetyKuvrrKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafetyKuvrrKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,7 +71,8 @@
 			isa = PBXGroup;
 			children = (
 				15572B862C2C2D0B0057318D /* SafetyKuvrrKit.h */,
-				15572B8D2C2C2D690057318D /* SKTesting.swift */,
+				15BA66EE2C3BEB8E00E60C4D /* SKKit.swift */,
+				15572B8D2C2C2D690057318D /* SafetyKuvrr.swift */,
 				150887932C2DA6DB0041DFC0 /* SKService.swift */,
 				151C3B642C34077700688277 /* SKDataModels.swift */,
 				151C3B622C34072100688277 /* SKEncoder.swift */,
@@ -208,7 +211,8 @@
 				15EAA5D22C36BA77009D61EA /* UIDevice+Extension.swift in Sources */,
 				15EAA5CE2C369900009D61EA /* SKPermission.swift in Sources */,
 				151C3B652C34077800688277 /* SKDataModels.swift in Sources */,
-				15572B8E2C2C2D690057318D /* SKTesting.swift in Sources */,
+				15572B8E2C2C2D690057318D /* SafetyKuvrr.swift in Sources */,
+				15BA66EF2C3BEB8E00E60C4D /* SKKit.swift in Sources */,
 				151C3B672C340B2000688277 /* SKUserDefaults.swift in Sources */,
 				150887942C2DA6DB0041DFC0 /* SKService.swift in Sources */,
 				15B5768E2C35048A0043BDFD /* SKConstants.swift in Sources */,

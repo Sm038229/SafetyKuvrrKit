@@ -73,7 +73,7 @@ Run the `pod install` command to install `SafetyKuvrrKit`. If the installation s
 
 ### Add permissions
 
-The app requires permissions of audio/video devices and cameras. In the `info.plist` file, click `+` to add the following information:
+The app requires permissions of location. In the `info.plist` file, click `+` to add the following information:
 
 | Key                                    | Type   | Value                                                        |
 | -------------------------------------- | ------ | ------------------------------------------------------------ |
@@ -91,7 +91,7 @@ import SafetyKuvrrKit
 ```
 In your code:
 ``` swift
-SKTesting.call911(success: {
+SafetyKuvrr.call911(success: {
 
 }, failure: {
 

@@ -15,7 +15,11 @@ extension UIDevice {
     }
     
     var deviceModel: String? {
-        return try? UIDevice.current.deviceGuru?.hardwareDescription()
+        if let path = Bundle(identifier: Bundle.main.bundleIdentifier ?? "") {
+            return try? UIDevice.current.deviceGuru?.hardwareDescription()
+        } else {
+            return nil
+        }
     }
     
     var deviceType: String  {
