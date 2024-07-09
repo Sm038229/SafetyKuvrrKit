@@ -15,7 +15,7 @@ extension UIDevice {
     }
     
     var deviceModel: String? {
-        if let path = Bundle(identifier: Bundle.main.bundleIdentifier ?? "") {
+        if let path = Bundle(identifier: "kitios.safety.armourgrid.SafetyKuvrrKit") {
             return try? UIDevice.current.deviceGuru?.hardwareDescription()
         } else {
             return nil

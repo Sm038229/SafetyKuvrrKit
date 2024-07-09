@@ -13,14 +13,16 @@ public struct SafetyKuvrr: SKKit {
     
     public static func initialize() {
         SKPermission.requestLocation { status in
-            if status == true, SafetyKuvrr.isUserLoggedIn == true, SKPermission.isLocationAuthorized == true {
-                SafetyKuvrr.updateUserDeviceDetailAPI(success: {
-                    
-                }, failure: { error in
-                    guard let error = error else { return }
-                    print("Failure: \(error)")
-                })
-            }
+            
+        }
+        //
+        if SafetyKuvrr.isUserLoggedIn == true {
+            SafetyKuvrr.updateUserDeviceDetailAPI(success: {
+                
+            }, failure: { error in
+                guard let error = error else { return }
+                print("Failure: \(error)")
+            })
         }
     }
     
@@ -85,13 +87,59 @@ public struct SafetyKuvrr: SKKit {
         })
     }
     
-    public static func login(forMoble mobile: String, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+    public static func login(withEmail email: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+        SafetyKuvrr.sessionAPI(success: {
+            let loginRequest = SKEmailLoginRequest(email: email)
+            SKService.apiCall(with: SKConstants.API.login, method: .post, parameters: loginRequest.dictionary, responseModel: SKMessage.self) { response in
+                guard let response = response else { return }
+                print("Login Success: \(response)")
+                SafetyKuvrr.verifyOTP(email: email, success: {
+                    success(response.message)
+                }, failure: { error in
+                    guard let error = error else { return }
+                    print("Failure: \(error)")
+                    failure(error)
+                })
+            } failure: { error in
+                guard let error = error else { return }
+                print("Failure: \(error)")
+                failure(error)
+            }
+        }, failure: { error in
+            guard let error = error else { return }
+            print("Failure: \(error)")
+            failure(error)
+        })
+    }
+    
+    public static func login(withMoble mobile: String, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
         SafetyKuvrr.sessionAPI(success: {
             let loginRequest = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile)
             SKService.apiCall(with: SKConstants.API.login, method: .post, parameters: loginRequest.dictionary, responseModel: SKMessage.self) { response in
                 guard let response = response else { return }
                 print("Login Success: \(response)")
                 success(response.message)
+            } failure: { error in
+                guard let error = error else { return }
+                print("Failure: \(error)")
+                failure(error)
+            }
+        }, failure: { error in
+            guard let error = error else { return }
+            print("Failure: \(error)")
+            failure(error)
+        })
+    }
+    
+    public static func verifyOTP(email: String, otp: String = "159753", success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
+        SafetyKuvrr.sessionAPI(success: {
+            let loginRequest = SKEmailOTPRequest(email: email, otp: otp)
+            SKService.apiCall(with: SKConstants.API.otpVerify, method: .post, parameters: loginRequest.dictionary, responseModel: SKVerifyOTPResponse.self) { response in
+                guard let response = response else { return }
+                print("OTP Verify Success: \(response)")
+                SKUserDefaults.userUUID = response.userUUID
+                SafetyKuvrr.initialize()
+                success()
             } failure: { error in
                 guard let error = error else { return }
                 print("Failure: \(error)")
@@ -145,13 +193,18 @@ public struct SafetyKuvrr: SKKit {
     }
     
     public static func raiseEvent(isSoS: Bool = false, isWalkSafe: Bool = false, isTimer: Bool = false, isMedical: Bool = false, isCheckIn: Bool = false, isCheckOut: Bool = false, isEMS: Bool = false, emsNumber number: Int? = 0, success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
-        var responderType = "\(number ?? 0)"
-        if isSoS == true { responderType = SKConstants.ResponderType._sos }
+        var responderType = ""
+        if let emsNumber = number, emsNumber > 0, isEMS == true {
+            responderType = "\(emsNumber)"
+            SafetyKuvrr.callNumber(phoneNumber: "\(emsNumber)")
+        }
+        else if isSoS == true { responderType = SKConstants.ResponderType._sos }
         else if isWalkSafe == true { responderType = SKConstants.ResponderType._walk_safe }
         else if isTimer == true { responderType = SKConstants.ResponderType._timer }
         else if isMedical == true { responderType = SKConstants.ResponderType._medical }
         else if isCheckIn == true { responderType = SKConstants.ResponderType._check_in }
         else if isCheckOut == true { responderType = SKConstants.ResponderType._check_out }
+        else { failure("Undefined value") }
         //
         var mediaType = ""
         if (isSoS == true || isWalkSafe == true || isTimer == true) && UIApplication.shared.applicationState != .background {
@@ -162,6 +215,14 @@ public struct SafetyKuvrr: SKKit {
         } failure: { error in
             failure(error)
         }
+    }
+    
+    private static func callNumber(phoneNumber: String) {
+        guard let url = URL(string: "telprompt://\(phoneNumber)"),
+            UIApplication.shared.canOpenURL(url) else {
+            return
+        }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     private static func makeEvent(isEMS: Bool, mediaType: String, responderType : String, success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
