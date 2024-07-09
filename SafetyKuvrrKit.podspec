@@ -1,14 +1,13 @@
 Pod::Spec.new do |spec|
 
   spec.name           = "SafetyKuvrrKit"
-  spec.version        = "1.0.12"
+  spec.version        = "v1.0.0"
   spec.summary        = "SafetyKuvrr app functionalities integration separately."
   spec.description    = "It is a separate integration for SafetyKuvrr app functionalities."
   spec.homepage       = "https://github.com/Sm038229/SafetyKuvrrKit"
   spec.license        = "MIT"
   spec.author         = { "Sachin Mishra" => "sachinmishrahp@gmail.com" }
   spec.platform       = :ios, "13.0"
-  spec.ios.deployment_target = '13.0'
   spec.source         = { :git => "https://github.com/Sm038229/SafetyKuvrrKit.git", :tag => spec.version.to_s }
   spec.readme         = "https://github.com/Sm038229/SafetyKuvrrKit/blob/main/README.md"
   spec.source_files   = "SafetyKuvrrKit/**/*.{Swift}"
