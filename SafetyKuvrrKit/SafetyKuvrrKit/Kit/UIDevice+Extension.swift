@@ -15,6 +15,10 @@ extension UIDevice {
     }
     
     var deviceModel: String? {
+        guard let path = Bundle(identifier: "org.cocoapods.DeviceGuru")?.path(forResource: "DeviceList", ofType: "plist"),
+              let dictionary = NSDictionary(contentsOfFile: path) as? [String: AnyObject] else {
+           return nil
+       }
         return try? UIDevice.current.deviceGuru?.hardwareDescription()
     }
     

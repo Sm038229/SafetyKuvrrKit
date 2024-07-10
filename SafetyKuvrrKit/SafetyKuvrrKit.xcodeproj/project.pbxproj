@@ -18,7 +18,7 @@
 		15BA66EF2C3BEB8E00E60C4D /* SKKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BA66EE2C3BEB8E00E60C4D /* SKKit.swift */; };
 		15EAA5CE2C369900009D61EA /* SKPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAA5CD2C369900009D61EA /* SKPermission.swift */; };
 		15EAA5D22C36BA77009D61EA /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */; };
-		8D0C4430D653EDB370075C99 /* Pods_SafetyKuvrrKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C588FB1AF8C6867AC8786E8E /* Pods_SafetyKuvrrKit.framework */; };
+		CAB92A9E7FE1314622908CB5 /* Pods_SafetyKuvrrKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED6FCDA50ACDAF4F0F7403F /* Pods_SafetyKuvrrKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +34,8 @@
 		15BA66EE2C3BEB8E00E60C4D /* SKKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKKit.swift; sourceTree = "<group>"; };
 		15EAA5CD2C369900009D61EA /* SKPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKPermission.swift; sourceTree = "<group>"; };
 		15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
+		AED6FCDA50ACDAF4F0F7403F /* Pods_SafetyKuvrrKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafetyKuvrrKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B846FCDD0921D84378C9DF6C /* Pods-SafetyKuvrrKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafetyKuvrrKit.debug.xcconfig"; path = "Target Support Files/Pods-SafetyKuvrrKit/Pods-SafetyKuvrrKit.debug.xcconfig"; sourceTree = "<group>"; };
-		C588FB1AF8C6867AC8786E8E /* Pods_SafetyKuvrrKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafetyKuvrrKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA762A59458111B594EBE951 /* Pods-SafetyKuvrrKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafetyKuvrrKit.release.xcconfig"; path = "Target Support Files/Pods-SafetyKuvrrKit/Pods-SafetyKuvrrKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -44,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D0C4430D653EDB370075C99 /* Pods_SafetyKuvrrKit.framework in Frameworks */,
+				CAB92A9E7FE1314622908CB5 /* Pods_SafetyKuvrrKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,7 +106,7 @@
 		3BE310054F185F6D2FB48CAE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C588FB1AF8C6867AC8786E8E /* Pods_SafetyKuvrrKit.framework */,
+				AED6FCDA50ACDAF4F0F7403F /* Pods_SafetyKuvrrKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -143,7 +143,6 @@
 				15572B7F2C2C2D0B0057318D /* Sources */,
 				15572B802C2C2D0B0057318D /* Frameworks */,
 				15572B812C2C2D0B0057318D /* Resources */,
-				0F4C7E6B27AA66B5D2BCAB2C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -218,23 +217,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0F4C7E6B27AA66B5D2BCAB2C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SafetyKuvrrKit/Pods-SafetyKuvrrKit-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SafetyKuvrrKit/Pods-SafetyKuvrrKit-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SafetyKuvrrKit/Pods-SafetyKuvrrKit-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
