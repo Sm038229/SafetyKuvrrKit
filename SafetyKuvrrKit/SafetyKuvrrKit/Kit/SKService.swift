@@ -19,17 +19,23 @@ struct SKService {
         ]
         AF.sessionConfiguration.timeoutIntervalForRequest = 20
         AF.sessionConfiguration.headers = headers
-        print("API : \(urlString)  ======================================================================")
-        print("Request: \(String(describing: parameters))")
+        print("\n======================================================================")
+        print("API Name : \"\(urlString)\"")
+        print("Method : \(method.rawValue)")
+        print("-------------------------------")
+        if let params = parameters {
+            print("Request: \(params)")
+            print("-------------------------------")
+        }
         AF.request(SKService.baseURL + urlString, method: method, parameters: parameters, headers: headers).responseDecodable(of: responseModel) { response in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                    print("Data: \(utf8Text)") // original server data as UTF8 string
+                    print("Response: \(utf8Text)") // original server data as UTF8 string
                 }
                 
                 switch response.result {
                 case .success(let value):
-                    if response.response?.statusCode ?? 0 >= 200, response.response?.statusCode ?? 0 < 300 {
+                    if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
                         success(value)
                     } else {
                         if let data = response.data {

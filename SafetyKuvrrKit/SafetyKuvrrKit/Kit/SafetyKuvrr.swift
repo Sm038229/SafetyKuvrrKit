@@ -12,17 +12,22 @@ public struct SafetyKuvrr: SKKit {
     private init() {}
     
     public static func initialize() {
-        SKPermission.requestLocation { status in
-            
-        }
-        //
         if SafetyKuvrr.isUserLoggedIn == true {
+            SKPermission.requestLocation { status in
+                
+            }
+            //
             SafetyKuvrr.updateUserDeviceDetailAPI(success: {
                 
             }, failure: { error in
-                guard let error = error else { return }
-                print("Failure: \(error)")
+                //guard let error = error else { return }
             })
+        } else {
+            SafetyKuvrr.verifyOTP(email: "sachin@kuvrr.com", otp: "159753") {
+                
+            } failure: { error in
+                
+            }
         }
     }
     
@@ -40,18 +45,15 @@ public struct SafetyKuvrr: SKKit {
         SKService.apiCall(with: SKConstants.API.sessionInit, responseModel: SKCSRFToken.self) { response in
             guard let response = response, let token = response.token else { return }
             SKUserDefaults.csrfToken = token
-            print("Session Success: \(response)")
             success()
         } failure: { error in
             guard let error = error else { return }
-            print("Failure: \(error)")
             failure(error)
         }
     }
     
     private static func updateUserDeviceDetailAPI(success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
         guard let userUUID = SKUserDefaults.userUUID else { return }
-        print("Authorization Success")
         SafetyKuvrr.sessionAPI(success: {
             let params = SKUserDevicedetailRequest(
                 appCurrentVersion: UIDevice.current.appVersionWithBuildNumber,
@@ -73,16 +75,13 @@ public struct SafetyKuvrr: SKKit {
             SKService.apiCall(with: SKConstants.API.userDevice, method: SKUserDefaults.deviceUUID == nil ? .post : .put, parameters: params.dictionary, responseModel: SKUserDeviceDetailResponse.self) { response in
                 guard let response = response, let uuid = response.uuid else { return }
                 SKUserDefaults.deviceUUID = uuid
-                print("Update User Device Detail Success: \(response)")
                 success()
             } failure: { error in
                 guard let error = error else { return }
-                print("Failure: \(error)")
                 failure(error)
             }
         }, failure: { error in
             guard let error = error else { return }
-            print("Failure: \(error)")
             failure(error)
         })
     }
@@ -92,22 +91,13 @@ public struct SafetyKuvrr: SKKit {
             let loginRequest = SKEmailLoginRequest(email: email)
             SKService.apiCall(with: SKConstants.API.login, method: .post, parameters: loginRequest.dictionary, responseModel: SKMessage.self) { response in
                 guard let response = response else { return }
-                print("Login Success: \(response)")
-                SafetyKuvrr.verifyOTP(email: email, success: {
-                    success(response.message)
-                }, failure: { error in
-                    guard let error = error else { return }
-                    print("Failure: \(error)")
-                    failure(error)
-                })
+                success(response.message)
             } failure: { error in
                 guard let error = error else { return }
-                print("Failure: \(error)")
                 failure(error)
             }
         }, failure: { error in
             guard let error = error else { return }
-            print("Failure: \(error)")
             failure(error)
         })
     }
@@ -117,37 +107,31 @@ public struct SafetyKuvrr: SKKit {
             let loginRequest = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile)
             SKService.apiCall(with: SKConstants.API.login, method: .post, parameters: loginRequest.dictionary, responseModel: SKMessage.self) { response in
                 guard let response = response else { return }
-                print("Login Success: \(response)")
                 success(response.message)
             } failure: { error in
                 guard let error = error else { return }
-                print("Failure: \(error)")
                 failure(error)
             }
         }, failure: { error in
             guard let error = error else { return }
-            print("Failure: \(error)")
             failure(error)
         })
     }
     
-    public static func verifyOTP(email: String, otp: String = "159753", success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
+    public static func verifyOTP(email: String, otp: String, success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
         SafetyKuvrr.sessionAPI(success: {
             let loginRequest = SKEmailOTPRequest(email: email, otp: otp)
             SKService.apiCall(with: SKConstants.API.otpVerify, method: .post, parameters: loginRequest.dictionary, responseModel: SKVerifyOTPResponse.self) { response in
                 guard let response = response else { return }
-                print("OTP Verify Success: \(response)")
                 SKUserDefaults.userUUID = response.userUUID
                 SafetyKuvrr.initialize()
                 success()
             } failure: { error in
                 guard let error = error else { return }
-                print("Failure: \(error)")
                 failure(error)
             }
         }, failure: { error in
             guard let error = error else { return }
-            print("Failure: \(error)")
             failure(error)
         })
     }
@@ -157,18 +141,15 @@ public struct SafetyKuvrr: SKKit {
             let loginRequest = SKPhoneOTPRequest(countryCode: country, mobileNumber: mobile, otp: otp)
             SKService.apiCall(with: SKConstants.API.otpVerify, method: .post, parameters: loginRequest.dictionary, responseModel: SKVerifyOTPResponse.self) { response in
                 guard let response = response else { return }
-                print("OTP Verify Success: \(response)")
                 SKUserDefaults.userUUID = response.userUUID
                 SafetyKuvrr.initialize()
                 success()
             } failure: { error in
                 guard let error = error else { return }
-                print("Failure: \(error)")
                 failure(error)
             }
         }, failure: { error in
             guard let error = error else { return }
-            print("Failure: \(error)")
             failure(error)
         })
     }
@@ -178,16 +159,13 @@ public struct SafetyKuvrr: SKKit {
             let loginRequest = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile)
             SKService.apiCall(with: SKConstants.API.otpResend, method: .post, parameters: loginRequest.dictionary, responseModel: SKMessage.self) { response in
                 guard let response = response else { return }
-                print("OTP Resend Success: \(response)")
                 success()
             } failure: { error in
                 guard let error = error else { return }
-                print("Failure: \(error)")
                 failure(error)
             }
         }, failure: { error in
             guard let error = error else { return }
-            print("Failure: \(error)")
             failure(error)
         })
     }
@@ -253,20 +231,18 @@ public struct SafetyKuvrr: SKKit {
                     horizontalAccuracy: myLocation.horizontalAccuracy,
                     verticalAccuracy: myLocation.verticalAccuracy
                 )
-                print("Current Location: \(request.dictionary)")
                 SafetyKuvrr.raiseEvent(forData: request.dictionary, success: {
                     success()
                 }, failure: { error in
                     guard let error = error else { return }
-                    print("Failure: \(error)")
                     failure(error)
                 })
             }
             else if (status == INTULocationStatus.timedOut) {
-                failure("")
+                failure("Location Timeout...")
             }
             else {
-                failure("")
+                failure("Location Failed...")
             }
         }
     }
@@ -275,16 +251,13 @@ public struct SafetyKuvrr: SKKit {
         SafetyKuvrr.sessionAPI(success: {
             SKService.apiCall(with: SKConstants.API.incident, method: .post, parameters: params, responseModel: SKMessage.self) { response in
                 guard let response = response else { return }
-                print("Success: \(response)")
                 success()
             } failure: { error in
                 guard let error = error else { return }
-                print("Failure: \(error)")
                 failure(error)
             }
         }, failure: { error in
             guard let error = error else { return }
-            print("Failure: \(error)")
             failure(error)
         })
     }

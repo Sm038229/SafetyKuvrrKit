@@ -17,7 +17,7 @@ struct SKPermission {
     //
     static func requestLocation(status : @escaping((Bool) -> Void)) {
         Provider.location(.alwaysAndWhenInUse).request { (result) in
-            print("isAuthorized: \(result)")
+            //print("isAuthorized: \(result)")
             status(result)
         }
     }
