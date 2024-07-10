@@ -154,12 +154,12 @@ public struct SafetyKuvrr: SKKit {
         })
     }
     
-    public static func resendOTP(forMoble mobile: String, country: String = "IN", success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
+    public static func resendOTP(forMoble mobile: String, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
         SafetyKuvrr.sessionAPI(success: {
             let loginRequest = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile)
             SKService.apiCall(with: SKConstants.API.otpResend, method: .post, parameters: loginRequest.dictionary, responseModel: SKMessage.self) { response in
                 guard let response = response else { return }
-                success()
+                success(response.message)
             } failure: { error in
                 guard let error = error else { return }
                 failure(error)
@@ -170,7 +170,7 @@ public struct SafetyKuvrr: SKKit {
         })
     }
     
-    public static func raiseEvent(isSoS: Bool = false, isWalkSafe: Bool = false, isTimer: Bool = false, isMedical: Bool = false, isCheckIn: Bool = false, isCheckOut: Bool = false, isEMS: Bool = false, emsNumber number: Int? = 0, success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
+    public static func raiseEvent(isSoS: Bool = false, isWalkSafe: Bool = false, isTimer: Bool = false, isMedical: Bool = false, isCheckIn: Bool = false, isCheckOut: Bool = false, isEMS: Bool = false, emsNumber number: Int? = 0, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
         var responderType = ""
         if let emsNumber = number, emsNumber > 0, isEMS == true {
             responderType = "\(emsNumber)"
@@ -188,8 +188,8 @@ public struct SafetyKuvrr: SKKit {
         if (isSoS == true || isWalkSafe == true || isTimer == true) && UIApplication.shared.applicationState != .background {
             mediaType = "Video"
         }
-        SafetyKuvrr.makeEvent(isEMS: isEMS, mediaType: mediaType, responderType: responderType) {
-            success()
+        SafetyKuvrr.makeEvent(isEMS: isEMS, mediaType: mediaType, responderType: responderType) { response in
+            success(response)
         } failure: { error in
             failure(error)
         }
@@ -203,7 +203,7 @@ public struct SafetyKuvrr: SKKit {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
-    private static func makeEvent(isEMS: Bool, mediaType: String, responderType : String, success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
+    private static func makeEvent(isEMS: Bool, mediaType: String, responderType : String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
         let locationManager = INTULocationManager.sharedInstance()
         locationManager.requestLocation(withDesiredAccuracy: .city,
                                         timeout: 10.0,
@@ -231,8 +231,8 @@ public struct SafetyKuvrr: SKKit {
                     horizontalAccuracy: myLocation.horizontalAccuracy,
                     verticalAccuracy: myLocation.verticalAccuracy
                 )
-                SafetyKuvrr.raiseEvent(forData: request.dictionary, success: {
-                    success()
+                SafetyKuvrr.raiseEvent(forData: request.dictionary, success: { response in
+                    success(response)
                 }, failure: { error in
                     guard let error = error else { return }
                     failure(error)
@@ -247,11 +247,11 @@ public struct SafetyKuvrr: SKKit {
         }
     }
     
-    private static func raiseEvent(forData params: [String: Any]?, success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
+    private static func raiseEvent(forData params: [String: Any]?, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
         SafetyKuvrr.sessionAPI(success: {
             SKService.apiCall(with: SKConstants.API.incident, method: .post, parameters: params, responseModel: SKMessage.self) { response in
                 guard let response = response else { return }
-                success()
+                success(response.message)
             } failure: { error in
                 guard let error = error else { return }
                 failure(error)
