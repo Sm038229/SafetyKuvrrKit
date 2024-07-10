@@ -36,10 +36,13 @@ struct SKService {
                 switch response.result {
                 case .success(let value):
                     if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
-                        success(value)
+                        if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
+                            failure(errorMessage)
+                        } else {
+                            success(value)
+                        }
                     } else {
-                        if let data = response.data {
-                            let errorMessage = SKService.getErrorResponse(forData: data)
+                        if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
                             failure(errorMessage)
                         } else {
                             failure("Something went wrong!")

@@ -92,9 +92,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - Alamofire
-  trunk:
     - AgoraRtcEngine_iOS
+    - Alamofire
     - DeviceGuru
     - INTULocationManager
     - PermissionKit
@@ -106,6 +105,6 @@ SPEC CHECKSUMS:
   INTULocationManager: b5a0422782f0b87af0b8db14e0826fb38dbecd19
   PermissionKit: 5bfb53abe59cf35743f2798cc05207b305331507
 
-PODFILE CHECKSUM: 4732643029f8bb033fedfebc3ddd65b05fb49f62
+PODFILE CHECKSUM: c0ed1282266036595ec686bb5db5907d4a9cf69b
 
 COCOAPODS: 1.15.2

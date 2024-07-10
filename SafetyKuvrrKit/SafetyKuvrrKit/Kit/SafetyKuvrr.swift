@@ -13,10 +13,6 @@ public struct SafetyKuvrr: SKKit {
     
     public static func initialize() {
         if SafetyKuvrr.isUserLoggedIn == true {
-            SKPermission.requestLocation { status in
-                
-            }
-            //
             SafetyKuvrr.updateUserDeviceDetailAPI(success: {
                 
             }, failure: { error in
@@ -171,43 +167,53 @@ public struct SafetyKuvrr: SKKit {
     }
     
     public static func raiseEvent(isSoS: Bool = false, isWalkSafe: Bool = false, isTimer: Bool = false, isMedical: Bool = false, isCheckIn: Bool = false, isCheckOut: Bool = false, isEMS: Bool = false, emsNumber number: Int? = 0, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
-        var responderType = ""
-        if let emsNumber = number, emsNumber > 0, isEMS == true {
-            responderType = "\(emsNumber)"
-            SafetyKuvrr.callNumber(phoneNumber: "\(emsNumber)")
+        if SafetyKuvrr.isUserLoggedIn == false {
+            failure("Please Login first!")
+            return
         }
-        else if isSoS == true { responderType = SKConstants.ResponderType._sos }
-        else if isWalkSafe == true { responderType = SKConstants.ResponderType._walk_safe }
-        else if isTimer == true { responderType = SKConstants.ResponderType._timer }
-        else if isMedical == true { responderType = SKConstants.ResponderType._medical }
-        else if isCheckIn == true { responderType = SKConstants.ResponderType._check_in }
-        else if isCheckOut == true { responderType = SKConstants.ResponderType._check_out }
-        else { failure("Undefined value") }
         //
-        var mediaType = ""
-        if (isSoS == true || isWalkSafe == true || isTimer == true) && UIApplication.shared.applicationState != .background {
-            mediaType = "Video"
-        }
-        SafetyKuvrr.makeEvent(isEMS: isEMS, mediaType: mediaType, responderType: responderType) { response in
-            success(response)
-        } failure: { error in
-            failure(error)
+        SKPermission.requestLocation { status in
+            if status == false {
+                failure("Please Allow Location Permission...")
+            } else {
+                var responderType = ""
+                if let emsNumber = number, emsNumber > 0, isEMS == true {
+                    responderType = "\(emsNumber)"
+                    SafetyKuvrr.callNumber(phoneNumber: "\(emsNumber)")
+                }
+                else if isSoS == true { responderType = SKConstants.ResponderType._sos }
+                else if isWalkSafe == true { responderType = SKConstants.ResponderType._walk_safe }
+                else if isTimer == true { responderType = SKConstants.ResponderType._timer }
+                else if isMedical == true { responderType = SKConstants.ResponderType._medical }
+                else if isCheckIn == true { responderType = SKConstants.ResponderType._check_in }
+                else if isCheckOut == true { responderType = SKConstants.ResponderType._check_out }
+                else { failure("Undefined value") }
+                //
+                var mediaType = ""
+                if (isSoS == true || isWalkSafe == true || isTimer == true) && UIApplication.shared.applicationState != .background {
+                    mediaType = "Video"
+                }
+                SafetyKuvrr.makeEvent(isEMS: isEMS, mediaType: mediaType, responderType: responderType) { response in
+                    success(response)
+                } failure: { error in
+                    failure(error)
+                }
+            }
         }
     }
     
     private static func callNumber(phoneNumber: String) {
         guard let url = URL(string: "telprompt://\(phoneNumber)"),
-            UIApplication.shared.canOpenURL(url) else {
+              UIApplication.shared.canOpenURL(url) else {
             return
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     private static func makeEvent(isEMS: Bool, mediaType: String, responderType : String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
-        let locationManager = INTULocationManager.sharedInstance()
-        locationManager.requestLocation(withDesiredAccuracy: .city,
-                                        timeout: 10.0,
-                                        delayUntilAuthorized: true) { (currentLocation, achievedAccuracy, status) in
+        INTULocationManager.sharedInstance().requestLocation(withDesiredAccuracy: .city,
+                                                             timeout: 10.0,
+                                                             delayUntilAuthorized: true) { (currentLocation, achievedAccuracy, status) in
             if (status == INTULocationStatus.success) {
                 let myLocation = SKLocation(
                     latitude: currentLocation?.coordinate.latitude ?? 0.0,

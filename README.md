@@ -1,4 +1,3 @@
-> [Readme](README.md)
 # Getting Started with iOS SafetyKuvrrKit
 
 ## Introduction
@@ -93,23 +92,23 @@ For login:
 ``` swift
 SafetyKuvrr.login(withEmail: "email@example.com") { response in
 
-}, failure: {
+}, failure: { error in
 
 })
 ```
 For 911:
 ``` swift
-SafetyKuvrr.raiseEvent(isEMS: true, emsNumber: 911, success: {
+SafetyKuvrr.raiseEvent(isEMS: true, emsNumber: 911, success: { response in
 
-}, failure: {
+}, failure: { error in
 
 })
 ```
 For SoS:
 ``` swift
-SafetyKuvrr.raiseEvent(isSoS: true, success: {
+SafetyKuvrr.raiseEvent(isSoS: true, success: { response in
 
-}, failure: {
+}, failure: { error in
 
 })
 ```
