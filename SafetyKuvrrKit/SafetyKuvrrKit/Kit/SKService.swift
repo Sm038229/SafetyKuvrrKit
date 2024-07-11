@@ -28,6 +28,10 @@ struct SKService {
             print("-------------------------------")
         }
         AF.request(SKService.baseURL + urlString, method: method, parameters: parameters, headers: headers).responseDecodable(of: responseModel) { response in
+            if let fields = response.response?.allHeaderFields as? [String : String]{
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.request?.url!)!)
+                HTTPCookieStorage.shared.setCookies(cookies, for: (response.request?.url!)!, mainDocumentURL: nil)
+            }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
                     print("Response: \(utf8Text)") // original server data as UTF8 string

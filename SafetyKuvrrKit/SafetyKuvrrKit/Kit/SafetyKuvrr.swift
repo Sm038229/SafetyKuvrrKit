@@ -50,36 +50,31 @@ public struct SafetyKuvrr: SKKit {
     
     private static func updateUserDeviceDetailAPI(success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
         guard let userUUID = SKUserDefaults.userUUID else { return }
-        SafetyKuvrr.sessionAPI(success: {
-            let params = SKUserDevicedetailRequest(
-                appCurrentVersion: UIDevice.current.appVersionWithBuildNumber,
-                appVersionMajor: UIDevice.current.appVersionMajor,
-                appVersionMinor: UIDevice.current.appVersionMinor,
-                appVersionPoint: UIDevice.current.appVersionPoint,
-                osVersionMajor: UIDevice.current.osVersionMajor,
-                osVersionMinor: UIDevice.current.osVersionMinor,
-                osVersionPoint: UIDevice.current.osVersionPoint,
-                deviceType: UIDevice.current.deviceType,
-                osType: UIDevice.current.osType,
-                deviceModel: UIDevice.current.deviceModel,
-                userUUID: userUUID,
-                pushEnabled: false,
-                nativeDeviceID: nil,
-                pushID: nil,
-                voipPushID: nil
-            )
-            SKService.apiCall(with: SKConstants.API.userDevice, method: SKUserDefaults.deviceUUID == nil ? .post : .put, parameters: params.dictionary, responseModel: SKUserDeviceDetailResponse.self) { response in
-                guard let response = response, let uuid = response.uuid else { return }
-                SKUserDefaults.deviceUUID = uuid
-                success()
-            } failure: { error in
-                guard let error = error else { return }
-                failure(error)
-            }
-        }, failure: { error in
+        let params = SKUserDevicedetailRequest(
+            appCurrentVersion: UIDevice.current.appVersionWithBuildNumber,
+            appVersionMajor: UIDevice.current.appVersionMajor,
+            appVersionMinor: UIDevice.current.appVersionMinor,
+            appVersionPoint: UIDevice.current.appVersionPoint,
+            osVersionMajor: UIDevice.current.osVersionMajor,
+            osVersionMinor: UIDevice.current.osVersionMinor,
+            osVersionPoint: UIDevice.current.osVersionPoint,
+            deviceType: UIDevice.current.deviceType,
+            osType: UIDevice.current.osType,
+            deviceModel: UIDevice.current.deviceModel,
+            userUUID: userUUID,
+            pushEnabled: false,
+            nativeDeviceID: nil,
+            pushID: nil,
+            voipPushID: nil
+        )
+        SKService.apiCall(with: SKConstants.API.userDevice, method: SKUserDefaults.deviceUUID == nil ? .post : .put, parameters: params.dictionary, responseModel: SKUserDeviceDetailResponse.self) { response in
+            guard let response = response, let uuid = response.uuid else { return }
+            SKUserDefaults.deviceUUID = uuid
+            success()
+        } failure: { error in
             guard let error = error else { return }
             failure(error)
-        })
+        }
     }
     
     public static func login(withEmail email: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
@@ -254,17 +249,12 @@ public struct SafetyKuvrr: SKKit {
     }
     
     private static func raiseEvent(forData params: [String: Any]?, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
-        SafetyKuvrr.sessionAPI(success: {
-            SKService.apiCall(with: SKConstants.API.incident, method: .post, parameters: params, responseModel: SKMessage.self) { response in
-                guard let response = response else { return }
-                success(response.message)
-            } failure: { error in
-                guard let error = error else { return }
-                failure(error)
-            }
-        }, failure: { error in
+        SKService.apiCall(with: SKConstants.API.incident, method: .post, parameters: params, responseModel: SKMessage.self) { response in
+            guard let response = response else { return }
+            success(response.message)
+        } failure: { error in
             guard let error = error else { return }
             failure(error)
-        })
+        }
     }
 }
