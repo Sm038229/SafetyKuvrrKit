@@ -11,7 +11,7 @@ import Alamofire
 struct SKService {
     private static let baseURL = "https://safety-red5.kuvrr.com/api/v1/"
     
-    static func apiCall<T: Decodable>(with urlString: String, method: HTTPMethod = .get, parameters: Parameters? = nil, responseModel: T.Type, success: @escaping((T?)-> Void), failure: @escaping((String?)-> Void)) {
+    static func apiCall<T: Decodable>(with urlString: String, method: HTTPMethod = .get, parameters: Parameters? = nil, responseModel: T.Type = SKMessage.self, success: @escaping((T?)-> Void), failure: @escaping((String?)-> Void)) {
         let headers: HTTPHeaders = [
             "X-CSRFToken": SKUserDefaults.csrfToken ?? "",
             "Accept": "application/json",
@@ -27,34 +27,50 @@ struct SKService {
             print("Request: \(params)")
             print("-------------------------------")
         }
-        AF.request(SKService.baseURL + urlString, method: method, parameters: parameters, headers: headers).responseDecodable(of: responseModel) { response in
-            if let fields = response.response?.allHeaderFields as? [String : String]{
-                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.request?.url!)!)
-                HTTPCookieStorage.shared.setCookies(cookies, for: (response.request?.url!)!, mainDocumentURL: nil)
+        //
+        let authRequest = AF.request(
+            SKService.baseURL + urlString,
+            method: method,
+            parameters: parameters,
+            headers: headers
+        )
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+        //
+        authRequest.responseDecodable(of: responseModel) { response in
+            if let fields = response.response?.allHeaderFields as? [String : String], let requestURL = response.request?.url {
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: requestURL)
+                HTTPCookieStorage.shared.setCookies(cookies, for: requestURL, mainDocumentURL: nil)
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                    print("Response: \(utf8Text)") // original server data as UTF8 string
+            //
+            let responseCode = "\(response.response?.statusCode.description ?? "")"
+            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                print("Response - (Code-\(responseCode)): \(utf8Text)")
+            } else {
+                print("Response - (Code-\(responseCode)): Empty")
+                if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
+                    success(SKMessage(message: "Empty Response") as? T)
+                    return
                 }
-                
-                switch response.result {
-                case .success(let value):
-                    if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
-                        if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
-                            failure(errorMessage)
-                        } else {
-                            success(value)
-                        }
+            }
+            //
+            switch response.result {
+            case .success(let value):
+                if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
+                    if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
+                        failure(errorMessage)
                     } else {
-                        if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
-                            failure(errorMessage)
-                        } else {
-                            failure("Something went wrong!")
-                        }
+                        success(value)
                     }
-                case .failure(let error):
-                    failure(error.localizedDescription)
+                } else {
+                    if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
+                        failure(errorMessage)
+                    } else {
+                        failure("Something went wrong!")
+                    }
                 }
+            case .failure(let error):
+                failure(error.localizedDescription)
             }
         }
     }

@@ -15,6 +15,8 @@ struct SKConstants {
         static let otpVerify = "otp/verify/"
         static let otpResend = "otp/resend/"
         static let incident = "incident/"
+        static let incidentMediaStart = "media_incident/start/"
+        static let incidentMediaStop = "incident_media/stop"
     }
     //
     struct ResponderType {

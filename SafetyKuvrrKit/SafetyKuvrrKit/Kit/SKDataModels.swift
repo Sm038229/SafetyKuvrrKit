@@ -139,7 +139,63 @@ struct SKUserDeviceDetailResponse: Codable {
     }
 }
 
-struct SKEMSRequest: Codable {
+struct SKEventResponseMapDetails: Codable {
+    let accessToken: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case accessToken = "api_key"
+    }
+}
+
+struct SKEventResponse: Codable {
+    let dateCreated : String?
+    let browsableURL : String?
+    let token : String?
+    let status : String?
+    let observingProOrg : String?
+    let observingGeofence : String?
+    let uuid : String?
+    let statusMessage : String?
+    //let observersWatching : String?
+    let incidentURLString : String?
+    let type : String?
+    let eventType : String?
+    let message : String?
+    let organization : String?
+    let isRead : Bool?
+    let messageID : Int?
+    let streamChannelName : String?
+    let streamToken : String?
+    let isTwoWayLiveStream : Bool?
+    let isPortraitOnly : Bool?
+    let mapDetails : SKEventResponseMapDetails?
+    
+    enum CodingKeys: String, CodingKey {
+        case dateCreated = "created"
+        case browsableURL = "browsable_url"
+        case token = "token"
+        case status = "status"
+        case observingProOrg = "observing_pro_org"
+        case observingGeofence = "observing_geofence"
+        case uuid = "uuid"
+        case statusMessage = "status_message"
+        //case observersWatching = "observers_watching"
+        case incidentURLString = "url"
+        case type = "type"
+        case eventType = "event_type"
+        case message = "message"
+        case organization = "organization"
+        case isRead = "is_read"
+        case messageID = "id"
+        case streamChannelName = "channel_name"
+        case streamToken = "token_stream"
+        case isTwoWayLiveStream = "two_way_live_stream"
+        case isPortraitOnly = "portrait_only"
+        case mapDetails = "map"
+    }
+}
+
+struct SKEventRequest: Codable {
     let isEMS: Bool
     let mediaType: String
     let pbTrigger: Bool
@@ -204,5 +260,15 @@ struct SKUserDevicedetailRequest: Codable {
         case nativeDeviceID = "native_device_id"
         case pushID = "push_id"
         case voipPushID = "voip_push_id"
+    }
+}
+
+struct SKStartEventResponse: Codable {
+    let message: String?
+    let allowedMinutes: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case message = "message"
+        case allowedMinutes = "max_live_stream_allow"
     }
 }

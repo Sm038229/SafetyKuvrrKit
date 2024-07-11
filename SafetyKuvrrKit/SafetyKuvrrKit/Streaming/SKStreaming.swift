@@ -9,19 +9,27 @@ import Foundation
 import UIKit
 
 public class SKStreaming: UIViewController {
+    static var eventResponse: SKEventResponse?
     @IBOutlet weak var localStremingView: UIView!
     @IBOutlet weak var remoteStreamingView: UIView!
     //
-    private var appID = "e4a7751e763944a38680592591398f44"
-    private var token = ""
-    private var channelName = "Kuvrr_Demo_8May"
-    private var isTwoWayLiveStream = false
-    private var isRemoteUserJoined = false
+    private static var appID = "e4a7751e763944a38680592591398f44"
+    private static var token = ""
+    private static var channelName = "Kuvrr_Demo_8May"
+    private static var isTwoWayLiveStream = false
+    private static var isRemoteUserJoined = false
     
     public static func viewController() -> SKStreaming {
-        let storyboard = UIStoryboard(name: "Streaming", bundle: .main)
-        let vc = storyboard.instantiateViewController(withIdentifier: "SKStreaming") as! SKStreaming
+        let vc = UIApplication.viewController(forStoryboardID: "Streaming", viewControllerID: "SKStreaming") as! SKStreaming
         return vc
+    }
+    
+    public static func presentViewController() {
+        if let topController = UIApplication.topViewController() {
+            let vc = SKStreaming.viewController()
+            vc.modalPresentationStyle = .fullScreen
+            topController.present(vc, animated: true)
+        }
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -35,25 +43,31 @@ public class SKStreaming: UIViewController {
     }
     
     @IBAction func endAction(_ sender: UIButton) {
-        leave()
+        SafetyKuvrr.eventMediaStop(forEventUUID: SKStreaming.eventResponse?.uuid ?? "", success: { [weak self] response in
+            SKStreaming.leave()
+            self?.dismiss(animated: true)
+        }, failure: { error in
+            
+        })
     }
     
-    @objc func startCamera() {
+    @objc public func startCamera() {
+        let tokenn = SKStreaming.eventResponse?.streamToken ?? SKStreaming.token
+        let channel = SKStreaming.eventResponse?.streamChannelName ?? SKStreaming.channelName
         SKCallSDKManager.shared.delegate = self
-        SKCallSDKManager.shared.initializeAgoraEngine(withAppID: appID, token: token, channel: channelName, joinNeeded: false, video: true, audio: true, cameraDirection: .front, watermark: true)
+        SKCallSDKManager.shared.initializeAgoraEngine(withAppID: SKStreaming.appID, token: tokenn, channel: channel, joinNeeded: true, video: true, audio: true, cameraDirection: .front, watermark: true)
         SKCallSDKManager.shared.setupVideoView(via: 0, intoView: localStremingView)
-        join()
     }
     
-    func join() {
-        //        if AppDelegate.instance().currentIncident?.isTwoWayLiveStream == false {
-        //            SKCallSDKManager.shared.agoraEngine.setDualStreamMode(.disableSimulcastStream)
-        //        }
+    static func join() {
+        if SKStreaming.eventResponse?.isTwoWayLiveStream == false {
+            SKCallSDKManager.shared.agoraEngine.setDualStreamMode(.disableSimulcastStream)
+        }
         SKCallSDKManager.shared.joinChannel(withVideo: true, forCalling: false)
     }
     
-    func leave() {
-        SKCallSDKManager.shared.leaveChannel()
+    static func leave() {
+        SKCallSDKManager.shared.resetAllData()
     }
     
     func switchCamera() {

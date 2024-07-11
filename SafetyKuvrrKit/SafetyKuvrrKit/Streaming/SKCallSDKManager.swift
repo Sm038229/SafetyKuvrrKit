@@ -91,8 +91,6 @@ class SKCallSDKManager: NSObject {
     func resetAllData() {
         UIApplication.shared.isIdleTimerDisabled = false
         leaveChannel()
-        UIDevice.current.setValue( UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
-        UIViewController.attemptRotationToDeviceOrientation()
         //
         DispatchQueue.global(qos: .userInitiated).async {AgoraRtcEngineKit.destroy()}
     }
@@ -227,7 +225,6 @@ class SKCallSDKManager: NSObject {
         if (result == 0) {
             joined = false
             delegate?.removeAllUser?()
-            resetAllData()
         }
     }
     
