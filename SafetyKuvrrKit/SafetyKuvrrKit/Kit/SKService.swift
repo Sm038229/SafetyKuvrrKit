@@ -57,18 +57,22 @@ struct SKService {
             case .success(let value):
                 if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
                     if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
+                        print(errorMessage)
                         failure(errorMessage)
                     } else {
                         success(value)
                     }
                 } else {
                     if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
+                        print(errorMessage)
                         failure(errorMessage)
                     } else {
+                        print("Something went wrong!")
                         failure("Something went wrong!")
                     }
                 }
             case .failure(let error):
+                print(error.localizedDescription)
                 failure(error.localizedDescription)
             }
         }

@@ -141,20 +141,20 @@ struct SKUserDeviceDetailResponse: Codable {
     let nativeDeviceID: String?
     let deviceType: String?
     let osType: String?
-    let osVersionMajor: String?
-    let osVersionMinor: String?
-    let osVersionPoint: String?
-    let appVersionMajor: String?
-    let appVersionMinor: String?
-    let appVersionPoint: String?
+    let osVersionMajor: Int?
+    let osVersionMinor: Int?
+    let osVersionPoint: Int?
+    let appVersionMajor: Int?
+    let appVersionMinor: Int?
+    let appVersionPoint: Int?
     let phoneModel: String?
-    let pushEnabled: String?
     let pushID: String?
     let voipPushID: String?
     let awsPushARN: String?
     let skipVersion: String?
     let currentVersion: String?
     let isActive: Bool?
+    let pushEnabled: Bool?
     
     enum CodingKeys: String, CodingKey {
         case user = "user"
@@ -173,13 +173,13 @@ struct SKUserDeviceDetailResponse: Codable {
         case appVersionMinor = "app_version_minor"
         case appVersionPoint = "app_version_point"
         case phoneModel = "phone_model"
-        case pushEnabled = "push_enabled"
         case pushID = "push_id"
         case voipPushID = "voip_push_id"
         case awsPushARN = "aws_push_arn"
         case skipVersion = "skip_version"
         case currentVersion = "current_version"
         case isActive = "is_active"
+        case pushEnabled = "push_enabled"
     }
 }
 
