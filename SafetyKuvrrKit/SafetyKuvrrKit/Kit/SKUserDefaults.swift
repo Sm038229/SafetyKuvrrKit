@@ -40,7 +40,7 @@ extension SKUserDefaults {
     }
     
     static func removeCSRFToken() {
-        return SKUserDefaults.removeData(forKey: SKUserDefaults.Key.csrfToken)
+        SKUserDefaults.removeData(forKey: SKUserDefaults.Key.csrfToken)
     }
     //
     static var deviceUUID: String? {
@@ -53,7 +53,7 @@ extension SKUserDefaults {
     }
     
     static func removeDeviceUUID() {
-        return SKUserDefaults.removeData(forKey: SKUserDefaults.Key.deviceUUID)
+        SKUserDefaults.removeData(forKey: SKUserDefaults.Key.deviceUUID)
     }
     //
     static var userUUID: String? {
@@ -66,7 +66,7 @@ extension SKUserDefaults {
     }
     
     static func removeUserUUID() {
-        return SKUserDefaults.removeData(forKey: SKUserDefaults.Key.userUUID)
+        SKUserDefaults.removeData(forKey: SKUserDefaults.Key.userUUID)
     }
     //
 }

@@ -132,10 +132,54 @@ struct SKEmailOTPRequest: Codable {
 }
 
 struct SKUserDeviceDetailResponse: Codable {
+    let user: String?
+    let userUUID: String?
+    let url: String?
     let uuid: String?
+    let created: String?
+    let phoneNumber: String?
+    let nativeDeviceID: String?
+    let deviceType: String?
+    let osType: String?
+    let osVersionMajor: String?
+    let osVersionMinor: String?
+    let osVersionPoint: String?
+    let appVersionMajor: String?
+    let appVersionMinor: String?
+    let appVersionPoint: String?
+    let phoneModel: String?
+    let pushEnabled: String?
+    let pushID: String?
+    let voipPushID: String?
+    let awsPushARN: String?
+    let currentVersion: String?
+    let isActive: Bool?
+    let skipVersion: Bool?
     
     enum CodingKeys: String, CodingKey {
+        case user = "user"
+        case userUUID = "user_uuid"
+        case url = "url"
         case uuid = "uuid"
+        case created = "created"
+        case phoneNumber = "phone_number"
+        case nativeDeviceID = "native_device_id"
+        case deviceType = "device_type"
+        case osType = "os_type"
+        case osVersionMajor = "os_version_major"
+        case osVersionMinor = "os_version_minor"
+        case osVersionPoint = "os_version_point"
+        case appVersionMajor = "app_version_major"
+        case appVersionMinor = "app_version_minor"
+        case appVersionPoint = "app_version_point"
+        case phoneModel = "phone_model"
+        case pushEnabled = "push_enabled"
+        case pushID = "push_id"
+        case voipPushID = "voip_push_id"
+        case awsPushARN = "aws_push_arn"
+        case currentVersion = "current_version"
+        case isActive = "is_active"
+        case skipVersion = "skip_version"
     }
 }
 

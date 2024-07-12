@@ -18,6 +18,7 @@ Pod::Spec.new do |spec|
   spec.dependency 'DeviceGuru'
   spec.dependency 'PermissionKit'
   spec.dependency 'AgoraRtcEngine_iOS'
+  spec.dependency 'KeychainSwift'
   
   spec.framework = "UIKit", "Foundation", "CoreLocation" #, "CoreBluetooth", "ExternalAccessory"
 

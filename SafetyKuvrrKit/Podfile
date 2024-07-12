@@ -10,6 +10,7 @@ def common_pods
   pod 'DeviceGuru'
   pod 'PermissionKit'
   pod 'AgoraRtcEngine_iOS'
+  pod 'KeychainSwift'
 end
 
 target 'SafetyKuvrrKit' do

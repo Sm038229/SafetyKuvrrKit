@@ -63,7 +63,7 @@ public struct SafetyKuvrr: SKKit {
             deviceModel: UIDevice.current.deviceModel,
             userUUID: userUUID,
             pushEnabled: false,
-            nativeDeviceID: nil,
+            nativeDeviceID: UIDevice.current.nativeDeviceID,
             pushID: nil,
             voipPushID: nil
         )

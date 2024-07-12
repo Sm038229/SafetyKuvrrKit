@@ -41,6 +41,7 @@ PODS:
     - DeviceGuru/Resources
   - DeviceGuru/Resources (10.0.7)
   - INTULocationManager (4.4.0)
+  - KeychainSwift (24.0.0)
   - PermissionKit (1.6.1):
     - PermissionKit/Bluetooth (= 1.6.1)
     - PermissionKit/Camera (= 1.6.1)
@@ -88,6 +89,7 @@ DEPENDENCIES:
   - Alamofire
   - DeviceGuru
   - INTULocationManager
+  - KeychainSwift
   - PermissionKit
 
 SPEC REPOS:
@@ -96,6 +98,7 @@ SPEC REPOS:
     - Alamofire
     - DeviceGuru
     - INTULocationManager
+    - KeychainSwift
     - PermissionKit
 
 SPEC CHECKSUMS:
@@ -103,8 +106,9 @@ SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   DeviceGuru: 593a89a21c71bc1d5a039a8d6807c325c84cc091
   INTULocationManager: b5a0422782f0b87af0b8db14e0826fb38dbecd19
+  KeychainSwift: 007c4647486e4563adca839cf02cef00deb3b670
   PermissionKit: 5bfb53abe59cf35743f2798cc05207b305331507
 
-PODFILE CHECKSUM: c0ed1282266036595ec686bb5db5907d4a9cf69b
+PODFILE CHECKSUM: 39dfee8b81d8c81214aa9f203987bf0373db53f9
 
 COCOAPODS: 1.15.2

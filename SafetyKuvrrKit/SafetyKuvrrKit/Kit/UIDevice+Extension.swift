@@ -8,8 +8,11 @@
 import Foundation
 import UIKit
 import DeviceGuru
+import KeychainSwift
 
 extension UIDevice {
+    private static let kNativeDeviceID = "kNativeDeviceID"
+    
     private var deviceGuru: DeviceGuru? {
         return DeviceGuruImplementation()
     }
@@ -97,5 +100,16 @@ extension UIDevice {
     
     var appVersionPoint: String  {
         return getAppVersion(forIndex: 2)
+    }
+    
+    var nativeDeviceID: String {
+        get {
+            guard let idStr = KeychainSwift().get(UIDevice.kNativeDeviceID) else {
+                let str = UUID().uuidString
+                KeychainSwift().set(str, forKey: UIDevice.kNativeDeviceID)
+                return str
+            }
+            return idStr
+        }
     }
 }
