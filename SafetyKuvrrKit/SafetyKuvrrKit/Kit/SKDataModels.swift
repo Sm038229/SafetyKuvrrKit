@@ -152,9 +152,9 @@ struct SKUserDeviceDetailResponse: Codable {
     let pushID: String?
     let voipPushID: String?
     let awsPushARN: String?
+    let skipVersion: String?
     let currentVersion: String?
     let isActive: Bool?
-    let skipVersion: Bool?
     
     enum CodingKeys: String, CodingKey {
         case user = "user"
@@ -177,9 +177,9 @@ struct SKUserDeviceDetailResponse: Codable {
         case pushID = "push_id"
         case voipPushID = "voip_push_id"
         case awsPushARN = "aws_push_arn"
+        case skipVersion = "skip_version"
         case currentVersion = "current_version"
         case isActive = "is_active"
-        case skipVersion = "skip_version"
     }
 }
 

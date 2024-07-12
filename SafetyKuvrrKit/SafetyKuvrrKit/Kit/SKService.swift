@@ -10,6 +10,8 @@ import Alamofire
 
 struct SKService {
     private static let baseURL = "https://safety-red5.kuvrr.com/api/v1/"
+    private static let sessionCookie = "csrftoken"
+    private static let sessionIDCookie = "sessionid"
     
     static func apiCall<T: Decodable>(with urlString: String, method: HTTPMethod = .get, parameters: Parameters? = nil, responseModel: T.Type = SKMessage.self, success: @escaping((T?)-> Void), failure: @escaping((String?)-> Void)) {
         let headers: HTTPHeaders = [
@@ -38,10 +40,7 @@ struct SKService {
             .validate(contentType: ["application/json"])
         //
         authRequest.responseDecodable(of: responseModel) { response in
-            if let fields = response.response?.allHeaderFields as? [String : String], let requestURL = response.request?.url {
-                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: requestURL)
-                HTTPCookieStorage.shared.setCookies(cookies, for: requestURL, mainDocumentURL: nil)
-            }
+            SKService.setupCookies()
             //
             let responseCode = "\(response.response?.statusCode.description ?? "")"
             if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
@@ -81,6 +80,19 @@ struct SKService {
             return(errorModel.errorMessage?.first)
         } catch {
             return(error.localizedDescription)
+        }
+    }
+    
+    static func setupCookies() {
+        if let url = URL(string: SKService.baseURL), let cookies = HTTPCookieStorage.shared.cookies(for: url) {
+            for cookie in cookies {
+                //print("\(cookie.name): \(cookie.value)")
+                if cookie.name == sessionCookie {
+                    let csrfToken = cookie.value
+                    SKUserDefaults.csrfToken = csrfToken
+                    AF.sessionConfiguration.httpCookieStorage?.setCookies(cookies, for: url, mainDocumentURL: nil)
+                }
+            }
         }
     }
 }

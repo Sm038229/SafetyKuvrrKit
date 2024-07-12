@@ -77,9 +77,14 @@ public struct SafetyKuvrr: SKKit {
         }
     }
     
-    public static func login(withEmail email: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
-        let loginRequest = SKEmailLoginRequest(email: email)
-        SKService.apiCall(with: SKConstants.API.login, method: .post, parameters: loginRequest.dictionary) { response in
+    public static func login(withEmail email: String? = nil, withMoble mobile: String? = nil, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+        var request: [String : Any] = [:]
+        if let email = email {
+            request = SKEmailLoginRequest(email: email).dictionary
+        } else if let mobile = mobile {
+            request = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile).dictionary
+        }
+        SKService.apiCall(with: SKConstants.API.login, method: .post, parameters: request) { response in
             guard let response = response else { return }
             success(response.message)
         } failure: { error in
@@ -88,23 +93,19 @@ public struct SafetyKuvrr: SKKit {
         }
     }
     
-    public static func login(withMoble mobile: String, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
-        let loginRequest = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile)
-        SKService.apiCall(with: SKConstants.API.login, method: .post, parameters: loginRequest.dictionary) { response in
-            guard let response = response else { return }
-            success(response.message)
-        } failure: { error in
-            guard let error = error else { return }
-            failure(error)
-        }
-    }
-    
-    public static func verifyOTP(email: String, otp: String, success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
+    public static func verifyOTP(email: String? = nil, mobile: String? = nil, country: String = "IN", otp: String, success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
         SafetyKuvrr.sessionAPI(success: {
-            let loginRequest = SKEmailOTPRequest(email: email, otp: otp)
-            SKService.apiCall(with: SKConstants.API.otpVerify, method: .post, parameters: loginRequest.dictionary, responseModel: SKVerifyOTPResponse.self) { response in
+            var request: [String : Any] = [:]
+            if let email = email {
+                request = SKEmailOTPRequest(email: email, otp: otp).dictionary
+            } else if let mobile = mobile {
+                request = SKPhoneOTPRequest(countryCode: country, mobileNumber: mobile, otp: otp).dictionary
+            }
+            SKService.apiCall(with: SKConstants.API.otpVerify, method: .post, parameters: request, responseModel: SKVerifyOTPResponse.self) { response in
                 guard let response = response else { return }
                 SKUserDefaults.userUUID = response.userUUID
+                SKService.setupCookies()
+                //
                 SafetyKuvrr.initialize()
                 success()
             } failure: { error in
@@ -117,27 +118,14 @@ public struct SafetyKuvrr: SKKit {
         })
     }
     
-    public static func verifyOTP(mobile: String, country: String = "IN", otp: String, success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
-        SafetyKuvrr.sessionAPI(success: {
-            let loginRequest = SKPhoneOTPRequest(countryCode: country, mobileNumber: mobile, otp: otp)
-            SKService.apiCall(with: SKConstants.API.otpVerify, method: .post, parameters: loginRequest.dictionary, responseModel: SKVerifyOTPResponse.self) { response in
-                guard let response = response else { return }
-                SKUserDefaults.userUUID = response.userUUID
-                SafetyKuvrr.initialize()
-                success()
-            } failure: { error in
-                guard let error = error else { return }
-                failure(error)
-            }
-        }, failure: { error in
-            guard let error = error else { return }
-            failure(error)
-        })
-    }
-    
-    public static func resendOTP(forMoble mobile: String, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
-        let loginRequest = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile)
-        SKService.apiCall(with: SKConstants.API.otpResend, method: .post, parameters: loginRequest.dictionary) { response in
+    public static func resendOTP(forEmail email: String? = nil, forMoble mobile: String? = nil, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+        var request: [String : Any] = [:]
+        if let email = email {
+            request = SKEmailLoginRequest(email: email).dictionary
+        } else if let mobile = mobile {
+            request = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile).dictionary
+        }
+        SKService.apiCall(with: SKConstants.API.otpResend, method: .post, parameters: request) { response in
             guard let response = response else { return }
             success(response.message)
         } failure: { error in
