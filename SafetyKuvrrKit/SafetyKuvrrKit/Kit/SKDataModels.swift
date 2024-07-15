@@ -39,6 +39,8 @@ struct SKLocation: Codable {
     let altitude: Double
     let verticalAccuracy: Double
     let horizontalAccuracy: Double
+    let course: Double
+    let directionDegrees: Double?
     
     enum CodingKeys: String, CodingKey {
         case latitude
@@ -46,6 +48,8 @@ struct SKLocation: Codable {
         case altitude
         case verticalAccuracy
         case horizontalAccuracy
+        case course
+        case directionDegrees
     }
 }
 
@@ -201,7 +205,7 @@ struct SKEventResponse: Codable {
     let uuid : String?
     let statusMessage : String?
     //let observersWatching : String?
-    let incidentURLString : String?
+    let eventURLString : String?
     let type : String?
     let eventType : String?
     let message : String?
@@ -224,7 +228,7 @@ struct SKEventResponse: Codable {
         case uuid = "uuid"
         case statusMessage = "status_message"
         //case observersWatching = "observers_watching"
-        case incidentURLString = "url"
+        case eventURLString = "url"
         case type = "type"
         case eventType = "event_type"
         case message = "message"
@@ -242,32 +246,34 @@ struct SKEventResponse: Codable {
 struct SKEventRequest: Codable {
     let isEMS: Bool
     let mediaType: String
-    let pbTrigger: Bool
     let responderType: String
-    let appLocationOnly: Bool?
     let deviceUUID: String?
+    let pbTrigger: Bool?
+    let appLocationOnly: Bool?
     let directionDegrees: Double?
-    let incidentUUID: String?
+    let eventUUID: String?
     let latitude: Double?
     let longitude: Double?
     let altitude: Double?
     let horizontalAccuracy: Double?
     let verticalAccuracy: Double?
+    let course: Double?
     
     enum CodingKeys: String, CodingKey {
         case isEMS = "ems"
         case mediaType = "media_type"
-        case pbTrigger = "pb_trigger"
         case responderType = "responder_type"
-        case appLocationOnly = "app_location_only"
         case deviceUUID = "device_uuid"
+        case pbTrigger = "pb_trigger"
+        case appLocationOnly = "app_location_only"
         case directionDegrees = "direction_degrees"
-        case incidentUUID = "incident_uuid"
+        case eventUUID = "incident_uuid"
         case latitude = "lat"
         case longitude = "lng"
         case altitude = "altitude"
         case horizontalAccuracy = "horizontal_accuracy"
         case verticalAccuracy = "vertical_accuracy"
+        case course = "course"
     }
 }
 
@@ -314,5 +320,15 @@ struct SKStartEventResponse: Codable {
     enum CodingKeys: String, CodingKey {
         case message = "message"
         case allowedMinutes = "max_live_stream_allow"
+    }
+}
+
+struct SKStartEventRequest: Codable {
+    let mediaType: String?
+    let eventUUID: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case mediaType = "media_type"
+        case eventUUID = "incident_id"
     }
 }

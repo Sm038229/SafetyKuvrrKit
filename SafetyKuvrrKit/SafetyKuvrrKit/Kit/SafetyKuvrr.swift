@@ -188,22 +188,25 @@ public struct SafetyKuvrr: SKKit {
                     longitude: currentLocation?.coordinate.longitude ?? 0.0,
                     altitude: currentLocation?.altitude ?? 0.0,
                     verticalAccuracy: currentLocation?.verticalAccuracy ?? 0.0,
-                    horizontalAccuracy: currentLocation?.horizontalAccuracy ?? 0.0
+                    horizontalAccuracy: currentLocation?.horizontalAccuracy ?? 0.0,
+                    course: currentLocation?.course ?? 0.0,
+                    directionDegrees: nil
                 )
                 let request = SKEventRequest(
                     isEMS: isEMS,
                     mediaType: mediaType,
-                    pbTrigger: false,
                     responderType: responderType,
-                    appLocationOnly: mediaType.isEmpty ? true : false,
                     deviceUUID: SKUserDefaults.deviceUUID ?? "",
+                    pbTrigger: nil,
+                    appLocationOnly: nil,
                     directionDegrees: nil,
-                    incidentUUID: nil,
+                    eventUUID: nil,
                     latitude: myLocation.latitude,
                     longitude: myLocation.longitude,
                     altitude: myLocation.altitude,
                     horizontalAccuracy: myLocation.horizontalAccuracy,
-                    verticalAccuracy: myLocation.verticalAccuracy
+                    verticalAccuracy: myLocation.verticalAccuracy,
+                    course: myLocation.course
                 )
                 SafetyKuvrr.raiseEvent(forData: request, success: { response in
                     success(response)
@@ -225,7 +228,8 @@ public struct SafetyKuvrr: SKKit {
         SKService.apiCall(with: SKConstants.API.incident, method: .post, parameters: params.dictionary, responseModel: SKEventResponse.self) { response in
             guard let response = response else { return }
             SKStreaming.eventResponse = response
-            SafetyKuvrr.startMediaEvent(forMediaType: params.mediaType, uuid: response.uuid)
+            let request = SKStartEventRequest(mediaType: params.mediaType, eventUUID: response.uuid)
+            SafetyKuvrr.startMediaEvent(forRequest: request)
             success(response.message)
         } failure: { error in
             guard let error = error else { return }
@@ -233,9 +237,9 @@ public struct SafetyKuvrr: SKKit {
         }
     }
     
-    private static func startMediaEvent(forMediaType mediaType: String, uuid: String?) {
-        if mediaType == "Video", let uuid = uuid {
-            SafetyKuvrr.eventMediaStart(forData: ["incident_id" : uuid, "media_type" : mediaType]) { response in
+    private static func startMediaEvent(forRequest request: SKStartEventRequest) {
+        if request.mediaType == "Video", let uuid = request.eventUUID {
+            SafetyKuvrr.eventMediaStart(forData: request.dictionary) { response in
                 SKStreaming.presentViewController()
             } failure: { error in
                 
