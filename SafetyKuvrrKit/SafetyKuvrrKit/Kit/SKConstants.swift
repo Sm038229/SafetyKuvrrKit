@@ -17,6 +17,7 @@ struct SKConstants {
         static let incident = "incident/"
         static let incidentMediaStart = "media_incident/start/"
         static let incidentMediaStop = "incident_media/stop"
+        static let erp = "erp/"
     }
     //
     struct ResponderType {

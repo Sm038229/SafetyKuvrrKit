@@ -13,7 +13,8 @@ public class SKStreaming: UIViewController {
     @IBOutlet weak var localStremingView: UIView!
     @IBOutlet weak var remoteStreamingView: UIView!
     //
-    private static var appID = "e4a7751e763944a38680592591398f44"
+    //private static var appID = "e4a7751e763944a38680592591398f44" // Test Server
+    private static var appID = "e9c9b52fcad241bcb1655f58fc2c16d6" // Red5 Server
     private static var token = ""
     private static var channelName = "Kuvrr_Demo_8May"
     private static var isTwoWayLiveStream = false

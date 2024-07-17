@@ -16,10 +16,10 @@ public struct SafetyKuvrr: SKKit {
             SafetyKuvrr.updateUserDeviceDetailAPI(success: {
                 
             }, failure: { error in
-                //guard let error = error else { return }
+                //guard let error = error else { failure(nil); return; }
             })
         } else {
-            SafetyKuvrr.verifyOTP(email: "sachin@kuvrr.com", otp: "159753") {
+            SafetyKuvrr.verifyOTP(email: "sachin@kuvrr.com", otp: "159753") { response in 
                 
             } failure: { error in
                 
@@ -43,7 +43,7 @@ public struct SafetyKuvrr: SKKit {
             SKUserDefaults.csrfToken = token
             success()
         } failure: { error in
-            guard let error = error else { return }
+            guard let error = error else { failure(nil); return; }
             failure(error)
         }
     }
@@ -72,7 +72,7 @@ public struct SafetyKuvrr: SKKit {
             SKUserDefaults.deviceUUID = uuid
             success()
         } failure: { error in
-            guard let error = error else { return }
+            guard let error = error else { failure(nil); return; }
             failure(error)
         }
     }
@@ -85,15 +85,15 @@ public struct SafetyKuvrr: SKKit {
             request = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile).dictionary
         }
         SKService.apiCall(with: SKConstants.API.login, method: .post, parameters: request) { response in
-            guard let response = response else { return }
+            guard let response = response else { success(nil); return; }
             success(response.message)
         } failure: { error in
-            guard let error = error else { return }
+            guard let error = error else { failure(nil); return; }
             failure(error)
         }
     }
     
-    public static func verifyOTP(email: String? = nil, mobile: String? = nil, country: String = "IN", otp: String, success: @escaping(() -> Void), failure: @escaping((String?)-> Void)) {
+    public static func verifyOTP(email: String? = nil, mobile: String? = nil, country: String = "IN", otp: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
         SafetyKuvrr.sessionAPI(success: {
             var request: [String : Any] = [:]
             if let email = email {
@@ -102,18 +102,18 @@ public struct SafetyKuvrr: SKKit {
                 request = SKPhoneOTPRequest(countryCode: country, mobileNumber: mobile, otp: otp).dictionary
             }
             SKService.apiCall(with: SKConstants.API.otpVerify, method: .post, parameters: request, responseModel: SKVerifyOTPResponse.self) { response in
-                guard let response = response else { return }
+                guard let response = response else { success(nil); return; }
                 SKUserDefaults.userUUID = response.userUUID
                 SKService.setupCookies()
                 //
                 SafetyKuvrr.initialize()
-                success()
+                success(response.userUUID)
             } failure: { error in
-                guard let error = error else { return }
+                guard let error = error else { failure(nil); return; }
                 failure(error)
             }
         }, failure: { error in
-            guard let error = error else { return }
+            guard let error = error else { failure(nil); return; }
             failure(error)
         })
     }
@@ -126,10 +126,10 @@ public struct SafetyKuvrr: SKKit {
             request = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile).dictionary
         }
         SKService.apiCall(with: SKConstants.API.otpResend, method: .post, parameters: request) { response in
-            guard let response = response else { return }
+            guard let response = response else { success(nil); return; }
             success(response.message)
         } failure: { error in
-            guard let error = error else { return }
+            guard let error = error else { failure(nil); return; }
             failure(error)
         }
     }
@@ -140,33 +140,27 @@ public struct SafetyKuvrr: SKKit {
             return
         }
         //
-        SKPermission.requestLocation { status in
-            if status == false {
-                failure("Please Allow Location Permission...")
-            } else {
-                var responderType = ""
-                if let emsNumber = number, emsNumber > 0, isEMS == true {
-                    responderType = "\(emsNumber)"
-                    SafetyKuvrr.callNumber(phoneNumber: "\(emsNumber)")
-                }
-                else if isSoS == true { responderType = SKConstants.ResponderType._sos }
-                else if isWalkSafe == true { responderType = SKConstants.ResponderType._walk_safe }
-                else if isTimer == true { responderType = SKConstants.ResponderType._timer }
-                else if isMedical == true { responderType = SKConstants.ResponderType._medical }
-                else if isCheckIn == true { responderType = SKConstants.ResponderType._check_in }
-                else if isCheckOut == true { responderType = SKConstants.ResponderType._check_out }
-                else { failure("Undefined value") }
-                //
-                var mediaType = ""
-                if (isSoS == true || isWalkSafe == true || isTimer == true) && UIApplication.shared.applicationState != .background {
-                    mediaType = "Video"
-                }
-                SafetyKuvrr.makeEvent(isEMS: isEMS, mediaType: mediaType, responderType: responderType) { response in
-                    success(response)
-                } failure: { error in
-                    failure(error)
-                }
-            }
+        var responderType = ""
+        if let emsNumber = number, emsNumber > 0, isEMS == true {
+            responderType = "\(emsNumber)"
+            SafetyKuvrr.callNumber(phoneNumber: "\(emsNumber)")
+        }
+        else if isSoS == true { responderType = SKConstants.ResponderType._sos }
+        else if isWalkSafe == true { responderType = SKConstants.ResponderType._walk_safe }
+        else if isTimer == true { responderType = SKConstants.ResponderType._timer }
+        else if isMedical == true { responderType = SKConstants.ResponderType._medical }
+        else if isCheckIn == true { responderType = SKConstants.ResponderType._check_in }
+        else if isCheckOut == true { responderType = SKConstants.ResponderType._check_out }
+        else { failure("Undefined value") }
+        //
+        var mediaType = ""
+        if (isSoS == true || isWalkSafe == true || isTimer == true) && UIApplication.shared.applicationState != .background {
+            mediaType = "Video"
+        }
+        SafetyKuvrr.makeEvent(isEMS: isEMS, mediaType: mediaType, responderType: responderType) { response in
+            success(response)
+        } failure: { error in
+            failure(error)
         }
     }
     
@@ -179,60 +173,44 @@ public struct SafetyKuvrr: SKKit {
     }
     
     private static func makeEvent(isEMS: Bool, mediaType: String, responderType : String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
-        INTULocationManager.sharedInstance().requestLocation(withDesiredAccuracy: .city,
-                                                             timeout: 10.0,
-                                                             delayUntilAuthorized: true) { (currentLocation, achievedAccuracy, status) in
-            if (status == INTULocationStatus.success) {
-                let myLocation = SKLocation(
-                    latitude: currentLocation?.coordinate.latitude ?? 0.0,
-                    longitude: currentLocation?.coordinate.longitude ?? 0.0,
-                    altitude: currentLocation?.altitude ?? 0.0,
-                    verticalAccuracy: currentLocation?.verticalAccuracy ?? 0.0,
-                    horizontalAccuracy: currentLocation?.horizontalAccuracy ?? 0.0,
-                    course: currentLocation?.course ?? 0.0,
-                    directionDegrees: nil
-                )
-                let request = SKEventRequest(
-                    isEMS: isEMS,
-                    mediaType: mediaType,
-                    responderType: responderType,
-                    deviceUUID: SKUserDefaults.deviceUUID ?? "",
-                    pbTrigger: nil,
-                    appLocationOnly: nil,
-                    directionDegrees: nil,
-                    eventUUID: nil,
-                    latitude: myLocation.latitude,
-                    longitude: myLocation.longitude,
-                    altitude: myLocation.altitude,
-                    horizontalAccuracy: myLocation.horizontalAccuracy,
-                    verticalAccuracy: myLocation.verticalAccuracy,
-                    course: myLocation.course
-                )
-                SafetyKuvrr.raiseEvent(forData: request, success: { response in
-                    success(response)
-                }, failure: { error in
-                    guard let error = error else { return }
-                    failure(error)
-                })
-            }
-            else if (status == INTULocationStatus.timedOut) {
-                failure("Location Timeout...")
-            }
-            else {
-                failure("Location Failed...")
-            }
+        SKLocationManager.currentLocation { currentLocation in
+            let request = SKEventRequest(
+                isEMS: isEMS,
+                mediaType: mediaType,
+                responderType: responderType,
+                deviceUUID: SKUserDefaults.deviceUUID ?? "",
+                pbTrigger: nil,
+                appLocationOnly: nil,
+                directionDegrees: nil,
+                eventUUID: nil,
+                latitude: currentLocation.latitude,
+                longitude: currentLocation.longitude,
+                altitude: currentLocation.altitude,
+                horizontalAccuracy: currentLocation.horizontalAccuracy,
+                verticalAccuracy: currentLocation.verticalAccuracy,
+                course: currentLocation.course
+            )
+            SafetyKuvrr.raiseEvent(forData: request, success: { response in
+                success(response)
+            }, failure: { error in
+                guard let error = error else { failure(nil); return; }
+                failure(error)
+            })
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
+            failure(error)
         }
     }
     
     private static func raiseEvent(forData params: SKEventRequest, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
         SKService.apiCall(with: SKConstants.API.incident, method: .post, parameters: params.dictionary, responseModel: SKEventResponse.self) { response in
-            guard let response = response else { return }
+            guard let response = response else { success(nil); return; }
             SKStreaming.eventResponse = response
             let request = SKStartEventRequest(mediaType: params.mediaType, eventUUID: response.uuid)
             SafetyKuvrr.startMediaEvent(forRequest: request)
             success(response.message)
         } failure: { error in
-            guard let error = error else { return }
+            guard let error = error else { failure(nil); return; }
             failure(error)
         }
     }
@@ -249,20 +227,58 @@ public struct SafetyKuvrr: SKKit {
     
     private static func eventMediaStart(forData params: [String: Any]?, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
         SKService.apiCall(with: SKConstants.API.incidentMediaStart, method: .post, parameters: params, responseModel: SKStartEventResponse.self) { response in
-            guard let response = response else { return }
+            guard let response = response else { success(nil); return; }
             success(response.message)
         } failure: { error in
-            guard let error = error else { return }
+            guard let error = error else { failure(nil); return; }
             failure(error)
         }
     }
     
     public static func eventMediaStop(forEventUUID uuid: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
         SKService.apiCall(with: "\(SKConstants.API.incidentMediaStop)/\(uuid)") { response in
-            guard let response = response else { return }
+            guard let response = response else { success(nil); return; }
             success(response.message)
         } failure: { error in
-            guard let error = error else { return }
+            guard let error = error else { failure(nil); return; }
+            failure(error)
+        }
+    }
+    
+    static func erpList(success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+        SKLocationManager.currentLocation { currentLocation in
+            let request = SKERPRequest(plansOnly: "1", latitude: currentLocation.latitude, longitude: currentLocation.longitude)
+            SKService.apiCall(with: SKConstants.API.erp, method: .post, parameters: request.dictionary, responseModel: SKMessage.self) { response in
+                guard let response = response else { success(nil); return; }
+                success(response.message)
+            } failure: { error in
+                guard let error = error else { failure(nil); return; }
+                failure(error)
+            }
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
+            failure(error)
+        }
+    }
+    
+    static func erpSelection(forUUID uuid: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+        let request = SKERPRequest(plansOnly: "1")
+        SKService.apiCall(with: SKConstants.API.erp + uuid, parameters: request.dictionary, responseModel: SKMessage.self) { response in
+            guard let response = response else { success(nil); return; }
+            success(response.message)
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
+            failure(error)
+        }
+    }
+    
+    static func erpAcknowledgement(forVersion version: Int, andUUID uuid: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+        let request = SKERPRequest(version: version)
+        SKService.apiCall(with: SKConstants.API.erp + uuid, method: .put, parameters: request.dictionary, responseModel: SKStartEventResponse.self) { response in
+            guard let response = response else { success(nil); return; }
+            success(response.message)
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
             failure(error)
         }
     }

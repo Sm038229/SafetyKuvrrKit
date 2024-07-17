@@ -14,6 +14,7 @@
 		151C3B632C34072200688277 /* SKEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151C3B622C34072100688277 /* SKEncoder.swift */; };
 		151C3B652C34077800688277 /* SKDataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151C3B642C34077700688277 /* SKDataModels.swift */; };
 		151C3B672C340B2000688277 /* SKUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151C3B662C340B2000688277 /* SKUserDefaults.swift */; };
+		152D2F282C47EF85000CAD99 /* SKLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152D2F272C47EF85000CAD99 /* SKLocationManager.swift */; };
 		153E82CF2C3C2A380035286A /* SKStreaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E82CE2C3C2A380035286A /* SKStreaming.swift */; };
 		15572B872C2C2D0B0057318D /* SafetyKuvrrKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 15572B862C2C2D0B0057318D /* SafetyKuvrrKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		15572B8E2C2C2D690057318D /* SafetyKuvrr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15572B8D2C2C2D690057318D /* SafetyKuvrr.swift */; };
@@ -33,6 +34,7 @@
 		151C3B622C34072100688277 /* SKEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKEncoder.swift; sourceTree = "<group>"; };
 		151C3B642C34077700688277 /* SKDataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKDataModels.swift; sourceTree = "<group>"; };
 		151C3B662C340B2000688277 /* SKUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKUserDefaults.swift; sourceTree = "<group>"; };
+		152D2F272C47EF85000CAD99 /* SKLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKLocationManager.swift; sourceTree = "<group>"; };
 		153E82CE2C3C2A380035286A /* SKStreaming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKStreaming.swift; sourceTree = "<group>"; };
 		15572B832C2C2D0B0057318D /* SafetyKuvrrKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SafetyKuvrrKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		15572B862C2C2D0B0057318D /* SafetyKuvrrKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafetyKuvrrKit.h; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				151C3B662C340B2000688277 /* SKUserDefaults.swift */,
 				15B5768D2C35048A0043BDFD /* SKConstants.swift */,
 				15EAA5CD2C369900009D61EA /* SKPermission.swift */,
+				152D2F272C47EF85000CAD99 /* SKLocationManager.swift */,
 				15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */,
 				15B29F1E2C3FE39B00CE3005 /* UIApplication+Extension.swift */,
 			);
@@ -251,6 +254,7 @@
 				150887942C2DA6DB0041DFC0 /* SKService.swift in Sources */,
 				150865C52C3FC3B80042309E /* SKCallUserInfo.swift in Sources */,
 				15B5768E2C35048A0043BDFD /* SKConstants.swift in Sources */,
+				152D2F282C47EF85000CAD99 /* SKLocationManager.swift in Sources */,
 				15B29F1F2C3FE39B00CE3005 /* UIApplication+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
