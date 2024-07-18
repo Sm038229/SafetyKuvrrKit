@@ -199,11 +199,11 @@ struct SKEventResponse: Codable {
     let dateCreated : String?
     let browsableURL : String?
     let token : String?
-    let status : String?
+    var reason : String?
+    var reasonMessage : String?
     let observingProOrg : String?
     let observingGeofence : String?
     let uuid : String?
-    let statusMessage : String?
     //let observersWatching : String?
     let eventURLString : String?
     let type : String?
@@ -222,11 +222,11 @@ struct SKEventResponse: Codable {
         case dateCreated = "created"
         case browsableURL = "browsable_url"
         case token = "token"
-        case status = "status"
+        case reason = "status"
+        case reasonMessage = "status_message"
         case observingProOrg = "observing_pro_org"
         case observingGeofence = "observing_geofence"
         case uuid = "uuid"
-        case statusMessage = "status_message"
         //case observersWatching = "observers_watching"
         case eventURLString = "url"
         case type = "type"

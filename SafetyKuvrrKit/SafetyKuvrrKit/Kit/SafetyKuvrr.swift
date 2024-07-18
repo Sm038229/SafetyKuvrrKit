@@ -215,6 +215,18 @@ public struct SafetyKuvrr: SKKit {
         }
     }
     
+    static func endEvent(forReason reason: String, andMessage message: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+        SKStreaming.eventResponse?.reason = reason
+        SKStreaming.eventResponse?.reasonMessage = message
+        SKService.apiCall(with: SKConstants.API.incident + SKStreaming.eventResponse!.uuid!, method: .put, parameters: SKStreaming.eventResponse!.dictionary, responseModel: SKEventResponse.self) { response in
+            guard let response = response else { success(nil); return; }
+            success(response.message)
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
+            failure(error)
+        }
+    }
+    
     private static func startMediaEvent(forRequest request: SKStartEventRequest) {
         if request.mediaType == "Video", let uuid = request.eventUUID {
             SafetyKuvrr.eventMediaStart(forData: request.dictionary) { response in

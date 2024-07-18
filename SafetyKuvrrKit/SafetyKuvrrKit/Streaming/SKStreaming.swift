@@ -45,8 +45,13 @@ public class SKStreaming: UIViewController {
     
     @IBAction func endAction(_ sender: UIButton) {
         SafetyKuvrr.eventMediaStop(forEventUUID: SKStreaming.eventResponse?.uuid ?? "", success: { [weak self] response in
-            SKStreaming.leave()
-            self?.dismiss(animated: true)
+            SafetyKuvrr.endEvent(forReason: "Other", andMessage: "Test Message") { response in
+                self?.dismiss(animated: true, completion: {
+                    SKStreaming.leave()
+                })
+            } failure: { error in
+                
+            }
         }, failure: { error in
             
         })
