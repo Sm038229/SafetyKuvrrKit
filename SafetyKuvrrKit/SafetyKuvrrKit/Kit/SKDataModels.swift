@@ -332,19 +332,3 @@ struct SKStartEventRequest: Codable {
         case eventUUID = "incident_id"
     }
 }
-
-struct SKERPRequest: Codable {
-    var plansOnly: String? = nil
-    var latitude: Double? = nil
-    var longitude: Double? = nil
-    var uuid: String? = nil
-    var version: Int? = nil
-    
-    enum CodingKeys: String, CodingKey {
-        case plansOnly = "plans_only"
-        case latitude = "lat"
-        case longitude = "lng"
-        case uuid = "uuid"
-        case version = "version"
-    }
-}

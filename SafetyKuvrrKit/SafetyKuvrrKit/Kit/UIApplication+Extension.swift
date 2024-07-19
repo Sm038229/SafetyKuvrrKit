@@ -30,3 +30,22 @@ extension UIApplication {
         }
     }
 }
+
+extension String {
+    func htmlToUtf8() -> String{
+        //chuyển đổi kết quả từ JSON htmlString sang Utf8
+        let encodedData = self.data(using: .utf8)
+        let attributedOptions : [NSAttributedString.DocumentReadingOptionKey : Any ] = [
+            .documentType: NSAttributedString.DocumentType.html,
+            .characterEncoding: String.Encoding.utf8.rawValue ]
+        do {
+            let attributedString = try NSAttributedString(data: encodedData!, options: attributedOptions, documentAttributes: nil)
+            let decodedString = attributedString.string
+            return decodedString
+        } catch {
+            // error ...
+        }
+        
+        return String()
+    }
+}

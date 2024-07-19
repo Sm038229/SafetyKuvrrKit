@@ -44,7 +44,7 @@ struct SKService {
             //
             let responseCode = "\(response.response?.statusCode.description ?? "")"
             if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                print("Response - (Code-\(responseCode)): \(utf8Text)")
+                print("Response - (Code-\(responseCode)): \(utf8Text.htmlToUtf8())")
             } else {
                 print("Response - (Code-\(responseCode)): Empty")
                 if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
@@ -55,24 +55,20 @@ struct SKService {
             //
             switch response.result {
             case .success(let value):
-                if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
-                    if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
-                        print(errorMessage)
-                        failure(errorMessage)
-                    } else {
-                        success(value)
-                    }
+                if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
+                    NSLog("Error: " + errorMessage)
+                    failure(errorMessage)
                 } else {
-                    if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
-                        print(errorMessage)
-                        failure(errorMessage)
+                    if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
+                        NSLog("Success: \(value)")
+                        success(value)
                     } else {
-                        print("Something went wrong!")
+                        NSLog("Something went wrong!")
                         failure("Something went wrong!")
                     }
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                NSLog(error.localizedDescription)
                 failure(error.localizedDescription)
             }
         }
@@ -87,7 +83,7 @@ struct SKService {
         }
     }
     
-    static func setupCookies() {
+    private static func setupCookies() {
         if let url = URL(string: SKService.baseURL), let cookies = HTTPCookieStorage.shared.cookies(for: url) {
             for cookie in cookies {
                 //print("\(cookie.name): \(cookie.value)")

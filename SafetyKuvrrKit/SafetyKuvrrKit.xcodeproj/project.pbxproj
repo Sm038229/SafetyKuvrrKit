@@ -15,12 +15,20 @@
 		151C3B652C34077800688277 /* SKDataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151C3B642C34077700688277 /* SKDataModels.swift */; };
 		151C3B672C340B2000688277 /* SKUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151C3B662C340B2000688277 /* SKUserDefaults.swift */; };
 		152D2F282C47EF85000CAD99 /* SKLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152D2F272C47EF85000CAD99 /* SKLocationManager.swift */; };
+		153CC6F42C4A51B3002D24EC /* ERP.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 153CC6F32C4A51B3002D24EC /* ERP.storyboard */; };
+		153CC6F62C4A526B002D24EC /* SKSelectedERPTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153CC6F52C4A526B002D24EC /* SKSelectedERPTableViewController.swift */; };
+		153CC6F82C4A529F002D24EC /* SKERPListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153CC6F72C4A529F002D24EC /* SKERPListTableViewController.swift */; };
+		153CC6FA2C4A5625002D24EC /* SKERPListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153CC6F92C4A5625002D24EC /* SKERPListTableViewCell.swift */; };
+		153CC6FC2C4A564E002D24EC /* SKSelectedERPTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153CC6FB2C4A564E002D24EC /* SKSelectedERPTableViewCell.swift */; };
+		153CC6FE2C4A5DB9002D24EC /* SKServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153CC6FD2C4A5DB9002D24EC /* SKServiceManager.swift */; };
+		153CC7002C4A78D0002D24EC /* SKERPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153CC6FF2C4A78D0002D24EC /* SKERPManager.swift */; };
 		153E82CF2C3C2A380035286A /* SKStreaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E82CE2C3C2A380035286A /* SKStreaming.swift */; };
 		15572B872C2C2D0B0057318D /* SafetyKuvrrKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 15572B862C2C2D0B0057318D /* SafetyKuvrrKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		15572B8E2C2C2D690057318D /* SafetyKuvrr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15572B8D2C2C2D690057318D /* SafetyKuvrr.swift */; };
 		15B29F1F2C3FE39B00CE3005 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B29F1E2C3FE39B00CE3005 /* UIApplication+Extension.swift */; };
 		15B5768E2C35048A0043BDFD /* SKConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B5768D2C35048A0043BDFD /* SKConstants.swift */; };
 		15BA66EF2C3BEB8E00E60C4D /* SKKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BA66EE2C3BEB8E00E60C4D /* SKKit.swift */; };
+		15CC57802C4A8B4600053DBB /* SKERPModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CC577F2C4A8B4600053DBB /* SKERPModels.swift */; };
 		15EAA5CE2C369900009D61EA /* SKPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAA5CD2C369900009D61EA /* SKPermission.swift */; };
 		15EAA5D22C36BA77009D61EA /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */; };
 		CAB92A9E7FE1314622908CB5 /* Pods_SafetyKuvrrKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED6FCDA50ACDAF4F0F7403F /* Pods_SafetyKuvrrKit.framework */; };
@@ -35,6 +43,13 @@
 		151C3B642C34077700688277 /* SKDataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKDataModels.swift; sourceTree = "<group>"; };
 		151C3B662C340B2000688277 /* SKUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKUserDefaults.swift; sourceTree = "<group>"; };
 		152D2F272C47EF85000CAD99 /* SKLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKLocationManager.swift; sourceTree = "<group>"; };
+		153CC6F32C4A51B3002D24EC /* ERP.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ERP.storyboard; sourceTree = "<group>"; };
+		153CC6F52C4A526B002D24EC /* SKSelectedERPTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSelectedERPTableViewController.swift; sourceTree = "<group>"; };
+		153CC6F72C4A529F002D24EC /* SKERPListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKERPListTableViewController.swift; sourceTree = "<group>"; };
+		153CC6F92C4A5625002D24EC /* SKERPListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKERPListTableViewCell.swift; sourceTree = "<group>"; };
+		153CC6FB2C4A564E002D24EC /* SKSelectedERPTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSelectedERPTableViewCell.swift; sourceTree = "<group>"; };
+		153CC6FD2C4A5DB9002D24EC /* SKServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKServiceManager.swift; sourceTree = "<group>"; };
+		153CC6FF2C4A78D0002D24EC /* SKERPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKERPManager.swift; sourceTree = "<group>"; };
 		153E82CE2C3C2A380035286A /* SKStreaming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKStreaming.swift; sourceTree = "<group>"; };
 		15572B832C2C2D0B0057318D /* SafetyKuvrrKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SafetyKuvrrKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		15572B862C2C2D0B0057318D /* SafetyKuvrrKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafetyKuvrrKit.h; sourceTree = "<group>"; };
@@ -42,6 +57,7 @@
 		15B29F1E2C3FE39B00CE3005 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		15B5768D2C35048A0043BDFD /* SKConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKConstants.swift; sourceTree = "<group>"; };
 		15BA66EE2C3BEB8E00E60C4D /* SKKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKKit.swift; sourceTree = "<group>"; };
+		15CC577F2C4A8B4600053DBB /* SKERPModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKERPModels.swift; sourceTree = "<group>"; };
 		15EAA5CD2C369900009D61EA /* SKPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKPermission.swift; sourceTree = "<group>"; };
 		15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
 		AED6FCDA50ACDAF4F0F7403F /* Pods_SafetyKuvrrKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafetyKuvrrKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +77,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		153CC6EA2C4A50FD002D24EC /* ERP */ = {
+			isa = PBXGroup;
+			children = (
+				153CC6FF2C4A78D0002D24EC /* SKERPManager.swift */,
+				15CC577F2C4A8B4600053DBB /* SKERPModels.swift */,
+				153CC6F72C4A529F002D24EC /* SKERPListTableViewController.swift */,
+				153CC6F92C4A5625002D24EC /* SKERPListTableViewCell.swift */,
+				153CC6F52C4A526B002D24EC /* SKSelectedERPTableViewController.swift */,
+				153CC6FB2C4A564E002D24EC /* SKSelectedERPTableViewCell.swift */,
+				153CC6F32C4A51B3002D24EC /* ERP.storyboard */,
+			);
+			path = ERP;
+			sourceTree = "<group>";
+		};
 		153E82CC2C3C29CB0035286A /* Kit */ = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +98,7 @@
 				15BA66EE2C3BEB8E00E60C4D /* SKKit.swift */,
 				15572B8D2C2C2D690057318D /* SafetyKuvrr.swift */,
 				150887932C2DA6DB0041DFC0 /* SKService.swift */,
+				153CC6FD2C4A5DB9002D24EC /* SKServiceManager.swift */,
 				151C3B642C34077700688277 /* SKDataModels.swift */,
 				151C3B622C34072100688277 /* SKEncoder.swift */,
 				151C3B662C340B2000688277 /* SKUserDefaults.swift */,
@@ -114,6 +145,7 @@
 			children = (
 				153E82CC2C3C29CB0035286A /* Kit */,
 				153E82CD2C3C29F50035286A /* Streaming */,
+				153CC6EA2C4A50FD002D24EC /* ERP */,
 			);
 			path = SafetyKuvrrKit;
 			sourceTree = "<group>";
@@ -175,6 +207,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				CLASSPREFIX = SK;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					15572B822C2C2D0B0057318D = {
@@ -206,6 +239,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				153CC6F42C4A51B3002D24EC /* ERP.storyboard in Resources */,
 				150865BF2C3FBEE00042309E /* Streaming.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,12 +277,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				151C3B632C34072200688277 /* SKEncoder.swift in Sources */,
+				153CC6F82C4A529F002D24EC /* SKERPListTableViewController.swift in Sources */,
+				153CC6FC2C4A564E002D24EC /* SKSelectedERPTableViewCell.swift in Sources */,
+				15CC57802C4A8B4600053DBB /* SKERPModels.swift in Sources */,
 				15EAA5D22C36BA77009D61EA /* UIDevice+Extension.swift in Sources */,
 				150865C22C3FC0B20042309E /* SKCallSDKManager.swift in Sources */,
 				15EAA5CE2C369900009D61EA /* SKPermission.swift in Sources */,
+				153CC6FE2C4A5DB9002D24EC /* SKServiceManager.swift in Sources */,
 				151C3B652C34077800688277 /* SKDataModels.swift in Sources */,
 				153E82CF2C3C2A380035286A /* SKStreaming.swift in Sources */,
+				153CC7002C4A78D0002D24EC /* SKERPManager.swift in Sources */,
 				15572B8E2C2C2D690057318D /* SafetyKuvrr.swift in Sources */,
+				153CC6FA2C4A5625002D24EC /* SKERPListTableViewCell.swift in Sources */,
+				153CC6F62C4A526B002D24EC /* SKSelectedERPTableViewController.swift in Sources */,
 				15BA66EF2C3BEB8E00E60C4D /* SKKit.swift in Sources */,
 				151C3B672C340B2000688277 /* SKUserDefaults.swift in Sources */,
 				150887942C2DA6DB0041DFC0 /* SKService.swift in Sources */,
