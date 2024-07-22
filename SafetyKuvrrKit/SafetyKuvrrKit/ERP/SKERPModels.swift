@@ -24,14 +24,15 @@ struct SKERPRequest: Codable {
 }
 
 struct SKERPListResponse: Codable {
-    let uuid: String? = nil
-    let orgUUID: String? = nil
-    let sortKey: Int? = nil
-    let title: String? = nil
-    let banner: String? = nil
-    let iconURLString: String? = nil
-    let version: Int? = nil
-    let jsonData: [String]? = nil
+    var uuid: String? = nil
+    var orgUUID: String? = nil
+    var sortKey: Int? = nil
+    var title: String? = nil
+    var banner: String? = nil
+    var iconURLString: String? = nil
+    var version: Int? = nil
+    var jsonData: [String]? = nil
+    var acknowledgeMentDate: String? = nil
     
     enum CodingKeys: String, CodingKey {
         case uuid = "uuid"
@@ -42,5 +43,6 @@ struct SKERPListResponse: Codable {
         case iconURLString = "icon"
         case version = "version"
         case jsonData = "json_data"
+        case acknowledgeMentDate = "ack_date"
     }
 }

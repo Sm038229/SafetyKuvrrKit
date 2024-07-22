@@ -44,7 +44,7 @@ struct SKService {
             //
             let responseCode = "\(response.response?.statusCode.description ?? "")"
             if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                print("Response - (Code-\(responseCode)): \(utf8Text.htmlToUtf8())")
+                print("Response - (Code-\(responseCode)): \(utf8Text)")
             } else {
                 print("Response - (Code-\(responseCode)): Empty")
                 if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
@@ -56,8 +56,13 @@ struct SKService {
             switch response.result {
             case .success(let value):
                 if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
-                    NSLog("Error: " + errorMessage)
-                    failure(errorMessage)
+                    if let model = SKService.getResponse(forData: data, model: responseModel) {
+                        NSLog("Model Data: \(model)")
+                        success(model)
+                    } else {
+                        NSLog("Error: " + errorMessage)
+                        failure(errorMessage)
+                    }
                 } else {
                     if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
                         NSLog("Success: \(value)")
@@ -80,6 +85,16 @@ struct SKService {
             return(errorModel.errorMessage?.first)
         } catch {
             return(error.localizedDescription)
+        }
+    }
+    
+    private static func getResponse<T: Decodable>(forData data: Data, model: T.Type) -> T? {
+        do {
+            let model = try JSONDecoder().decode(model, from: data)
+            return(model)
+        } catch {
+            print(error.localizedDescription)
+            return nil
         }
     }
     

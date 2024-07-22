@@ -24,13 +24,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QaN-w7-CgH">
                                 <rect key="frame" x="10" y="608" width="373" height="200"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kpD-eq-hl4">
-                                        <rect key="frame" x="159.66666666666666" y="155" width="54" height="35"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kpD-eq-hl4">
+                                        <rect key="frame" x="171" y="156" width="31" height="34"/>
                                         <color key="tintColor" systemColor="systemRedColor"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="End">
-                                            <color key="baseBackgroundColor" systemColor="systemRedColor"/>
-                                        </buttonConfiguration>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="End"/>
                                         <connections>
                                             <action selector="endAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="0zI-bc-EGT"/>
                                         </connections>

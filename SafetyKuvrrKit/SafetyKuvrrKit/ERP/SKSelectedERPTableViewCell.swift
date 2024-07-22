@@ -8,6 +8,7 @@
 import UIKit
 
 class SKSelectedERPTableViewCell: UITableViewCell {
+    static let identifier = "SKSelectedERPTableViewCell"
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     

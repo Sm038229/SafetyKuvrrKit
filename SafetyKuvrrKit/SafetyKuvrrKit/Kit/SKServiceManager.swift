@@ -227,7 +227,7 @@ struct SKServiceManager {
     }
     
     private static func startMediaEvent(forRequest request: SKStartEventRequest) {
-        if request.mediaType == "Video", let uuid = request.eventUUID {
+        if request.mediaType == "Video" {
             SKServiceManager.eventMediaStart(forData: request.dictionary) { response in
                 SKStreaming.presentViewController()
             } failure: { error in
@@ -272,11 +272,11 @@ struct SKServiceManager {
         }
     }
     
-    static func erpSelection(forUUID uuid: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+    static func erpSelection(forUUID uuid: String, success: @escaping((SKERPListResponse?) -> Void), failure: @escaping((String?)-> Void)) {
         let request = SKERPRequest(plansOnly: "1")
-        SKService.apiCall(with: SKConstants.API.erp + uuid, parameters: request.dictionary, responseModel: SKMessage.self) { response in
+        SKService.apiCall(with: SKConstants.API.erp + uuid, parameters: request.dictionary, responseModel: SKERPListResponse.self) { response in
             guard let response = response else { success(nil); return; }
-            success(response.message)
+            success(response)
         } failure: { error in
             guard let error = error else { failure(nil); return; }
             failure(error)

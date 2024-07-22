@@ -6,11 +6,16 @@
 //
 
 import UIKit
+import SDWebImage
 
 class SKERPListTableViewController: UITableViewController {
     var erpList: [SKERPListResponse?]?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Plans"
+        addBackButton()
+        //
         tableView.estimatedRowHeight = 50
         SKServiceManager.erpList { [weak self] response in
             self?.erpList = response
@@ -37,14 +42,26 @@ class SKERPListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: SKERPListTableViewCell.identifier, for: indexPath) as! SKERPListTableViewCell
 
         if let data = erpList?[indexPath.row] {
-            cell.titleLabel.text = data.title
+            cell.imgView.sd_setImage(with: URL(string: data.iconURLString!))
+            cell.titleLabel.setupLabel(text: data.title)
         }
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        var height = UITableView.automaticDimension
+        if let data = erpList?[indexPath.row] {
+            height = UILabel.heightForLabel(text: data.title, width: tableView.bounds.width - 130.0)
+        }
+        
+        return height
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let data = erpList?[indexPath.row] {
+            SKERPManager.presentSelectedERPListViewController(forTitle: data.title!, andUUID: data.uuid!)
+        }
     }
 
     /*

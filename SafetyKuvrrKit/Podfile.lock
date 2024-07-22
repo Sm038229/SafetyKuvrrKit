@@ -83,6 +83,9 @@ PODS:
     - PermissionKit/Core
   - PermissionKit/Tracking (1.6.1):
     - PermissionKit/Core
+  - SDWebImage (5.19.4):
+    - SDWebImage/Core (= 5.19.4)
+  - SDWebImage/Core (5.19.4)
 
 DEPENDENCIES:
   - AgoraRtcEngine_iOS
@@ -91,6 +94,7 @@ DEPENDENCIES:
   - INTULocationManager
   - KeychainSwift
   - PermissionKit
+  - SDWebImage
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -100,6 +104,7 @@ SPEC REPOS:
     - INTULocationManager
     - KeychainSwift
     - PermissionKit
+    - SDWebImage
 
 SPEC CHECKSUMS:
   AgoraRtcEngine_iOS: eaa97751fcfe1b50d9b067e0df92752a6a5f899f
@@ -108,7 +113,8 @@ SPEC CHECKSUMS:
   INTULocationManager: b5a0422782f0b87af0b8db14e0826fb38dbecd19
   KeychainSwift: 007c4647486e4563adca839cf02cef00deb3b670
   PermissionKit: 5bfb53abe59cf35743f2798cc05207b305331507
+  SDWebImage: 066c47b573f408f18caa467d71deace7c0f8280d
 
-PODFILE CHECKSUM: ec75a0aa8807ac5071f7ace1b8ead7daf6681eea
+PODFILE CHECKSUM: 3b1e89d6a4196186c734d01377bc21a694d639d8
 
 COCOAPODS: 1.15.2
