@@ -11,7 +11,10 @@ Pod::Spec.new do |spec|
   spec.source         = { :git => "https://github.com/Sm038229/SafetyKuvrrKit.git", :tag => spec.version.to_s }
   spec.readme         = "README.md"
   spec.source_files   = "SafetyKuvrrKit/**/*.{Swift}"
-  spec.resources      = "SafetyKuvrrKit/**/*.{storyboard}"
+  spec.resources      = "SafetyKuvrrKit/**/*.{storyboard,png,jpg,jpeg}"
+  spec.resource_bundles = {
+   'SafetyKuvrrKit' => ['SafetyKuvrrKit/Assets/**/*.{imageset}']
+  }
   spec.swift_versions = "5.0"
   spec.dependency 'Alamofire' # , '~> 0.1.0'
   spec.dependency 'INTULocationManager'

@@ -25,6 +25,15 @@ class SKSelectedERPTableViewController: UITableViewController {
             
         }
     }
+    @IBAction func ackAction(_ sender: UIButton) {
+        if let version = erpDetail?.version, let uuid = erpDetail?.uuid {
+            SKServiceManager.erpAcknowledgement(forVersion: version, andUUID: uuid) { response in
+                
+            } failure: { error in
+                
+            }
+        }
+    }
     
     // MARK: - Table view data source
     /*
@@ -43,7 +52,12 @@ class SKSelectedERPTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: SKSelectedERPTableViewCell.identifier, for: indexPath) as! SKSelectedERPTableViewCell
         
         if let data = erpDetail?.jsonData {
-            //cell.imgView.sd_setImage(with: URL(string: data.iconURLString!))
+            if erpDetail?.acknowledgeMentDate == nil {
+                cell.imgView.isHidden = false
+                cell.imgView.image = UIImage(named: "toogle_off")
+            } else {
+                cell.imgView.isHidden = true
+            }
             cell.titleLabel.setupLabel(text: data[indexPath.row])
         }
         
@@ -60,7 +74,9 @@ class SKSelectedERPTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if let cell = tableView.cellForRow(at: indexPath) as? SKSelectedERPTableViewCell, erpDetail?.acknowledgeMentDate == nil {
+            cell.imgView.image = UIImage(named: "toogle_on")
+        }
     }
     
     /*

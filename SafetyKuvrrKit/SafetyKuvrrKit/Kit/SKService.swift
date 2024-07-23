@@ -60,7 +60,7 @@ struct SKService {
                         NSLog("Model Data: \(model)")
                         success(model)
                     } else {
-                        NSLog("Error: " + errorMessage)
+                        NSLog("Error1: " + errorMessage)
                         failure(errorMessage)
                     }
                 } else {
@@ -73,8 +73,13 @@ struct SKService {
                     }
                 }
             case .failure(let error):
-                NSLog(error.localizedDescription)
-                failure(error.localizedDescription)
+                if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
+                    NSLog("Error: " + errorMessage)
+                    failure(errorMessage)
+                } else {
+                    NSLog(error.localizedDescription)
+                    failure(error.localizedDescription)
+                }
             }
         }
     }

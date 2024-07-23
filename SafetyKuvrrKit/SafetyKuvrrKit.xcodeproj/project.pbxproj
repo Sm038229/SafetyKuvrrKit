@@ -29,6 +29,10 @@
 		15B5768E2C35048A0043BDFD /* SKConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B5768D2C35048A0043BDFD /* SKConstants.swift */; };
 		15BA66EF2C3BEB8E00E60C4D /* SKKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BA66EE2C3BEB8E00E60C4D /* SKKit.swift */; };
 		15CC57802C4A8B4600053DBB /* SKERPModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CC577F2C4A8B4600053DBB /* SKERPModels.swift */; };
+		15DF5E332C4F98A90055961C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15DF5E322C4F98A90055961C /* Assets.xcassets */; };
+		15DF5E352C4F99030055961C /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DF5E342C4F99030055961C /* UILabel+Extension.swift */; };
+		15DF5E372C4F99190055961C /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DF5E362C4F99190055961C /* UIFont+Extension.swift */; };
+		15DF5E392C4F9C350055961C /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DF5E382C4F9C350055961C /* UIViewController+Extension.swift */; };
 		15EAA5CE2C369900009D61EA /* SKPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAA5CD2C369900009D61EA /* SKPermission.swift */; };
 		15EAA5D22C36BA77009D61EA /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */; };
 		CAB92A9E7FE1314622908CB5 /* Pods_SafetyKuvrrKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED6FCDA50ACDAF4F0F7403F /* Pods_SafetyKuvrrKit.framework */; };
@@ -58,6 +62,10 @@
 		15B5768D2C35048A0043BDFD /* SKConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKConstants.swift; sourceTree = "<group>"; };
 		15BA66EE2C3BEB8E00E60C4D /* SKKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKKit.swift; sourceTree = "<group>"; };
 		15CC577F2C4A8B4600053DBB /* SKERPModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKERPModels.swift; sourceTree = "<group>"; };
+		15DF5E322C4F98A90055961C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		15DF5E342C4F99030055961C /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		15DF5E362C4F99190055961C /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		15DF5E382C4F9C350055961C /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		15EAA5CD2C369900009D61EA /* SKPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKPermission.swift; sourceTree = "<group>"; };
 		15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
 		AED6FCDA50ACDAF4F0F7403F /* Pods_SafetyKuvrrKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafetyKuvrrKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,8 +113,7 @@
 				15B5768D2C35048A0043BDFD /* SKConstants.swift */,
 				15EAA5CD2C369900009D61EA /* SKPermission.swift */,
 				152D2F272C47EF85000CAD99 /* SKLocationManager.swift */,
-				15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */,
-				15B29F1E2C3FE39B00CE3005 /* UIApplication+Extension.swift */,
+				15DF5E3A2C4F9C5D0055961C /* Extensions */,
 			);
 			path = Kit;
 			sourceTree = "<group>";
@@ -146,8 +153,21 @@
 				153E82CC2C3C29CB0035286A /* Kit */,
 				153E82CD2C3C29F50035286A /* Streaming */,
 				153CC6EA2C4A50FD002D24EC /* ERP */,
+				15DF5E322C4F98A90055961C /* Assets.xcassets */,
 			);
 			path = SafetyKuvrrKit;
+			sourceTree = "<group>";
+		};
+		15DF5E3A2C4F9C5D0055961C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */,
+				15B29F1E2C3FE39B00CE3005 /* UIApplication+Extension.swift */,
+				15DF5E382C4F9C350055961C /* UIViewController+Extension.swift */,
+				15DF5E342C4F99030055961C /* UILabel+Extension.swift */,
+				15DF5E362C4F99190055961C /* UIFont+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		3BE310054F185F6D2FB48CAE /* Frameworks */ = {
@@ -240,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				153CC6F42C4A51B3002D24EC /* ERP.storyboard in Resources */,
+				15DF5E332C4F98A90055961C /* Assets.xcassets in Resources */,
 				150865BF2C3FBEE00042309E /* Streaming.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,10 +297,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15DF5E392C4F9C350055961C /* UIViewController+Extension.swift in Sources */,
+				15DF5E352C4F99030055961C /* UILabel+Extension.swift in Sources */,
 				151C3B632C34072200688277 /* SKEncoder.swift in Sources */,
 				153CC6F82C4A529F002D24EC /* SKERPListTableViewController.swift in Sources */,
 				153CC6FC2C4A564E002D24EC /* SKSelectedERPTableViewCell.swift in Sources */,
 				15CC57802C4A8B4600053DBB /* SKERPModels.swift in Sources */,
+				15DF5E372C4F99190055961C /* UIFont+Extension.swift in Sources */,
 				15EAA5D22C36BA77009D61EA /* UIDevice+Extension.swift in Sources */,
 				150865C22C3FC0B20042309E /* SKCallSDKManager.swift in Sources */,
 				15EAA5CE2C369900009D61EA /* SKPermission.swift in Sources */,

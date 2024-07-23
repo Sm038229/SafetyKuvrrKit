@@ -13,7 +13,7 @@ class SKERPListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Plans"
+        title = "Emergency Response Plan"
         addBackButton()
         //
         tableView.estimatedRowHeight = 50
