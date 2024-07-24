@@ -12,6 +12,7 @@ extension UIFont {
     private struct SKFont {
         struct Name {
             static let regular = "Helvetica"
+            static let bold = "Helvetica-Bold"
         }
         //
         struct Size {
@@ -19,7 +20,11 @@ extension UIFont {
         }
     }
     //
-    static func regularFontNormalSize() -> UIFont? {
-        return UIFont(name: SKFont.Name.regular, size: SKFont.Size.normal)
+    static func regularFontNormalSize() -> UIFont {
+        return UIFont(name: SKFont.Name.regular, size: SKFont.Size.normal)!
+    }
+    //
+    static func boldFontNormalSize() -> UIFont {
+        return UIFont(name: SKFont.Name.bold, size: SKFont.Size.normal)!
     }
 }

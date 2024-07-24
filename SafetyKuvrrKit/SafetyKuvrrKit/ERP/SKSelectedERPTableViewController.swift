@@ -12,10 +12,18 @@ class SKSelectedERPTableViewController: UITableViewController {
     var selectedERPUUID = ""
     var selectedERPCount = 0
     var erpDetail: SKERPListResponse?
+    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var footerButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = selectedERPTitle
+        //
+        var colorStrings = headerLabel.text?.getAllNumbers ?? []
+        var linkStrings = headerLabel.text?.getAllLinks ?? []
+        colorStrings.append(contentsOf: linkStrings)
+        let words = headerLabel.text?.components(separatedBy: " ").map{ $0 }
+        headerLabel.attributedText = headerLabel.text?.attributedStringWithColor(colorStrings, boldWords: words)
         //
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 50.0
@@ -61,6 +69,11 @@ class SKSelectedERPTableViewController: UITableViewController {
                 cell.imgView.isHidden = true
             }
             cell.titleLabel.setupLabel(text: data[indexPath.row])
+            cell.checkboxButton.tag = indexPath.row
+        }
+        
+        cell.checkboxTapped = { [weak self] sender in
+            self?.checkboxTapped(atIndexPath: IndexPath(row: sender.tag, section: 0))
         }
         
         return cell
@@ -76,6 +89,10 @@ class SKSelectedERPTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    private func checkboxTapped(atIndexPath indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? SKSelectedERPTableViewCell, erpDetail?.acknowledgeMentDate == nil {
             if cell.imgView.tag == 0 {
                 cell.imgView.image = UIImage.named("toogle_on")

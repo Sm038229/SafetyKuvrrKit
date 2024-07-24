@@ -50,13 +50,13 @@
                                                     <rect key="frame" x="10" y="5" width="353" height="512.33333333333337"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radio_empty" translatesAutoresizingMaskIntoConstraints="NO" id="doL-Va-mnu">
-                                                            <rect key="frame" x="0.0" y="0.0" width="25" height="512.33333333333337"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="512.33333333333337"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="25" id="VfF-c7-d1d"/>
+                                                                <constraint firstAttribute="width" constant="30" id="VfF-c7-d1d"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="csp-og-sbk">
-                                                            <rect key="frame" x="35" y="0.0" width="318" height="512.33333333333337"/>
+                                                            <rect key="frame" x="40" y="0.0" width="313" height="512.33333333333337"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -129,7 +129,7 @@
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="TjT-he-tuE">
-                            <rect key="frame" x="0.0" y="670.33331298828125" width="393" height="70"/>
+                            <rect key="frame" x="0.0" y="720" width="393" height="70"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QL2-1N-ljN">
@@ -156,23 +156,43 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SKSelectedERPTableViewCell" id="rcf-5z-OLn" customClass="SKSelectedERPTableViewCell" customModule="SafetyKuvrrKit" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="120" width="393" height="522.33331298828125"/>
+                                <rect key="frame" x="0.0" y="120" width="393" height="572"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rcf-5z-OLn" id="5jv-eP-2ji">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="522.33331298828125"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="572"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="KIu-KJ-s0i">
-                                            <rect key="frame" x="10" y="5" width="373" height="512.33333333333337"/>
+                                            <rect key="frame" x="10" y="5" width="373" height="562"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radio_empty" translatesAutoresizingMaskIntoConstraints="NO" id="8hz-4t-HDK">
-                                                    <rect key="frame" x="0.0" y="0.0" width="25" height="512.33333333333337"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vzf-AT-Rs6">
+                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="562"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radio_empty" translatesAutoresizingMaskIntoConstraints="NO" id="8hz-4t-HDK">
+                                                            <rect key="frame" x="0.0" y="25" width="30" height="512"/>
+                                                        </imageView>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t78-y1-L8d">
+                                                            <rect key="frame" x="0.0" y="25" width="30" height="512"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <connections>
+                                                                <action selector="checkboxAction:" destination="rcf-5z-OLn" eventType="touchUpInside" id="Xcp-6V-ZAd"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="25" id="K5M-dZ-joH"/>
+                                                        <constraint firstItem="t78-y1-L8d" firstAttribute="bottom" secondItem="8hz-4t-HDK" secondAttribute="bottom" id="4nj-f9-gnu"/>
+                                                        <constraint firstItem="8hz-4t-HDK" firstAttribute="centerY" secondItem="Vzf-AT-Rs6" secondAttribute="centerY" id="J7r-uU-Zh5"/>
+                                                        <constraint firstItem="t78-y1-L8d" firstAttribute="leading" secondItem="8hz-4t-HDK" secondAttribute="leading" id="KLR-2F-bMR"/>
+                                                        <constraint firstItem="t78-y1-L8d" firstAttribute="top" secondItem="8hz-4t-HDK" secondAttribute="top" id="PC2-jG-EWv"/>
+                                                        <constraint firstItem="8hz-4t-HDK" firstAttribute="leading" secondItem="Vzf-AT-Rs6" secondAttribute="leading" id="QNH-tu-2E3"/>
+                                                        <constraint firstAttribute="trailing" secondItem="8hz-4t-HDK" secondAttribute="trailing" id="oVl-iq-uu7"/>
+                                                        <constraint firstItem="t78-y1-L8d" firstAttribute="trailing" secondItem="8hz-4t-HDK" secondAttribute="trailing" id="rrx-kl-edo"/>
+                                                        <constraint firstAttribute="width" constant="30" id="tQV-r1-7Vv"/>
                                                     </constraints>
-                                                </imageView>
+                                                </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bOb-bl-yMU">
-                                                    <rect key="frame" x="35" y="0.0" width="338" height="512.33333333333337"/>
+                                                    <rect key="frame" x="40" y="0.0" width="333" height="562"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -189,6 +209,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
+                                    <outlet property="checkboxButton" destination="t78-y1-L8d" id="0vk-AU-tLm"/>
                                     <outlet property="imgView" destination="8hz-4t-HDK" id="bBL-v4-LcW"/>
                                     <outlet property="titleLabel" destination="bOb-bl-yMU" id="8qr-iM-vLr"/>
                                 </connections>
@@ -199,6 +220,10 @@
                             <outlet property="delegate" destination="r0c-N4-NdE" id="cFr-Ze-QEl"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="footerButton" destination="QL2-1N-ljN" id="Kon-aR-aa6"/>
+                        <outlet property="headerLabel" destination="Irn-zX-XcO" id="JMS-QI-SGJ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WsK-V8-SGN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

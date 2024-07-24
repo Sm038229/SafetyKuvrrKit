@@ -142,7 +142,7 @@ struct SKServiceManager {
         var responderType = ""
         if let emsNumber = number, emsNumber > 0, isEMS == true {
             responderType = "\(emsNumber)"
-            SKServiceManager.callNumber(phoneNumber: "\(emsNumber)")
+            responderType.call()
         }
         else if isSoS == true { responderType = SKConstants.ResponderType._sos }
         else if isWalkSafe == true { responderType = SKConstants.ResponderType._walk_safe }
@@ -161,14 +161,6 @@ struct SKServiceManager {
         } failure: { error in
             failure(error)
         }
-    }
-    
-    private static func callNumber(phoneNumber: String) {
-        guard let url = URL(string: "telprompt://\(phoneNumber)"),
-              UIApplication.shared.canOpenURL(url) else {
-            return
-        }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     private static func makeEvent(isEMS: Bool, mediaType: String, responderType : String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {

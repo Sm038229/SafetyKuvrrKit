@@ -10,7 +10,10 @@ import UIKit
 class SKSelectedERPTableViewCell: UITableViewCell {
     static let identifier = "SKSelectedERPTableViewCell"
     @IBOutlet weak var imgView: UIImageView!
+    @IBOutlet weak var checkboxButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
+    
+    var checkboxTapped: ((UIButton)-> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,6 +24,10 @@ class SKSelectedERPTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func checkboxAction(_ sender: UIButton) {
+        checkboxTapped?(sender)
     }
 
 }
