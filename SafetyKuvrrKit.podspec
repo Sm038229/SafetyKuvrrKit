@@ -23,6 +23,7 @@ Pod::Spec.new do |spec|
   spec.dependency 'AgoraRtcEngine_iOS'
   spec.dependency 'KeychainSwift'
   spec.dependency 'SDWebImage'
+  spec.dependency 'ActiveLabel'
   
   spec.framework = "UIKit", "Foundation", "CoreLocation" #, "CoreBluetooth", "ExternalAccessory"
 

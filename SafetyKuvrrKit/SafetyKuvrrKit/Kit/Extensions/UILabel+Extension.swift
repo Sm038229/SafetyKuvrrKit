@@ -12,11 +12,7 @@ extension UILabel {
     func setupLabel(text textt: String?, andFont fontt: UIFont? = UIFont.regularFontNormalSize()) {
         numberOfLines = 0
         font = fontt
-        //text = textt
-        var colorStrings = textt?.getAllNumbers ?? []
-        var linkStrings = textt?.getAllLinks ?? []
-        colorStrings.append(contentsOf: linkStrings)
-        attributedText = textt?.attributedStringWithColor(colorStrings)
+        text = textt
         sizeToFit()
     }
     

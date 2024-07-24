@@ -26,7 +26,7 @@ class SKSelectedERPTableViewController: UITableViewController {
         headerLabel.attributedText = headerLabel.text?.attributedStringWithColor(colorStrings, boldWords: words)
         //
         self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 50.0
+        self.tableView.estimatedRowHeight = UITableView.automaticDimension
         self.tableView.tableFooterView?.isHidden = true
         SKServiceManager.erpSelection(forUUID: selectedERPUUID) { [weak self] response in
             self?.erpDetail = response
@@ -62,14 +62,7 @@ class SKSelectedERPTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: SKSelectedERPTableViewCell.identifier, for: indexPath) as! SKSelectedERPTableViewCell
         
         if let data = erpDetail?.jsonData {
-            if erpDetail?.acknowledgeMentDate == nil {
-                cell.imgView.isHidden = false
-                cell.imgView.image = UIImage.named("toogle_off")
-            } else {
-                cell.imgView.isHidden = true
-            }
-            cell.titleLabel.setupLabel(text: data[indexPath.row])
-            cell.checkboxButton.tag = indexPath.row
+            cell.configure(forData: data, date: erpDetail?.acknowledgeMentDate, indexPath: indexPath)
         }
         
         cell.checkboxTapped = { [weak self] sender in
@@ -80,12 +73,11 @@ class SKSelectedERPTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height = UITableView.automaticDimension
-        if let data = erpDetail?.jsonData {
-            height = UILabel.heightForLabel(text: data[indexPath.row], width: tableView.bounds.width - 130.0)
-        }
-        
-        return height
+        return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

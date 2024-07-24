@@ -50,12 +50,11 @@ class SKERPListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height = UITableView.automaticDimension
-        if let data = erpList?[indexPath.row] {
-            height = UILabel.heightForLabel(text: data.title, width: tableView.bounds.width - 130.0)
-        }
-        
-        return height
+        return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

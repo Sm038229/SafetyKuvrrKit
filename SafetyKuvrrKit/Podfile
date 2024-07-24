@@ -12,6 +12,7 @@ def common_pods
   pod 'AgoraRtcEngine_iOS'
   pod 'KeychainSwift'
   pod 'SDWebImage'
+  pod 'ActiveLabel'
 end
 
 target 'SafetyKuvrrKit' do

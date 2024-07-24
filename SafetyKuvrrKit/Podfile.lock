@@ -1,4 +1,5 @@
 PODS:
+  - ActiveLabel (1.1.0)
   - AgoraRtcEngine_iOS (4.3.2):
     - AgoraRtcEngine_iOS/AIAEC (= 4.3.2)
     - AgoraRtcEngine_iOS/AINS (= 4.3.2)
@@ -88,6 +89,7 @@ PODS:
   - SDWebImage/Core (5.19.4)
 
 DEPENDENCIES:
+  - ActiveLabel
   - AgoraRtcEngine_iOS
   - Alamofire
   - DeviceGuru
@@ -98,6 +100,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - ActiveLabel
     - AgoraRtcEngine_iOS
     - Alamofire
     - DeviceGuru
@@ -107,6 +110,7 @@ SPEC REPOS:
     - SDWebImage
 
 SPEC CHECKSUMS:
+  ActiveLabel: 5e3f4de79a1952d4604b845a0610d4776e4b82b3
   AgoraRtcEngine_iOS: eaa97751fcfe1b50d9b067e0df92752a6a5f899f
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   DeviceGuru: 593a89a21c71bc1d5a039a8d6807c325c84cc091
@@ -115,6 +119,6 @@ SPEC CHECKSUMS:
   PermissionKit: 5bfb53abe59cf35743f2798cc05207b305331507
   SDWebImage: 066c47b573f408f18caa467d71deace7c0f8280d
 
-PODFILE CHECKSUM: 3b1e89d6a4196186c734d01377bc21a694d639d8
+PODFILE CHECKSUM: bdf14551cf954b5192599fbcbd21952f23c2ca9f
 
 COCOAPODS: 1.15.2
