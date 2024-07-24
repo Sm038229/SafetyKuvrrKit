@@ -26,3 +26,13 @@ extension UILabel {
         return height
     }
 }
+
+extension UIImage {
+    static func named(_ name: String) -> UIImage? {
+        if let bundlePath = Bundle(for: SKSelectedERPTableViewCell.self).resourcePath, let resourceBundle = Bundle(path: bundlePath) {
+            return UIImage(named: name, in: resourceBundle, compatibleWith: nil)
+        } else {
+            return nil
+        }
+    }
+}

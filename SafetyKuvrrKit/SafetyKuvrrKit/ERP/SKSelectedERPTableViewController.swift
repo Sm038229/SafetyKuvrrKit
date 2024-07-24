@@ -10,6 +10,7 @@ import UIKit
 class SKSelectedERPTableViewController: UITableViewController {
     var selectedERPTitle = ""
     var selectedERPUUID = ""
+    var selectedERPCount = 0
     var erpDetail: SKERPListResponse?
     
     override func viewDidLoad() {
@@ -18,6 +19,7 @@ class SKSelectedERPTableViewController: UITableViewController {
         //
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 50.0
+        self.tableView.tableFooterView?.isHidden = true
         SKServiceManager.erpSelection(forUUID: selectedERPUUID) { [weak self] response in
             self?.erpDetail = response
             self?.tableView.reloadData()
@@ -54,7 +56,7 @@ class SKSelectedERPTableViewController: UITableViewController {
         if let data = erpDetail?.jsonData {
             if erpDetail?.acknowledgeMentDate == nil {
                 cell.imgView.isHidden = false
-                cell.imgView.image = UIImage(named: "toogle_off")
+                cell.imgView.image = UIImage.named("toogle_off")
             } else {
                 cell.imgView.isHidden = true
             }
@@ -75,7 +77,21 @@ class SKSelectedERPTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? SKSelectedERPTableViewCell, erpDetail?.acknowledgeMentDate == nil {
-            cell.imgView.image = UIImage(named: "toogle_on")
+            if cell.imgView.tag == 0 {
+                cell.imgView.image = UIImage.named("toogle_on")
+                cell.imgView.tag = 1
+                selectedERPCount += 1
+            } else {
+                cell.imgView.image = UIImage.named("toogle_off")
+                cell.imgView.tag = 0
+                selectedERPCount -= 1
+            }
+            //
+            if selectedERPCount == erpDetail?.jsonData?.count {
+                tableView.tableFooterView?.isHidden = false
+            } else {
+                tableView.tableFooterView?.isHidden = true
+            }
         }
     }
     
