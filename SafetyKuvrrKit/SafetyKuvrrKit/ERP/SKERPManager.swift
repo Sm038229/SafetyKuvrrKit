@@ -16,14 +16,14 @@ struct SKERPManager {
     }
     
     static func presentERPListViewController() {
-        if let topController = UIApplication.topViewController(), let vc = SKERPManager.viewController(identifier: "SKERPNavigationController") as? UINavigationController {
+        if let topController = UIApplication.shared.topViewController, let vc = SKERPManager.viewController(identifier: "SKERPNavigationController") as? UINavigationController {
             vc.modalPresentationStyle = .fullScreen
             topController.present(vc, animated: true)
         }
     }
     
     static func presentSelectedERPListViewController(forTitle title: String, andUUID uuid: String) {
-        if let topController = UIApplication.topViewController(), let vc = SKERPManager.viewController(identifier: "SKSelectedERPTableViewController") as? SKSelectedERPTableViewController {
+        if let topController = UIApplication.shared.topViewController, let vc = SKERPManager.viewController(identifier: "SKSelectedERPTableViewController") as? SKSelectedERPTableViewController {
             //vc.modalPresentationStyle = .fullScreen
             vc.selectedERPTitle = title
             vc.selectedERPUUID = uuid

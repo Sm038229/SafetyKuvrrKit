@@ -9,6 +9,12 @@ import Foundation
 import UIKit
 
 extension UIApplication {
+    var topViewController: UIViewController? {
+        get {
+            return UIApplication.topViewController()
+        }
+    }
+    
     static func viewController(forStoryboardID storyboardID: String, viewControllerID: String) -> UIViewController {
         let storyboardName = storyboardID
         let storyboardBundle = Bundle(for: SKStreaming.self)
@@ -18,7 +24,7 @@ extension UIApplication {
         return vc
     }
     
-    static func topViewController(base: UIViewController? = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController) -> UIViewController? {
+    private static func topViewController(base: UIViewController? = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController) -> UIViewController? {
         
         if let nav = base as? UINavigationController {
             return topViewController(base: nav.visibleViewController)

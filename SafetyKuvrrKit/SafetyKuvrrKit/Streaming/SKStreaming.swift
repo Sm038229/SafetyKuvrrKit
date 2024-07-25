@@ -26,7 +26,7 @@ public class SKStreaming: UIViewController {
     }
     
     public static func presentViewController() {
-        if let topController = UIApplication.topViewController() {
+        if let topController = UIApplication.shared.topViewController {
             let vc = SKStreaming.viewController()
             vc.modalPresentationStyle = .fullScreen
             topController.present(vc, animated: true)

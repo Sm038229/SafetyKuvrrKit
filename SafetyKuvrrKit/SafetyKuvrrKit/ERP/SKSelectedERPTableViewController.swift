@@ -6,24 +6,23 @@
 //
 
 import UIKit
+import ActiveLabel
 
 class SKSelectedERPTableViewController: UITableViewController {
     var selectedERPTitle = ""
     var selectedERPUUID = ""
     var selectedERPCount = 0
     var erpDetail: SKERPListResponse?
-    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var headerLabel: ActiveLabel!
     @IBOutlet weak var footerButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = selectedERPTitle
         //
-        var colorStrings = headerLabel.text?.getAllNumbers ?? []
-        var linkStrings = headerLabel.text?.getAllLinks ?? []
-        colorStrings.append(contentsOf: linkStrings)
-        let words = headerLabel.text?.components(separatedBy: " ").map{ $0 }
-        headerLabel.attributedText = headerLabel.text?.attributedStringWithColor(colorStrings, boldWords: words)
+        ActiveLabel.setupTapable(label: headerLabel)
+        headerLabel.font = .boldFontNormalSize()
+        headerLabel.text = "If this is a life threatening situation, please call 911."
         //
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = UITableView.automaticDimension
