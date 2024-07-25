@@ -20,6 +20,8 @@ class SKSelectedERPTableViewController: UITableViewController {
         super.viewDidLoad()
         title = selectedERPTitle
         //
+        footerButton.titleLabel?.font = .boldFontNormalSize()
+        //
         ActiveLabel.setupTapable(label: headerLabel)
         headerLabel.font = .boldFontNormalSize()
         headerLabel.text = "If this is a life threatening situation, please call 911."
@@ -36,8 +38,8 @@ class SKSelectedERPTableViewController: UITableViewController {
     }
     @IBAction func ackAction(_ sender: UIButton) {
         if let version = erpDetail?.version, let uuid = erpDetail?.uuid {
-            SKServiceManager.erpAcknowledgement(forVersion: version, andUUID: uuid) { response in
-                
+            SKServiceManager.erpAcknowledgement(forVersion: version, andUUID: uuid) { [weak self] response in
+                self?.navigationController?.popViewController(animated: true)
             } failure: { error in
                 
             }

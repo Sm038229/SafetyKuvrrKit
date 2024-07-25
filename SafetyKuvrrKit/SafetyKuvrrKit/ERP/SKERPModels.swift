@@ -46,3 +46,19 @@ struct SKERPListResponse: Codable {
         case acknowledgeMentDate = "ack_date"
     }
 }
+
+struct SKERPAcknowledgementResponse: Codable {
+    var uuid: String? = nil
+    var version: Int? = nil
+    var createdDateString: String? = nil
+    var erpPlanURLString: String? = nil
+    var userURLString: String? = nil
+    
+    enum CodingKeys: String, CodingKey {
+        case uuid = "uuid"
+        case version = "version"
+        case createdDateString = "created"
+        case erpPlanURLString = "er_plan"
+        case userURLString = "user"
+    }
+}

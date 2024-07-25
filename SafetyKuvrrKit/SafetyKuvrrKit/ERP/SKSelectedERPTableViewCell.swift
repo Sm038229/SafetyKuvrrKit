@@ -10,6 +10,7 @@ import ActiveLabel
 
 class SKSelectedERPTableViewCell: UITableViewCell {
     static let identifier = "SKSelectedERPTableViewCell"
+    @IBOutlet weak var imgOuterView: UIView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var checkboxButton: UIButton!
     @IBOutlet weak var titleLabel: ActiveLabel!
@@ -30,10 +31,10 @@ class SKSelectedERPTableViewCell: UITableViewCell {
     func configure(forData data: [String], date: String?, indexPath: IndexPath) {
         ActiveLabel.setupTapable(label: titleLabel)
         if date == nil {
-            imgView.isHidden = false
+            imgOuterView.isHidden = false
             imgView.image = UIImage.named("toogle_off")
         } else {
-            imgView.isHidden = true
+            imgOuterView.isHidden = true
         }
         titleLabel.setupLabel(text: data[indexPath.row])
         //titleLabel.text = data[indexPath.row]

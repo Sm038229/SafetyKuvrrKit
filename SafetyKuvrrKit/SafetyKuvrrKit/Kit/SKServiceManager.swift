@@ -275,11 +275,11 @@ struct SKServiceManager {
         }
     }
     
-    static func erpAcknowledgement(forVersion version: Int, andUUID uuid: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+    static func erpAcknowledgement(forVersion version: Int, andUUID uuid: String, success: @escaping((SKERPAcknowledgementResponse?) -> Void), failure: @escaping((String?)-> Void)) {
         let request = SKERPRequest(version: version)
-        SKService.apiCall(with: SKConstants.API.erp + uuid, method: .put, parameters: request.dictionary, responseModel: SKStartEventResponse.self) { response in
+        SKService.apiCall(with: SKConstants.API.erp + uuid, method: .put, parameters: request.dictionary, responseModel: SKERPAcknowledgementResponse.self) { response in
             guard let response = response else { success(nil); return; }
-            success(response.message)
+            success(response)
         } failure: { error in
             guard let error = error else { failure(nil); return; }
             failure(error)
