@@ -20,7 +20,7 @@ public struct SafetyKuvrr: SKKit {
         SKServiceManager.initialize()
     }
     
-    public static func login(withEmail email: String? = nil, withMoble mobile: String? = nil, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+    private static func login(withEmail email: String? = nil, withMoble mobile: String? = nil, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
             SKServiceManager.login(withEmail: email, withMoble: mobile, country: country) { response in
                 success(response)
             } failure: { error in
@@ -28,7 +28,7 @@ public struct SafetyKuvrr: SKKit {
             }
     }
     
-    public static func verifyOTP(email: String? = nil, mobile: String? = nil, country: String = "IN", otp: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+    private static func verifyOTP(email: String? = nil, mobile: String? = nil, country: String = "IN", otp: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
             SKServiceManager.verifyOTP(email: email, mobile: mobile, otp: otp) { response in
                 success(response)
             } failure: { error in
@@ -36,7 +36,7 @@ public struct SafetyKuvrr: SKKit {
             }
     }
     
-    public static func resendOTP(forEmail email: String? = nil, forMoble mobile: String? = nil, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+    private static func resendOTP(forEmail email: String? = nil, forMoble mobile: String? = nil, country: String = "IN", success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
             SKServiceManager.resendOTP(forEmail: email, forMoble: mobile, country: country) { response in
                 success(response)
             } failure: { error in
@@ -54,5 +54,9 @@ public struct SafetyKuvrr: SKKit {
     
     public static func presentERPListViewController() {
         SKERPManager.presentERPListViewController()
+    }
+    
+    public static func presentMapListViewController() {
+        SKMapManager.presentMapListViewController()
     }
 }

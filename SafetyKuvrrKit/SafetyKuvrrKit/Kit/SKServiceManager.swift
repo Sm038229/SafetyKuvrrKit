@@ -285,4 +285,20 @@ struct SKServiceManager {
             failure(error)
         }
     }
+    
+    static func mapList(success: @escaping((SKMapListResponse?) -> Void), failure: @escaping((String?)-> Void)) {
+        SKLocationManager.currentLocation { currentLocation in
+            let request = SKMapRequest(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
+            SKService.apiCall(with: SKConstants.API.map, method: .post, parameters: request.dictionary, responseModel: SKMapListResponse.self) { response in
+                guard let response = response else { success(nil); return; }
+                success(response)
+            } failure: { error in
+                guard let error = error else { failure(nil); return; }
+                failure(error)
+            }
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
+            failure(error)
+        }
+    }
 }

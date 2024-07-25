@@ -46,8 +46,8 @@ extension ActiveLabel {
         label.handleURLTap { element in
             //print("URL type tapped: \(element)")
             var url = element.absoluteString
-            if url.hasPrefix("http://") == false || url.hasPrefix("https://") == false {
-                url = "https://" + url
+            if url.hasPrefix("http://") == false {
+                url = "http://" + url
             }
             if let exactURL = URL(string: url), UIApplication.shared.canOpenURL(exactURL) {
                 UIApplication.shared.open(exactURL, options: [:]) { status in
