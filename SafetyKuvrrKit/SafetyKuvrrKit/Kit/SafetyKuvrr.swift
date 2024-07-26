@@ -52,11 +52,11 @@ public struct SafetyKuvrr: SKKit {
         })
     }
     
-    public static func presentERPListViewController() {
+    public static func getERPList() {
         SKERPManager.presentERPListViewController()
     }
     
-    public static func presentMapListViewController() {
+    public static func getMapList() {
         SKMapManager.presentMapListViewController()
     }
 }

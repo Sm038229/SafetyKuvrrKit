@@ -36,11 +36,11 @@ PODS:
   - AgoraRtcEngine_iOS/VirtualBackground (4.3.2)
   - AgoraRtcEngine_iOS/VQA (4.3.2)
   - Alamofire (5.9.1)
-  - DeviceGuru (10.0.7):
-    - DeviceGuru/DeviceGuru (= 10.0.7)
-  - DeviceGuru/DeviceGuru (10.0.7):
+  - DeviceGuru (10.0.8):
+    - DeviceGuru/DeviceGuru (= 10.0.8)
+  - DeviceGuru/DeviceGuru (10.0.8):
     - DeviceGuru/Resources
-  - DeviceGuru/Resources (10.0.7)
+  - DeviceGuru/Resources (10.0.8)
   - INTULocationManager (4.4.0)
   - KeychainSwift (24.0.0)
   - PermissionKit (1.6.1):
@@ -113,7 +113,7 @@ SPEC CHECKSUMS:
   ActiveLabel: 5e3f4de79a1952d4604b845a0610d4776e4b82b3
   AgoraRtcEngine_iOS: eaa97751fcfe1b50d9b067e0df92752a6a5f899f
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
-  DeviceGuru: 593a89a21c71bc1d5a039a8d6807c325c84cc091
+  DeviceGuru: 7e52d67abdf7a9bdf88302cd1ac3dd8cfe6b0fad
   INTULocationManager: b5a0422782f0b87af0b8db14e0826fb38dbecd19
   KeychainSwift: 007c4647486e4563adca839cf02cef00deb3b670
   PermissionKit: 5bfb53abe59cf35743f2798cc05207b305331507

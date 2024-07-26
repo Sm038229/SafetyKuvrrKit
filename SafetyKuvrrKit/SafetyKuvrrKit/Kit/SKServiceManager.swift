@@ -12,15 +12,13 @@ struct SKServiceManager {
     private init() {}
     
     static func initialize() {
-        if SKServiceManager.isUserLoggedIn == true {
-            SKServiceManager.updateUserDeviceDetailAPI(success: {
-                
-            }, failure: { error in
-                //guard let error = error else { failure(nil); return; }
-            })
-        } else {
+        if SKServiceManager.isUserLoggedIn == false {
             SKServiceManager.verifyOTP(email: "sachin@kuvrr.com", otp: "159753") { response in
-                
+                SKServiceManager.updateUserDeviceDetailAPI(success: {
+                    
+                }, failure: { error in
+                    //guard let error = error else { failure(nil); return; }
+                })
             } failure: { error in
                 
             }
@@ -104,8 +102,6 @@ struct SKServiceManager {
             SKService.apiCall(with: SKConstants.API.otpVerify, method: .post, parameters: request, responseModel: SKVerifyOTPResponse.self) { response in
                 guard let response = response else { success(nil); return; }
                 SKUserDefaults.userUUID = response.userUUID
-                //
-                SKServiceManager.initialize()
                 success(response.userUUID)
             } failure: { error in
                 guard let error = error else { failure(nil); return; }

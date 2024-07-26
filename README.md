@@ -112,4 +112,12 @@ SafetyKuvrr.raiseEvent(isSoS: true, success: { response in
 
 })
 ```
+For ERPs:
+``` swift
+SafetyKuvrr.getERPList()
+```
+For Maps:
+``` swift
+SafetyKuvrr.getMapList()
+```
 Checkout [`Example Project`](Example/)!
