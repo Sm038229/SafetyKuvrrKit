@@ -33,7 +33,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="DYd-xW-j87">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" name="AAA_tableView"/>
+                        <color key="backgroundColor" name="appTableViewColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SKERPListTableViewCell" rowHeight="70" id="DtI-Zd-iJW" customClass="SKERPListTableViewCell" customModule="SafetyKuvrrKit" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="70"/>
@@ -64,7 +64,7 @@
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
-                                            <color key="backgroundColor" name="AAA_default"/>
+                                            <color key="backgroundColor" name="appDefaultColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="ThO-G6-g6Q" secondAttribute="trailing" constant="10" id="IOd-D7-I3w"/>
                                                 <constraint firstItem="ThO-G6-g6Q" firstAttribute="top" secondItem="sqA-Vf-N9y" secondAttribute="top" constant="10" id="Plg-a8-7vZ"/>
@@ -111,7 +111,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="1DY-bT-o2p">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" name="AAA_tableView"/>
+                        <color key="backgroundColor" name="appTableViewColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="S4s-R9-B2A">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -140,7 +140,7 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QL2-1N-ljN">
                                     <rect key="frame" x="10" y="10" width="373" height="50"/>
-                                    <color key="backgroundColor" name="AAA_default"/>
+                                    <color key="backgroundColor" name="appDefaultColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="JPg-HW-89B"/>
                                     </constraints>
@@ -273,18 +273,18 @@
     </scenes>
     <designables>
         <designable name="Irn-zX-XcO">
-            <size key="intrinsicContentSize" width="363" height="18.666666666666668"/>
+            <size key="intrinsicContentSize" width="363" height="20"/>
         </designable>
         <designable name="bOb-bl-yMU">
-            <size key="intrinsicContentSize" width="41.333333333333336" height="20.333333333333332"/>
+            <size key="intrinsicContentSize" width="42" height="21"/>
         </designable>
     </designables>
     <resources>
         <image name="radio_empty" width="512" height="512"/>
-        <namedColor name="AAA_default">
+        <namedColor name="appDefaultColor">
             <color red="0.12941176470588237" green="0.19215686274509805" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="AAA_tableView">
+        <namedColor name="appTableViewColor">
             <color red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>

@@ -15,6 +15,7 @@ class SKMapsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = mapData?.mapName
         noDataLabel.font = .regularFontNormalSize()
         if let myURLString = mapData?.mapURL?.addHTTPURLPrefix, myURLString.isEmpty == false, let url = URL(string: myURLString) {
             load(url: url)

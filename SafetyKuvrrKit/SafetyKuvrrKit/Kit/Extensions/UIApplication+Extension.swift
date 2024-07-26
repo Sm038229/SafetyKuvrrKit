@@ -35,6 +35,7 @@ extension UIApplication {
         } else if let presented = base?.presentedViewController {
             return topViewController(base: presented)
         }
+        base?.navigationBarSetup(forViewController:base)
         return base
     }
 }
