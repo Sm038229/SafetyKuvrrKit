@@ -17,6 +17,14 @@ extension String {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
+    var addHTTPURLPrefix: String? {
+        if hasPrefix("http") == false {
+            return "http://" + self
+        } else {
+            return self
+        }
+    }
+    
     var getAllNumbers: [String]? {
         let numbersInString = self.components(separatedBy: .decimalDigits.inverted).filter { !$0.isEmpty }
         return numbersInString.compactMap { $0 }

@@ -39,7 +39,7 @@ struct SKService {
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
         //
-        authRequest.responseDecodable(of: responseModel) { response in
+        authRequest.responseDecodable(of: responseModel, emptyResponseCodes: [200, 204, 205]) { response in
             SKService.setupCookies()
             //
             let responseCode = "\(response.response?.statusCode.description ?? "")"
@@ -47,7 +47,7 @@ struct SKService {
                 print("Response - (Code-\(responseCode)): \(utf8Text)")
             } else {
                 print("Response - (Code-\(responseCode)): Empty")
-                if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
+                if let statusCode = response.response?.statusCode, (200...299).contains(statusCode) {
                     success(SKMessage(message: "Empty Response") as? T)
                     return
                 }
@@ -55,29 +55,27 @@ struct SKService {
             //
             switch response.result {
             case .success(let value):
-                if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
+                if let statusCode = response.response?.statusCode, (200...299).contains(statusCode) {
+                    NSLog("Success: \(value)")
+                    success(value)
+                } else if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
                     if let model = SKService.getResponse(forData: data, model: responseModel) {
                         NSLog("Model Data: \(model)")
                         success(model)
                     } else {
-                        NSLog("Error1: " + errorMessage)
+                        NSLog("Success Response Error: " + errorMessage)
                         failure(errorMessage)
                     }
                 } else {
-                    if let statusCode = response.response?.statusCode, statusCode >= 200, statusCode < 300 {
-                        NSLog("Success: \(value)")
-                        success(value)
-                    } else {
-                        NSLog("Something went wrong!")
-                        failure("Something went wrong!")
-                    }
+                    NSLog("Something went wrong!")
+                    failure("Something went wrong!")
                 }
             case .failure(let error):
                 if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
-                    NSLog("Error: " + errorMessage)
+                    NSLog("Failure Response Error: " + errorMessage)
                     failure(errorMessage)
                 } else {
-                    NSLog(error.localizedDescription)
+                    NSLog("Response Error: " + error.localizedDescription)
                     failure(error.localizedDescription)
                 }
             }

@@ -9,6 +9,8 @@ import UIKit
 
 class SKMapsTableViewController: UITableViewController {
     var mapData: SKMapListResponse?
+    private let steerpathMap = "Steerpath"
+    private let hereMap = "Here"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +30,7 @@ class SKMapsTableViewController: UITableViewController {
         if let mapList = mapData?.mapList {
             var tempMapList: [SKMapInfoResponse] = []
             for mapInfo in mapList {
-                if let mapType = mapInfo.mapType, mapType.lowercased() != "Steerpath".lowercased() {
+                if let mapType = mapInfo.mapType, mapType.lowercased() != steerpathMap.lowercased(), mapType.lowercased() != hereMap.lowercased() {
                     tempMapList.append(mapInfo)
                 }
             }

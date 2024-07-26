@@ -16,25 +16,22 @@ class SKMapsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         noDataLabel.font = .regularFontNormalSize()
-        if let myURLString = mapData?.mapURL, myURLString.isEmpty == false {
-            var webURL = myURLString
-            if webURL.hasPrefix("http://") == false {
-                webURL = "http://" + webURL
-            }
-            if let url = URL(string: webURL) {
-                load(url: url)
-            }
+        if let myURLString = mapData?.mapURL?.addHTTPURLPrefix, myURLString.isEmpty == false, let url = URL(string: myURLString) {
+            load(url: url)
         } else {
-            print("URL not found")
+            print("Map not found")
             webView.isHidden = true
-            noDataLabel.text = "URL not found"
+            noDataLabel.text = "Map not found"
         }
     }
     
     private func load(url: URL) {
         let request = URLRequest(url: url)
         webView.navigationDelegate = self
-        webView.load(request)
+        webView.uiDelegate = self
+        DispatchQueue.main.async { [weak self] in
+            self?.webView.load(request)
+        }
     }
     
 
@@ -62,5 +59,31 @@ extension SKMapsViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         print(error.localizedDescription)
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        decisionHandler(.allow)
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        decisionHandler(.allow)
+    }
+}
+
+extension SKMapsViewController: WKUIDelegate {
+
+    /**
+     * Force all popup windows to remain in the current WKWebView.
+     * By default, WKWebView is blocking new windows from being created
+     * ex <a href="link" target="_blank">text</a>.
+     * This code catches those popup windows and displays them in the current WKWebView.
+     */
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+
+        // open in current view
+        webView.load(navigationAction.request)
+
+        // don't return a new view to build a popup into (the default behavior).
+        return nil;
     }
 }
