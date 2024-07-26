@@ -61,8 +61,10 @@ public class SKStreaming: UIViewController {
         let tokenn = SKStreaming.eventResponse?.streamToken ?? SKStreaming.token
         let channel = SKStreaming.eventResponse?.streamChannelName ?? SKStreaming.channelName
         SKCallSDKManager.shared.delegate = self
-        SKCallSDKManager.shared.initializeAgoraEngine(withAppID: SKStreaming.appID, token: tokenn, channel: channel, joinNeeded: true, video: true, audio: true, cameraDirection: .front, watermark: true)
-        SKCallSDKManager.shared.setupVideoView(via: 0, intoView: localStremingView)
+        DispatchQueue.main.async { [weak self] in
+            SKCallSDKManager.shared.initializeAgoraEngine(withAppID: SKStreaming.appID, token: tokenn, channel: channel, joinNeeded: true, video: true, audio: true, cameraDirection: .front, watermark: true)
+            SKCallSDKManager.shared.setupVideoView(via: 0, intoView: self?.localStremingView)
+        }
     }
     
     static func join() {
@@ -92,10 +94,11 @@ extension SKStreaming : SKCallingFeatureDelegate {
     
     func addUser(forUID uid: UInt) {
         SKCallSDKManager.shared.setupVideoView(via: uid, intoView: remoteStreamingView)
+        remoteStreamingView.isHidden = false
     }
     
     func removeUser(forUID uid: UInt) {
-        
+        remoteStreamingView.isHidden = true
     }
     
     func removeAllUser() {

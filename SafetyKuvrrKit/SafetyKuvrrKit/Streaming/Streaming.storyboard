@@ -25,31 +25,36 @@
                                 <rect key="frame" x="10" y="608" width="373" height="200"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kpD-eq-hl4">
-                                        <rect key="frame" x="171" y="156" width="31" height="34"/>
+                                        <rect key="frame" x="138.66666666666666" y="140" width="96" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="klE-oW-kaN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
                                         <color key="tintColor" systemColor="systemRedColor"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="End"/>
+                                        <state key="normal" title="  End SOS  ">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <action selector="endAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="0zI-bc-EGT"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Pl-MW-s36">
-                                        <rect key="frame" x="223" y="0.0" width="150" height="200"/>
+                                        <rect key="frame" x="0.0" y="-40" width="150" height="150"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="200" id="MSK-88-oro"/>
+                                            <constraint firstAttribute="height" constant="150" id="MSK-88-oro"/>
                                             <constraint firstAttribute="width" constant="150" id="r56-JD-ueX"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="yDy-Hx-x6K"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="4Pl-MW-s36" secondAttribute="bottom" id="Eiz-Py-yox"/>
+                                    <constraint firstAttribute="bottom" secondItem="4Pl-MW-s36" secondAttribute="bottom" constant="90" id="Eiz-Py-yox"/>
                                     <constraint firstItem="kpD-eq-hl4" firstAttribute="centerX" secondItem="QaN-w7-CgH" secondAttribute="centerX" id="MKc-sM-zZS"/>
-                                    <constraint firstAttribute="trailing" secondItem="4Pl-MW-s36" secondAttribute="trailing" id="hh6-Fi-KpJ"/>
+                                    <constraint firstAttribute="leading" secondItem="4Pl-MW-s36" secondAttribute="leading" id="hh6-Fi-KpJ"/>
                                     <constraint firstAttribute="bottom" secondItem="kpD-eq-hl4" secondAttribute="bottom" constant="10" id="ix7-CM-bXD"/>
-                                    <constraint firstItem="4Pl-MW-s36" firstAttribute="top" secondItem="QaN-w7-CgH" secondAttribute="top" id="xpE-yt-5zS"/>
                                     <constraint firstAttribute="height" constant="200" id="zlW-Bv-Q4y"/>
                                 </constraints>
                             </view>
