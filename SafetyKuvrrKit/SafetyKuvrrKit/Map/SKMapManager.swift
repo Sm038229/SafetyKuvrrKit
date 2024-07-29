@@ -17,7 +17,6 @@ struct SKMapManager {
     
     static func presentMapListViewController() {
         if let topController = UIApplication.shared.topViewController, let vc = SKMapManager.viewController(identifier: "SKMapNavigationController") as? UINavigationController {
-            vc.modalPresentationStyle = .fullScreen
             topController.present(vc, animated: true)
         }
     }

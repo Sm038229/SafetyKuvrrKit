@@ -8,10 +8,12 @@
 import Foundation
 import UIKit
 
-public class SKStreaming: UIViewController {
+final class SKStreaming: UIViewController {
     static var eventResponse: SKEventResponse?
     @IBOutlet weak var localStremingView: UIView!
     @IBOutlet weak var remoteStreamingView: UIView!
+    @IBOutlet weak var chatButton: UIButton!
+    @IBOutlet weak var hideButton: UIButton!
     //
     //private static var appID = "e4a7751e763944a38680592591398f44" // Test Server
     private static var appID = "e9c9b52fcad241bcb1655f58fc2c16d6" // Red5 Server
@@ -19,28 +21,43 @@ public class SKStreaming: UIViewController {
     private static var channelName = "Kuvrr_Demo_8May"
     private static var isTwoWayLiveStream = false
     private static var isRemoteUserJoined = false
+    var chatTimer: Timer?
+    static var chatResponse: SKEventChatResponse?
+    var chatVC: SKChatTableViewController?
     
-    public static func viewController() -> SKStreaming {
-        let vc = UIApplication.viewController(forStoryboardID: "Streaming", viewControllerID: "SKStreaming") as! SKStreaming
-        return vc
-    }
-    
-    public static func presentViewController() {
-        if let topController = UIApplication.shared.topViewController {
-            let vc = SKStreaming.viewController()
-            vc.modalPresentationStyle = .fullScreen
-            topController.present(vc, animated: true)
-        }
-    }
-    
-    public override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
     }
     
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         startCamera()
+        getChats()
+    }
+    
+    private func getChats() {
+        self.chatButton.isEnabled = false
+        chatTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
+            var lastMessge = SKStreaming.chatResponse?.results?.last?.lastMessage
+            SKServiceManager.getEventChats(forEventUUID: SKStreaming.eventResponse?.uuid, lastMessage: lastMessge) { response in
+                SKStreaming.chatResponse = response
+                if let count = SKStreaming.chatResponse?.count, count > 0 {
+                    if self?.chatButton.isEnabled == false {
+                        self?.chatButton.isEnabled = true
+                        SKStreamingManager.presentChatViewController(forData: SKStreaming.chatResponse)
+                    } else {
+                        SKStreamingManager.setChatData(response)
+                    }
+                }
+            } failure: { error in
+                
+            }
+        }
+    }
+    
+    private func invalidateTimer() {
+        chatTimer?.invalidate()
     }
     
     @IBAction func endAction(_ sender: UIButton) {
@@ -48,6 +65,7 @@ public class SKStreaming: UIViewController {
             SKServiceManager.endEvent(forReason: "Other", andMessage: "Test Message") { response in
                 self?.dismiss(animated: true, completion: {
                     SKStreaming.leave()
+                    self?.invalidateTimer()
                 })
             } failure: { error in
                 
@@ -57,7 +75,15 @@ public class SKStreaming: UIViewController {
         })
     }
     
-    @objc public func startCamera() {
+    @IBAction func chatButtonAction(_ sender: UIButton) {
+        SKStreamingManager.presentChatViewController(forData: SKStreaming.chatResponse)
+    }
+    
+    @IBAction func hideButtonAction(_ sender: UIButton) {
+        
+    }
+    
+    @objc func startCamera() {
         let tokenn = SKStreaming.eventResponse?.streamToken ?? SKStreaming.token
         let channel = SKStreaming.eventResponse?.streamChannelName ?? SKStreaming.channelName
         SKCallSDKManager.shared.delegate = self

@@ -217,7 +217,7 @@ struct SKServiceManager {
     private static func startMediaEvent(forRequest request: SKStartEventRequest) {
         if request.mediaType == "Video" {
             SKServiceManager.eventMediaStart(forData: request.dictionary) { response in
-                SKStreaming.presentViewController()
+                SKStreamingManager.presentViewController()
             } failure: { error in
                 
             }
@@ -236,6 +236,28 @@ struct SKServiceManager {
     
     static func eventMediaStop(forEventUUID uuid: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
         SKService.apiCall(with: "\(SKConstants.API.incidentMediaStop)/\(uuid)") { response in
+            guard let response = response else { success(nil); return; }
+            success(response.message)
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
+            failure(error)
+        }
+    }
+    
+    static func getEventChats(forEventUUID uuid: String?, lastMessage: String? = nil, success: @escaping((SKEventChatResponse?) -> Void), failure: @escaping((String?)-> Void)) {
+        let request = SKEventChatRequest(eventUUID: uuid, lastMessage: lastMessage)
+        SKService.apiCall(with: SKConstants.API.chat, parameters: request.dictionary, responseModel: SKEventChatResponse.self) { response in
+            guard let response = response else { success(nil); return; }
+            success(response)
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
+            failure(error)
+        }
+    }
+    
+    static func sendEventChats(forEventUUID uuid: String?, message: String?, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+        let request = SKEventChatRequest(eventUUID: uuid, message: message)
+        SKService.apiCall(with: SKConstants.API.chat, method: .post, parameters: request.dictionary) { response in
             guard let response = response else { success(nil); return; }
             success(response.message)
         } failure: { error in

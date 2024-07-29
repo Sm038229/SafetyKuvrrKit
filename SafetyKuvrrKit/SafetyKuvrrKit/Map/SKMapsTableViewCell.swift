@@ -8,7 +8,6 @@
 import UIKit
 
 class SKMapsTableViewCell: UITableViewCell {
-    static let identifier = "SKMapsTableViewCell"
     @IBOutlet weak var titleLabel: UILabel!
     
     override func awakeFromNib() {

@@ -53,7 +53,7 @@ class SKMapsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SKMapsTableViewCell.identifier, for: indexPath) as! SKMapsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SKMapsTableViewCell.defaultIdentifier, for: indexPath) as! SKMapsTableViewCell
         
         if let mapInfo = mapData?.mapList?[indexPath.row] {
             cell.titleLabel.setupLabel(text: mapInfo.mapName)

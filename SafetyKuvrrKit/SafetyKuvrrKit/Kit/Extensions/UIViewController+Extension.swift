@@ -9,7 +9,21 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-    func addBackButton() {
+    var isClearBackground: Bool {
+        get {
+            if view.isOpaque == false, view.backgroundColor == UIColor.clear {
+                return true
+            } else {
+                return false
+            }
+        }
+        set {
+            view.backgroundColor = UIColor.clear
+            view.isOpaque = false
+        }
+    }
+    
+    func addBackButton(withTransparentBackground isClear: Bool = false) {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(actionDismiss(sender:)))
         navigationBarSetup(forViewController:self)
     }

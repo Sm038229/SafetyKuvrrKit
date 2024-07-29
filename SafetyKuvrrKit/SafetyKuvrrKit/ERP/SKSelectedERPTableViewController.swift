@@ -60,7 +60,7 @@ class SKSelectedERPTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SKSelectedERPTableViewCell.identifier, for: indexPath) as! SKSelectedERPTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SKSelectedERPTableViewCell.defaultIdentifier, for: indexPath) as! SKSelectedERPTableViewCell
         
         if let data = erpDetail?.jsonData {
             cell.configure(forData: data, date: erpDetail?.acknowledgeMentDate, indexPath: indexPath)

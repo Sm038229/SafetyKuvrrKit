@@ -39,7 +39,7 @@ class SKERPListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SKERPListTableViewCell.identifier, for: indexPath) as! SKERPListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SKERPListTableViewCell.defaultIdentifier, for: indexPath) as! SKERPListTableViewCell
 
         if let data = erpList?[indexPath.row] {
             cell.imgView.sd_setImage(with: URL(string: data.iconURLString!))

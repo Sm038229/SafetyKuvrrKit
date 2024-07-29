@@ -20,6 +20,7 @@ extension UIApplication {
         let storyboardBundle = Bundle(for: SKStreaming.self)
         let storyboard = UIStoryboard(name: storyboardName, bundle: storyboardBundle)
         let vc = storyboard.instantiateViewController(withIdentifier: viewControllerID)
+        vc.modalPresentationStyle = .overFullScreen
         
         return vc
     }

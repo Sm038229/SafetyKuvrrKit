@@ -332,3 +332,45 @@ struct SKStartEventRequest: Codable {
         case eventUUID = "incident_id"
     }
 }
+
+struct SKEventChatRequest: Codable {
+    let eventUUID: String?
+    var lastMessage: String? = nil
+    var message: String? = nil
+    
+    enum CodingKeys: String, CodingKey {
+        case eventUUID = "incident_uuid"
+        case lastMessage = "created"
+        case message = "message"
+    }
+}
+
+struct SKEventChatResponse: Codable {
+    let count: Int
+    var timestamp: String? = nil
+    var results: [SKEventChatResults]? = nil
+    
+    enum CodingKeys: String, CodingKey {
+        case count = "count"
+        case timestamp = "timestamp"
+        case results = "results"
+    }
+    
+    struct SKEventChatResults: Codable {
+        var authorFirstName: String? = nil
+        var authorLastName: String? = nil
+        var authorRole: String? = nil
+        var authorUUID: String? = nil
+        var lastMessage: String? = nil
+        var message: String? = nil
+        
+        enum CodingKeys: String, CodingKey {
+            case authorFirstName = "author_first_name"
+            case authorLastName = "author_last_name"
+            case authorRole = "author_role"
+            case authorUUID = "uuid"
+            case lastMessage = "created"
+            case message = "message"
+        }
+    }
+}

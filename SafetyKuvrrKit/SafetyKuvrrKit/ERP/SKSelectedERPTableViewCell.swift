@@ -9,7 +9,6 @@ import UIKit
 import ActiveLabel
 
 class SKSelectedERPTableViewCell: UITableViewCell {
-    static let identifier = "SKSelectedERPTableViewCell"
     @IBOutlet weak var imgOuterView: UIView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var checkboxButton: UIButton!

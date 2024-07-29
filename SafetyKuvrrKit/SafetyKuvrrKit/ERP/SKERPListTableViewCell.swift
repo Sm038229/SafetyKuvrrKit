@@ -8,7 +8,6 @@
 import UIKit
 
 class SKERPListTableViewCell: UITableViewCell {
-    static let identifier = "SKERPListTableViewCell"
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     
