@@ -16,6 +16,7 @@ Pod::Spec.new do |spec|
      'SafetyKuvrrKit' => ['SafetyKuvrrKit/**/*.{xib,storyboard,xcassets,imageset,png,jpg,jpeg}'] 
   }
   spec.swift_versions = "5.0"
+  spec.ios.vendored_frameworks = ["SafetyKuvrrKit/**/fliclib.xcframework", "SafetyKuvrrKit/**/flic2lib.xcframework"]
   spec.dependency 'Alamofire' # , '~> 0.1.0'
   spec.dependency 'INTULocationManager'
   spec.dependency 'DeviceGuru'

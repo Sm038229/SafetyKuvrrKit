@@ -15,13 +15,15 @@ struct SKServiceManager {
         if SKServiceManager.isUserLoggedIn == false {
             SKServiceManager.verifyOTP(email: "sachin@kuvrr.com", otp: "159753") { response in
                 SKServiceManager.updateUserDeviceDetailAPI(success: {
-                    
+                    SKKuvrrButtonHandler.initializeKuvrrPanicButton()
                 }, failure: { error in
                     //guard let error = error else { failure(nil); return; }
                 })
             } failure: { error in
                 
             }
+        } else {
+            SKKuvrrButtonHandler.initializeKuvrrPanicButton()
         }
     }
     

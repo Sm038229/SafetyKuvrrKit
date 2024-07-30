@@ -16,4 +16,5 @@ public protocol SKKit {
     static func raiseEvent(isSoS: Bool, isWalkSafe: Bool, isTimer: Bool, isMedical: Bool, isCheckIn: Bool, isCheckOut: Bool, isEMS: Bool, emsNumber number: Int?, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void))
     static func getERPList()
     static func getMapList()
+    static func getKuvrrPanicButtonList()
 }

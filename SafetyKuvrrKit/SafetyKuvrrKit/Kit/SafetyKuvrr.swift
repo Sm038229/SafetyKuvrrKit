@@ -59,4 +59,8 @@ public struct SafetyKuvrr: SKKit {
     public static func getMapList() {
         SKMapManager.presentMapListViewController()
     }
+    
+    public static func getKuvrrPanicButtonList() {
+        SKKuvrrPanicButtonManager.presentKuvrrPanicButtonViewController()
+    }
 }
