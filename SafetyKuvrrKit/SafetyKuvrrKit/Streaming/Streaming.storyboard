@@ -296,6 +296,22 @@
                                     <constraint firstItem="09h-bZ-IER" firstAttribute="top" secondItem="QaN-w7-CgH" secondAttribute="top" constant="10" id="wxz-H0-GIk"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IWg-Jb-0AB">
+                                <rect key="frame" x="353" y="738" width="30" height="30"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="8vJ-Cq-Xa0"/>
+                                    <constraint firstAttribute="width" constant="30" id="Rrc-EQ-f4i"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -304,14 +320,17 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="QaN-w7-CgH" secondAttribute="trailing" constant="10" id="IDp-Ff-ss3"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="QaN-w7-CgH" secondAttribute="bottom" constant="10" id="Iga-Gu-gUh"/>
                             <constraint firstItem="cmX-jQ-a9g" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="KuO-4D-MDZ"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="IWg-Jb-0AB" secondAttribute="trailing" constant="10" id="NdP-62-slD"/>
                             <constraint firstItem="QaN-w7-CgH" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="10" id="abF-xN-nFV"/>
                             <constraint firstItem="cmX-jQ-a9g" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="bNx-NB-1M0"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="IWg-Jb-0AB" secondAttribute="bottom" constant="50" id="gpp-E5-CBJ"/>
                             <constraint firstAttribute="bottom" secondItem="cmX-jQ-a9g" secondAttribute="bottom" id="iTa-Ph-pR8"/>
                             <constraint firstItem="QaN-w7-CgH" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="10" id="jLU-OR-ZF0"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="chatButton" destination="B6f-c5-nHZ" id="aF1-uA-M19"/>
+                        <outlet property="chatCountLabel" destination="IWg-Jb-0AB" id="QjD-JZ-7qi"/>
                         <outlet property="hideButton" destination="2mO-Gb-UhV" id="kR3-Ig-6JC"/>
                         <outlet property="localStremingView" destination="cmX-jQ-a9g" id="pyw-vR-65e"/>
                         <outlet property="remoteStreamingView" destination="4Pl-MW-s36" id="iJw-Zl-zku"/>
@@ -616,6 +635,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

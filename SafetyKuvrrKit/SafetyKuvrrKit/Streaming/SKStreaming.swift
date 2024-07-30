@@ -14,6 +14,7 @@ final class SKStreaming: UIViewController {
     @IBOutlet weak var remoteStreamingView: UIView!
     @IBOutlet weak var chatButton: UIButton!
     @IBOutlet weak var hideButton: UIButton!
+    @IBOutlet weak var chatCountLabel: UILabel!
     //
     //private static var appID = "e4a7751e763944a38680592591398f44" // Test Server
     private static var appID = "e9c9b52fcad241bcb1655f58fc2c16d6" // Red5 Server
@@ -23,6 +24,8 @@ final class SKStreaming: UIViewController {
     private static var isRemoteUserJoined = false
     var chatTimer: Timer?
     static var chatResponse: SKEventChatResponse?
+    static var chatResponse2: SKEventChatResponse?
+    static var unreadChatCount: Int = 0
     var chatVC: SKChatTableViewController?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +41,7 @@ final class SKStreaming: UIViewController {
     
     private func getChats() {
         self.chatButton.isEnabled = false
+        self.chatCountLabel.isHidden = true
         chatTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
             var lastMessge = SKStreaming.chatResponse?.results?.last?.lastMessage
             SKServiceManager.getEventChats(forEventUUID: SKStreaming.eventResponse?.uuid, lastMessage: lastMessge) { response in
@@ -46,9 +50,20 @@ final class SKStreaming: UIViewController {
                     if self?.chatButton.isEnabled == false {
                         self?.chatButton.isEnabled = true
                         SKStreamingManager.presentChatViewController(forData: SKStreaming.chatResponse)
-                    } else {
+                    } else if let topVC = UIApplication.shared.topViewController, topVC.isKind(of: SKChatTableViewController.self) {
                         SKStreamingManager.setChatData(response)
+                        SKStreaming.chatResponse2 = response
+                        SKStreaming.unreadChatCount = 0
+                        self?.chatCountLabel.isHidden = true
+                    } else {
+                        SKStreaming.unreadChatCount = (SKStreaming.chatResponse?.count ?? 0) - (SKStreaming.chatResponse2?.count ?? 0)
+                        if SKStreaming.unreadChatCount == 0 {
+                            self?.chatCountLabel.isHidden = true
+                        } else {
+                            self?.chatCountLabel.isHidden = false
+                        }
                     }
+                    self?.chatCountLabel.text = "\(SKStreaming.unreadChatCount)"
                 }
             } failure: { error in
                 
