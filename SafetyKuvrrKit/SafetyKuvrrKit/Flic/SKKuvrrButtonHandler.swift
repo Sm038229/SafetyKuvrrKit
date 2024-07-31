@@ -8,8 +8,8 @@
 import Foundation
 
 struct SKKuvrrButtonHandler: SKKuvrrButtonActions {
-    static var successHandler: (() -> (Void))?
-    static var failureHandler: (() -> (Void))?
+    private static var successHandler: ((String?) -> (Void))?
+    private static var failureHandler: ((String?) -> (Void))?
     
     static func initializeKuvrrPanicButton() {
         print("initializeKuvrrPanicButton")
@@ -17,17 +17,45 @@ struct SKKuvrrButtonHandler: SKKuvrrButtonActions {
         SKFlic2_0.initFlic2_0()
     }
     
-    static func startKuvrrPanicButtonScanning(success: @escaping (() -> (Void)), failure: @escaping (() -> (Void))) {
+    static func getAllConnectedButtons() -> [SKKuvrrButton] {
+        print("getAllConnectedButtons")
+        var buttons: [SKKuvrrButton] = []
+        buttons = SKFlic1_0.getConectedButtons() + SKFlic2_0.getConectedButtons()
+        return buttons
+    }
+    
+    static func finishKuvrrPanicButtonScanning() {
+        print("finishKuvrrPanicButtonScanning")
+        SKKuvrrButtonHandler.failureHandler?("Scanning finished!")
+    }
+    
+    static func startKuvrrPanicButtonScanning(success: @escaping ((String?) -> (Void)), failure: @escaping ((String?) -> (Void))) {
         SKKuvrrButtonHandler.successHandler = success
         SKKuvrrButtonHandler.failureHandler = failure
-        print("startScanning")
+        print("startKuvrrPanicButtonScanning")
         SKFlic1_0.startScan()
         SKFlic2_0.startScan()
     }
     
+    static func forget(kuvrrButton button:SKKuvrrButton, success: @escaping (() -> (Void)), failure: @escaping (() -> (Void))) {
+        if button.flic1_0 != nil {
+            SKFlic1_0.forget(kuvrrButton: button) {
+                success()
+            } failure: {
+                failure()
+            }
+        } else {
+            SKFlic2_0.forget(kuvrrButton: button) {
+                success()
+            } failure: {
+                failure()
+            }
+        }
+    }
+    
     static func buttonDidConnect(_ button: SKKuvrrButton) {
         print("buttonDidConnect")
-        SKKuvrrButtonHandler.successHandler?()
+        SKKuvrrButtonHandler.successHandler?("Pairing success")
     }
     
     static func buttonIsReady(_ button: SKKuvrrButton) {
@@ -40,7 +68,7 @@ struct SKKuvrrButtonHandler: SKKuvrrButtonActions {
     
     static func button(_ button: SKKuvrrButton, didFailToConnectWithError error: (any Error)?) {
         print("didFailToConnectWithError")
-        SKKuvrrButtonHandler.failureHandler?()
+        SKKuvrrButtonHandler.failureHandler?("didFailToConnectWithError : \(error?.localizedDescription ?? "")")
     }
     
     static func button(_ button: SKKuvrrButton, didReceiveButtonClick queued: Bool, age: Int) {

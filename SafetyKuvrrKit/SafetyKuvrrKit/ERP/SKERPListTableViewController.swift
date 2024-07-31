@@ -19,6 +19,9 @@ class SKERPListTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 50
         SKServiceManager.erpList { [weak self] response in
             self?.erpList = response
+            if self?.erpList?.count ?? 0 <= 0 {
+                self?.view.addNoDataLabel()
+            }
             self?.tableView.reloadData()
         } failure: { error in
             

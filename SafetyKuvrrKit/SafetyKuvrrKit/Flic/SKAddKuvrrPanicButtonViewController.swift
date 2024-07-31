@@ -8,23 +8,47 @@
 import UIKit
 
 class SKAddKuvrrPanicButtonViewController: UIViewController {
-
+    @IBOutlet weak var textLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        title = "Pair"
         addButton()
     }
     
     private func addButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "+", style: .plain, target: self, action: #selector(actionAdd(sender:)))
+        var rightItem = UIBarButtonItem(title: "+", style: .plain, target: self, action: #selector(actionAdd(sender:)))
+        rightItem.setTitleTextAttributes([.foregroundColor : UIColor.white, .font: UIFont.regularFontXXXLargeSize()], for: .normal)
+        navigationItem.rightBarButtonItem = rightItem
     }
     
     @objc private func actionAdd(sender: AnyObject) {
-        SKKuvrrButtonHandler.startKuvrrPanicButtonScanning(success: { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }, failure: {
-            
-        })
+        SKPermission.isBluetoothOn { state in
+            SKPermission.requestBluetooth { [weak self] status in
+                if state == true, status == true, SKPermission.isBluetoothAuthorized == true {
+                    self?.navigationItem.leftBarButtonItem?.isEnabled = false
+                    self?.navigationItem.rightBarButtonItem?.isEnabled = false
+                    self?.navigationItem.backBarButtonItem?.isEnabled = false
+                    self?.textLabel.text = "Press and hold panic button for 7 seconds."
+                    SKKuvrrButtonHandler.startKuvrrPanicButtonScanning(success: { [weak self] message in
+                        self?.textLabel.text = message
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                            self?.navigationController?.popViewController(animated: true)
+                        }
+                    }, failure: { [weak self] error in
+                        self?.textLabel.text = error
+                        self?.navigationItem.leftBarButtonItem?.isEnabled = true
+                        self?.navigationItem.rightBarButtonItem?.isEnabled = true
+                        self?.navigationItem.backBarButtonItem?.isEnabled = true
+                    })
+                } else {
+                    self?.textLabel.text = "Please Turn On Bluetooth in your device."
+                    self?.navigationItem.leftBarButtonItem?.isEnabled = true
+                    self?.navigationItem.rightBarButtonItem?.isEnabled = true
+                    self?.navigationItem.backBarButtonItem?.isEnabled = true
+                }
+            }
+        }
     }
     
 

@@ -31,6 +31,10 @@ class SKSelectedERPTableViewController: UITableViewController {
         self.tableView.tableFooterView?.isHidden = true
         SKServiceManager.erpSelection(forUUID: selectedERPUUID) { [weak self] response in
             self?.erpDetail = response
+            if self?.erpDetail?.jsonData?.count ?? 0 <= 0 {
+                self?.view.addNoDataLabel()
+                self?.headerLabel.isHidden = true
+            }
             self?.tableView.reloadData()
         } failure: { error in
             

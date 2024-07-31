@@ -48,17 +48,19 @@ class SKChatTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let result = chatData?.results?[indexPath.row]
+        let name = "\(result?.authorFirstName ?? "") \(result?.authorLastName ?? "")"
+        let message = "\(result?.message ?? "")"
         if let role = result?.authorRole, role.lowercased() == "Observer".lowercased() {
             let cell = tableView.dequeueReusableCell(withIdentifier: SKObserverChatTableViewCell.defaultIdentifier, for: indexPath) as! SKObserverChatTableViewCell
 
-            cell.nameLabel.text = "\(result?.authorFirstName ?? "") \(result?.authorLastName ?? "")"
-            cell.messageLabel.text = result?.message
+            cell.nameLabel.setupLabel(text: name)
+            cell.messageLabel.setupLabel(text: message)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: SKUserChatTableViewCell.defaultIdentifier, for: indexPath) as! SKUserChatTableViewCell
 
-            cell.nameLabel.text = "\(result?.authorFirstName ?? "") \(result?.authorLastName ?? "")"
-            cell.messageLabel.text = result?.message
+            cell.nameLabel.setupLabel(text: name)
+            cell.messageLabel.setupLabel(text: message)
             return cell
         }
     }

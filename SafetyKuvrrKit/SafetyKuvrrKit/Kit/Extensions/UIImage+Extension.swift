@@ -22,6 +22,26 @@ extension UIColor {
     static var appTableViewColor: UIColor? {
         return UIColor(named: "appTableViewColor", in: Bundle.defaultBundle, compatibleWith: nil)
     }
+    //
+    static var appBlueColor: UIColor? {
+        return UIColor(named: "appBlueColor", in: Bundle.defaultBundle, compatibleWith: nil)
+    }
+    //
+    static var batteryStatusHigh: UIColor? {
+        return UIColor(named: "batteryStatusHigh", in: Bundle.defaultBundle, compatibleWith: nil)
+    }
+    //
+    static var batteryStatusLow: UIColor? {
+        return UIColor(named: "batteryStatusLow", in: Bundle.defaultBundle, compatibleWith: nil)
+    }
+    //
+    static var batteryStatusMedium: UIColor? {
+        return UIColor(named: "batteryStatusMedium", in: Bundle.defaultBundle, compatibleWith: nil)
+    }
+    //
+    static var batteryStatusUnknown: UIColor? {
+        return UIColor(named: "batteryStatusUnknown", in: Bundle.defaultBundle, compatibleWith: nil)
+    }
 }
 
 extension Bundle {

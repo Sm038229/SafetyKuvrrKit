@@ -8,6 +8,12 @@
 import Foundation
 import UIKit
 
+enum SKAlertAction {
+    case cancel(value: String?)
+    case destructive(value: String?)
+    case normal(value: String?)
+}
+
 extension UIApplication {
     var topViewController: UIViewController? {
         get {
@@ -38,5 +44,34 @@ extension UIApplication {
         }
         base?.navigationBarSetup(forViewController:base)
         return base
+    }
+    
+    func confirmationAlert(forTitle title: String?, message: String?, actions:[SKAlertAction]?, completion: @escaping ((String?) -> (Void))) {
+        let confirmationAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        if let actions = actions {
+            for (index, action) in actions.enumerated() {
+                var actionStr: String?
+                var alertStyle: UIAlertAction.Style = .default
+                switch action {
+                case .cancel(let str):
+                    actionStr = str
+                    alertStyle = .cancel
+                case .destructive(let str):
+                    actionStr = str
+                    alertStyle = .destructive
+                case .normal(let str):
+                    actionStr = str
+                    alertStyle = .default
+                }
+                let alertAction = UIAlertAction(title: actionStr, style: alertStyle, handler: { (actionn: UIAlertAction!) in
+                    print("\(String(describing: actionn.accessibilityIdentifier))")
+                    completion(actionn.accessibilityIdentifier)
+                })
+                alertAction.accessibilityIdentifier = actionStr
+                confirmationAlert.addAction(alertAction)
+            }
+        }
+
+        UIApplication.shared.topViewController?.present(confirmationAlert, animated: true, completion: nil)
     }
 }

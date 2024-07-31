@@ -35,6 +35,9 @@ class SKMapsTableViewController: UITableViewController {
                 }
             }
             mapData?.mapList = tempMapList
+            if mapData?.mapList?.count ?? 0 <= 0 {
+                self.view.addNoDataLabel()
+            }
         }
         tableView.reloadData()
     }

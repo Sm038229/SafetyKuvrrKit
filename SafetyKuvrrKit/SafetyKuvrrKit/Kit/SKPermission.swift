@@ -15,9 +15,29 @@ struct SKPermission {
         return Provider.location(.alwaysAndWhenInUse).isAuthorized
     }
     //
+    static var isBluetoothAuthorized: Bool {
+        return Provider.bluetooth.isAuthorized
+    }
+    //
+    static func isBluetoothOn(state : @escaping((Bool) -> Void)) {
+        BluetoothState.powered { statee in
+            switch statee {
+            case .on:
+                state(true)
+            default:
+                state(false)
+            }
+        }
+    }
+    //
     static func requestLocation(status : @escaping((Bool) -> Void)) {
         Provider.location(.alwaysAndWhenInUse).request { (result) in
-            //print("isAuthorized: \(result)")
+            status(result)
+        }
+    }
+    //
+    static func requestBluetooth(status : @escaping((Bool) -> Void)) {
+        Provider.bluetooth.request { result in
             status(result)
         }
     }

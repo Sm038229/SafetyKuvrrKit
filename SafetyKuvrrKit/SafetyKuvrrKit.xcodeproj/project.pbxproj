@@ -53,6 +53,8 @@
 		15DF5E392C4F9C350055961C /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DF5E382C4F9C350055961C /* UIViewController+Extension.swift */; };
 		15EAA5CE2C369900009D61EA /* SKPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAA5CD2C369900009D61EA /* SKPermission.swift */; };
 		15EAA5D22C36BA77009D61EA /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */; };
+		15EAAE452C59E78100AB14BD /* SKKuvrrPanicButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAAE442C59E78100AB14BD /* SKKuvrrPanicButtonTableViewCell.swift */; };
+		15EAAE472C59E79900AB14BD /* SKKuvrrPanicButtonListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAAE462C59E79900AB14BD /* SKKuvrrPanicButtonListTableViewCell.swift */; };
 		15F0FA902C57925800241586 /* SKChatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F0FA8F2C57925800241586 /* SKChatTableViewController.swift */; };
 		15F0FA922C57927600241586 /* SKUserChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F0FA912C57927600241586 /* SKUserChatTableViewCell.swift */; };
 		15F0FA942C57928B00241586 /* SKObserverChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F0FA932C57928B00241586 /* SKObserverChatTableViewCell.swift */; };
@@ -115,6 +117,8 @@
 		15DF5E382C4F9C350055961C /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		15EAA5CD2C369900009D61EA /* SKPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKPermission.swift; sourceTree = "<group>"; };
 		15EAA5D12C36BA77009D61EA /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
+		15EAAE442C59E78100AB14BD /* SKKuvrrPanicButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKKuvrrPanicButtonTableViewCell.swift; sourceTree = "<group>"; };
+		15EAAE462C59E79900AB14BD /* SKKuvrrPanicButtonListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKKuvrrPanicButtonListTableViewCell.swift; sourceTree = "<group>"; };
 		15F0FA8F2C57925800241586 /* SKChatTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKChatTableViewController.swift; sourceTree = "<group>"; };
 		15F0FA912C57927600241586 /* SKUserChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKUserChatTableViewCell.swift; sourceTree = "<group>"; };
 		15F0FA932C57928B00241586 /* SKObserverChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKObserverChatTableViewCell.swift; sourceTree = "<group>"; };
@@ -154,7 +158,9 @@
 				1511619B2C58F83C00BF227D /* SKKuvrrButtonHandler.swift */,
 				15FC09442C5926A100B7CD82 /* SKKuvrrPanicButtonManager.swift */,
 				15FC09402C5921BD00B7CD82 /* SKKuvrrPanicButtonTableViewController.swift */,
+				15EAAE442C59E78100AB14BD /* SKKuvrrPanicButtonTableViewCell.swift */,
 				15FC093C2C591FC200B7CD82 /* SKKuvrrPanicButtonListTableViewController.swift */,
+				15EAAE462C59E79900AB14BD /* SKKuvrrPanicButtonListTableViewCell.swift */,
 				15FC09422C59246F00B7CD82 /* SKAddKuvrrPanicButtonViewController.swift */,
 				151161882C58E19600BF227D /* Flic 1.0 */,
 				151161892C58E1B100BF227D /* Flic 2.0 */,
@@ -424,6 +430,7 @@
 				15DF5E352C4F99030055961C /* UILabel+Extension.swift in Sources */,
 				15670AFE2C52262300D53CB4 /* SKMailManager.swift in Sources */,
 				151C3B632C34072200688277 /* SKEncoder.swift in Sources */,
+				15EAAE472C59E79900AB14BD /* SKKuvrrPanicButtonListTableViewCell.swift in Sources */,
 				15FC09452C5926A100B7CD82 /* SKKuvrrPanicButtonManager.swift in Sources */,
 				1511619A2C58F78600BF227D /* SKKuvrrButton.swift in Sources */,
 				153CC6F82C4A529F002D24EC /* SKERPListTableViewController.swift in Sources */,
@@ -438,6 +445,7 @@
 				150865C22C3FC0B20042309E /* SKCallSDKManager.swift in Sources */,
 				159528DA2C525C00002BA064 /* SKMapsTableViewController.swift in Sources */,
 				15F0FA902C57925800241586 /* SKChatTableViewController.swift in Sources */,
+				15EAAE452C59E78100AB14BD /* SKKuvrrPanicButtonTableViewCell.swift in Sources */,
 				15EAA5CE2C369900009D61EA /* SKPermission.swift in Sources */,
 				159528DE2C525D83002BA064 /* SKMapModels.swift in Sources */,
 				153CC6FE2C4A5DB9002D24EC /* SKServiceManager.swift in Sources */,

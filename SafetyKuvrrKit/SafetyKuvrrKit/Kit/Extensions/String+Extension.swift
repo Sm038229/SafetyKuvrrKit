@@ -54,7 +54,8 @@ extension String {
                 }
                 attributedString.addAttribute(.foregroundColor, value: myColor, range: range)
             } else {
-                attributedString.addAttribute(.link, value: word, range: range)
+                //attributedString.addAttribute(.link, value: word, range: range)
+                attributedString.addAttribute(.foregroundColor, value: myColor, range: range)
             }
             
             if let isWordExist = boldWords?.contains(word), isWordExist == true {

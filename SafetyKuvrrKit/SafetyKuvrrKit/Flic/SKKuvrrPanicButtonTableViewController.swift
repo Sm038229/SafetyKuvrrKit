@@ -16,6 +16,12 @@ class SKKuvrrPanicButtonTableViewController: UITableViewController {
         addBackButton()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
+    }
+    
     // MARK: - Table view data source
     /*
      override func numberOfSections(in tableView: UITableView) -> Int {
@@ -30,9 +36,8 @@ class SKKuvrrPanicButtonTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.defaultIdentifier, for: indexPath) as! UITableViewCell
-        
-        cell.textLabel?.text = options[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: SKKuvrrPanicButtonTableViewCell.defaultIdentifier, for: indexPath) as! SKKuvrrPanicButtonTableViewCell
+        cell.configure(options: options, atIndexPath: indexPath)
         
         return cell
     }

@@ -10,7 +10,10 @@ import Foundation
 protocol SKKuvrrButtonActions {
     //Button
     static func initializeKuvrrPanicButton()
-    static func startKuvrrPanicButtonScanning(success: @escaping (() -> (Void)), failure: @escaping (() -> (Void)))
+    static func getAllConnectedButtons() -> [SKKuvrrButton]
+    static func finishKuvrrPanicButtonScanning()
+    static func startKuvrrPanicButtonScanning(success: @escaping ((String?) -> (Void)), failure: @escaping ((String?) -> (Void)))
+    static func forget(kuvrrButton button:SKKuvrrButton, success: @escaping (() -> (Void)), failure: @escaping (() -> (Void)))
     static func buttonDidConnect(_ button: SKKuvrrButton)
     static func buttonIsReady(_ button: SKKuvrrButton)
     static func button(_ button: SKKuvrrButton, didDisconnectWithError error: (any Error)?)
