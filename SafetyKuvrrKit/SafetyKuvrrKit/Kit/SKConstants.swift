@@ -20,6 +20,9 @@ struct SKConstants {
         static let erp = "erp/"
         static let map = "map/"
         static let chat = "incident_chat/"
+        static let panicButtonPairUnpair = "panicbutton/regdereg/"
+        static let panicButtonBatteryStatus = "panicbutton/alert/"
+        static let panicButtonLogs = "panicbutton/log/"
     }
     //
     struct ResponderType {

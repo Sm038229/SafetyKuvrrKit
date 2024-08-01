@@ -11,7 +11,6 @@ import fliclib
 
 final class SKFlic1_0: NSObject {
     static let shared = SKFlic1_0()
-    var timer: Timer?
     
     private override init() {}
     
@@ -21,19 +20,19 @@ final class SKFlic1_0: NSObject {
     
     static func startScan() {
         SCLFlicManager.shared()?.startScan()
-        var seconds = 0
-        SKFlic1_0.shared.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            seconds += 1
-            if seconds == 15 {
-                SKFlic1_0.stopScan()
-                SKKuvrrButtonHandler.finishKuvrrPanicButtonScanning()
-            }
-        }
+        SKFlic1_0.perform(#selector(SKFlic1_0.stopScan), with: nil, afterDelay: 15)
     }
     
-    static func stopScan() {
+    @objc static func stopScan() {
         SCLFlicManager.shared()?.stopScan()
-        SKFlic1_0.shared.timer?.invalidate()
+        SKKuvrrButtonHandler.finishKuvrrPanicButtonScanning()
+        SKFlic1_0.cancelPreviousPerformRequests(withTarget: self)
+        SKFlic2_0.stopScan2_0()
+    }
+    
+    static func stopScan1_0() {
+        SCLFlicManager.shared()?.stopScan()
+        SKFlic1_0.cancelPreviousPerformRequests(withTarget: self)
     }
     
     static func getConectedButtons() -> [SKKuvrrButton] {
@@ -56,7 +55,15 @@ final class SKFlic1_0: NSObject {
     }
     
     private static func kuvrrButton(from button:SCLFlicButton) -> SKKuvrrButton {
-        return SKKuvrrButton(name: button.name, identifier: button.buttonIdentifier, batteryStatus: SKFlic1_0.kuvrrButtonBatteryStatus(from: button), batteryStatusColor: SKFlic1_0.kuvrrButtonBatteryStatusColor(from: button), flic1_0: button, flic2_0: nil)
+        return SKKuvrrButton(
+            name: button.name,
+            identifier: button.buttonIdentifier,
+            batteryStatus: SKFlic1_0.kuvrrButtonBatteryStatus(from: button),
+            batteryStatusColor: SKFlic1_0.kuvrrButtonBatteryStatusColor(from: button),
+            flic1_0: button,
+            flic2_0: nil,
+            batteryVoltage: SKFlic1_0.kuvrrButtonBatteryStatus(from: button)
+        )
     }
     
     private static func kuvrrButtonBatteryStatus(from button:SCLFlicButton) -> String {
@@ -133,11 +140,26 @@ extension SKFlic1_0: SCLFlicManagerDelegate {
     }
     
     func flicManagerDidRestoreState(_ manager: SCLFlicManager) {
-        
+        if SKFlic1_0.getConectedButtons().count > 0 {
+            SKKuvrrButtonHandler.managerDidRestoreState()
+        }
     }
     
     func flicManager(_ manager: SCLFlicManager, didChange state: SCLFlicManagerBluetoothState) {
-        
+        if SKFlic1_0.getConectedButtons().count > 0 {
+            switch state {
+            case .poweredOn:
+                print("Powered On FLIC 1.0 state")
+            case .poweredOff:
+                print("Powered Off FLIC 1.0 state")
+            case .unsupported:
+                print("Unsupported FLIC 1.0 state")
+            case .unauthorized:
+                print("Unauthorized FLIC 1.0 state")
+            default:
+                print("Unknown FLIC 1.0 state")
+            }
+        }
     }
     
     func flicManager(_ manager: SCLFlicManager, didForgetButton buttonIdentifier: UUID, error: (any Error)?) {

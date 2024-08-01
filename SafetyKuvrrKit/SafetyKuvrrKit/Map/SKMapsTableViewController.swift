@@ -11,6 +11,7 @@ class SKMapsTableViewController: UITableViewController {
     var mapData: SKMapListResponse?
     private let steerpathMap = "Steerpath"
     private let hereMap = "Here"
+    private let mapwizeMap = "Mapwize"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,13 +29,11 @@ class SKMapsTableViewController: UITableViewController {
     
     private func refreshData() {
         if let mapList = mapData?.mapList {
-            var tempMapList: [SKMapInfoResponse] = []
-            for mapInfo in mapList {
-                if let mapType = mapInfo.mapType, mapType.lowercased() != steerpathMap.lowercased(), mapType.lowercased() != hereMap.lowercased() {
-                    tempMapList.append(mapInfo)
-                }
-            }
-            mapData?.mapList = tempMapList
+            mapData?.mapList = mapList.filter({
+                ($0.mapType?.lowercased() != steerpathMap.lowercased()) &&
+                ($0.mapType?.lowercased() != hereMap.lowercased()) &&
+                ($0.mapType?.lowercased() != mapwizeMap.lowercased())
+            })
             if mapData?.mapList?.count ?? 0 <= 0 {
                 self.view.addNoDataLabel()
             }

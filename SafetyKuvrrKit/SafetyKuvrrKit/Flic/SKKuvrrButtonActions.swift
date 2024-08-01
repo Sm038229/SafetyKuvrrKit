@@ -25,8 +25,5 @@ protocol SKKuvrrButtonActions {
     static func button(_ button: SKKuvrrButton, didReceiveButtonDown queued: Bool, age: Int)
     
     //Manager
-//    func flicManager(_ manager: SCLFlicManager, didDiscover button: SCLFlicButton, withRSSI RSSI: NSNumber?)
-//    func flicManagerDidRestoreState(_ manager: SCLFlicManager)
-//    func flicManager(_ manager: SCLFlicManager, didChange state: SCLFlicManagerBluetoothState)
-//    func flicManager(_ manager: SCLFlicManager, didForgetButton buttonIdentifier: UUID, error: (any Error)?)
+    static func managerDidRestoreState()
 }

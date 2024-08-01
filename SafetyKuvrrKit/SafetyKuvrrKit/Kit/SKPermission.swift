@@ -8,26 +8,15 @@
 import Foundation
 import PermissionKit
 
+// MARK: - Permissions
 struct SKPermission {
     private init() {}
-    
+}
+
+// MARK: - Location Permission
+extension SKPermission {
     static var isLocationAuthorized: Bool {
         return Provider.location(.alwaysAndWhenInUse).isAuthorized
-    }
-    //
-    static var isBluetoothAuthorized: Bool {
-        return Provider.bluetooth.isAuthorized
-    }
-    //
-    static func isBluetoothOn(state : @escaping((Bool) -> Void)) {
-        BluetoothState.powered { statee in
-            switch statee {
-            case .on:
-                state(true)
-            default:
-                state(false)
-            }
-        }
     }
     //
     static func requestLocation(status : @escaping((Bool) -> Void)) {
@@ -35,14 +24,17 @@ struct SKPermission {
             status(result)
         }
     }
+}
+
+// MARK: - Bluetooth Permission
+extension SKPermission {
+    static var isBluetoothAuthorized: Bool {
+        return Provider.bluetooth.isAuthorized
+    }
     //
     static func requestBluetooth(status : @escaping((Bool) -> Void)) {
         Provider.bluetooth.request { result in
             status(result)
         }
     }
-}
-
-extension SKPermission {
-    
 }

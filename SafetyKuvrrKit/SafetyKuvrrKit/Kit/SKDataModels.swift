@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct SKEmptyModel: Codable {
+    static func emptyValue() -> SKEmptyModel {
+        return SKEmptyModel.init()
+    }
+}
+
 struct SKMessage: Decodable {
     let message: String?
     

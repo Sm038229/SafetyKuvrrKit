@@ -15,7 +15,7 @@ class SKKuvrrPanicButtonListTableViewController: UITableViewController {
         title = "Connected Button(s)"
         connectedButtons = SKKuvrrButtonHandler.getAllConnectedButtons()
         if connectedButtons?.count ?? 0 <= 0 {
-            self.view.addNoDataLabel()
+            self.view.addNoDataLabel(text: "Currently there is no panic button paired.")
         }
     }
     

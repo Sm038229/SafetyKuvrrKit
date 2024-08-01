@@ -13,7 +13,7 @@ struct SKService {
     private static let sessionCookie = "csrftoken"
     private static let sessionIDCookie = "sessionid"
     
-    static func apiCall<T: Decodable>(with urlString: String, method: HTTPMethod = .get, parameters: Parameters? = nil, responseModel: T.Type = SKMessage.self, success: @escaping((T?)-> Void), failure: @escaping((String?)-> Void)) {
+    static func apiCall<T: Decodable>(with urlString: String, method: HTTPMethod = .get, parameters: Parameters? = nil, responseModel: T.Type = Empty.self, success: @escaping((T?)-> Void), failure: @escaping((String?)-> Void)) {
         let headers: HTTPHeaders = [
             "X-CSRFToken": SKUserDefaults.csrfToken ?? "",
             "Accept": "application/json",
@@ -30,54 +30,44 @@ struct SKService {
             print("-------------------------------")
         }
         //
-        let authRequest = AF.request(
-            SKService.baseURL + urlString,
-            method: method,
-            parameters: parameters,
-            headers: headers
-        )
-            .validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
+        var authRequest: DataRequest!
+        if method == .get {
+            authRequest = AF.request(
+                SKService.baseURL + urlString,
+                method: method,
+                parameters: parameters,
+                headers: headers
+            )
+        } else {
+            authRequest = AF.request(
+                SKService.baseURL + urlString,
+                method: method,
+                parameters: parameters,
+                encoding: JSONEncoding.default,
+                headers: headers
+            )
+        }
+        
+        authRequest.validate(statusCode: 200..<300)
+        authRequest.validate(contentType: ["application/json"])
         //
         authRequest.responseDecodable(of: responseModel, emptyResponseCodes: [200, 204, 205]) { response in
             SKService.setupCookies()
             //
             let responseCode = "\(response.response?.statusCode.description ?? "")"
             if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                print("Response - (Code-\(responseCode)): \(utf8Text)")
+                print("Response [\(urlString)] - (Code-\(responseCode)): \(utf8Text)")
             } else {
-                print("Response - (Code-\(responseCode)): Empty")
-                if let statusCode = response.response?.statusCode, (200...299).contains(statusCode) {
-                    success(SKMessage(message: "Empty Response") as? T)
-                    return
-                }
+                print("Response [\(urlString)] - (Code-\(responseCode)): Empty")
             }
             //
             switch response.result {
             case .success(let value):
-                if let statusCode = response.response?.statusCode, (200...299).contains(statusCode) {
-                    NSLog("Success: \(value)")
-                    success(value)
-                } else if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
-                    if let model = SKService.getResponse(forData: data, model: responseModel) {
-                        NSLog("Model Data: \(model)")
-                        success(model)
-                    } else {
-                        NSLog("Success Response Error: " + errorMessage)
-                        failure(errorMessage)
-                    }
-                } else {
-                    NSLog("Something went wrong!")
-                    failure("Something went wrong!")
-                }
+                NSLog("Success: \(value)")
+                success(value)
             case .failure(let error):
-                if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
-                    NSLog("Failure Response Error: " + errorMessage)
-                    failure(errorMessage)
-                } else {
-                    NSLog("Response Error: " + error.localizedDescription)
-                    failure(error.localizedDescription)
-                }
+                NSLog("Response Error: " + error.localizedDescription)
+                failure(error.localizedDescription)
             }
         }
     }

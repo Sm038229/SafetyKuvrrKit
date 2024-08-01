@@ -40,12 +40,16 @@ struct SKKuvrrButtonHandler: SKKuvrrButtonActions {
     static func forget(kuvrrButton button:SKKuvrrButton, success: @escaping (() -> (Void)), failure: @escaping (() -> (Void))) {
         if button.flic1_0 != nil {
             SKFlic1_0.forget(kuvrrButton: button) {
+                SKKuvrrButtonHandler.pairUnpairKuvrrButton(button, action: .deregister)
+                SKKuvrrButtonHandler.logsKuvrrButton(button, action: .unpair, connectionType: .manual)
                 success()
             } failure: {
                 failure()
             }
         } else {
             SKFlic2_0.forget(kuvrrButton: button) {
+                SKKuvrrButtonHandler.pairUnpairKuvrrButton(button, action: .deregister)
+                SKKuvrrButtonHandler.logsKuvrrButton(button, action: .unpair, connectionType: .manual)
                 success()
             } failure: {
                 failure()
@@ -53,17 +57,53 @@ struct SKKuvrrButtonHandler: SKKuvrrButtonActions {
         }
     }
     
+    private static func pairUnpairKuvrrButton(_ button: SKKuvrrButton, action: String) {
+        let request = SKKuvrrButtonRegisterDeRegisterRequest(name: button.name, identifier: button.identifier.uuidString, action: action)
+        SKServiceManager.pairUnpairKuvrrButton(request: request) { response in
+            
+        } failure: { error in
+            
+        }
+        //
+        SKKuvrrButtonHandler.sendKuvrrButtonBatteryStatusToServer()
+    }
+    
+    private static func sendKuvrrButtonBatteryStatusToServer() {
+        let buttons = SKKuvrrButtonHandler.getAllConnectedButtons().map { button in
+            SKKuvrrButtonStatusRequest(identifier: button.identifier.uuidString, batteryStatus: button.batteryStatus)
+        }
+        let request = SKKuvrrButtonBatteryStatusRequest(buttons: buttons)
+        SKServiceManager.batteryStatusKuvrrButton(request: request) { response in
+            
+        } failure: { error in
+            
+        }
+    }
+    
+    private static func logsKuvrrButton(_ button: SKKuvrrButton, action: String, connectionType: String) {
+        let request = SKKuvrrButtonLogsRequest(name: button.name, identifier: button.identifier.uuidString, action: action, connectionType: connectionType, batteryStatus: button.batteryStatus, batteryValue: button.batteryVoltage)
+        SKServiceManager.logsKuvrrButton(request: request) { response in
+            
+        } failure: { error in
+            
+        }
+    }
+    
     static func buttonDidConnect(_ button: SKKuvrrButton) {
         print("buttonDidConnect")
-        SKKuvrrButtonHandler.successHandler?("Pairing success")
+        SKKuvrrButtonHandler.logsKuvrrButton(button, action: .connect, connectionType: .auto)
     }
     
     static func buttonIsReady(_ button: SKKuvrrButton) {
         print("buttonIsReady")
+        SKKuvrrButtonHandler.successHandler?("Pairing success")
+        SKKuvrrButtonHandler.pairUnpairKuvrrButton(button, action: .register)
+        SKKuvrrButtonHandler.logsKuvrrButton(button, action: .pair, connectionType: .manual)
     }
     
     static func button(_ button: SKKuvrrButton, didDisconnectWithError error: (any Error)?) {
         print("didDisconnectWithError")
+        SKKuvrrButtonHandler.logsKuvrrButton(button, action: .disconnect, connectionType: .auto)
     }
     
     static func button(_ button: SKKuvrrButton, didFailToConnectWithError error: (any Error)?) {
@@ -94,5 +134,12 @@ struct SKKuvrrButtonHandler: SKKuvrrButtonActions {
     
     static func button(_ button: SKKuvrrButton, didReceiveButtonDown queued: Bool, age: Int) {
         print("didReceiveButtonDown")
+    }
+    
+    //
+    
+    static func managerDidRestoreState() {
+        print("managerDidRestoreState")
+        SKKuvrrButtonHandler.sendKuvrrButtonBatteryStatusToServer()
     }
 }

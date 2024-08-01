@@ -23,32 +23,28 @@ class SKAddKuvrrPanicButtonViewController: UIViewController {
     }
     
     @objc private func actionAdd(sender: AnyObject) {
-        SKPermission.isBluetoothOn { state in
-            SKPermission.requestBluetooth { [weak self] status in
-                if state == true, status == true, SKPermission.isBluetoothAuthorized == true {
-                    self?.navigationItem.leftBarButtonItem?.isEnabled = false
-                    self?.navigationItem.rightBarButtonItem?.isEnabled = false
-                    self?.navigationItem.backBarButtonItem?.isEnabled = false
-                    self?.textLabel.text = "Press and hold panic button for 7 seconds."
-                    SKKuvrrButtonHandler.startKuvrrPanicButtonScanning(success: { [weak self] message in
-                        self?.textLabel.text = message
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                            self?.navigationController?.popViewController(animated: true)
-                        }
-                    }, failure: { [weak self] error in
-                        self?.textLabel.text = error
-                        self?.navigationItem.leftBarButtonItem?.isEnabled = true
-                        self?.navigationItem.rightBarButtonItem?.isEnabled = true
-                        self?.navigationItem.backBarButtonItem?.isEnabled = true
-                    })
-                } else {
-                    self?.textLabel.text = "Please Turn On Bluetooth in your device."
-                    self?.navigationItem.leftBarButtonItem?.isEnabled = true
-                    self?.navigationItem.rightBarButtonItem?.isEnabled = true
-                    self?.navigationItem.backBarButtonItem?.isEnabled = true
-                }
+        SKPermission.requestBluetooth { [weak self] status in
+            if status == true, SKPermission.isBluetoothAuthorized == true {
+                self?.updateLabel(text: "Press and hold panic button for 7 seconds.", isPairing: true)
+                SKKuvrrButtonHandler.startKuvrrPanicButtonScanning(success: { [weak self] message in
+                    self?.updateLabel(text: message)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                        self?.navigationController?.popViewController(animated: true)
+                    }
+                }, failure: { [weak self] error in
+                    self?.updateLabel(text: error)
+                })
+            } else {
+                self?.updateLabel(text: "Please Turn On Bluetooth in your device.")
             }
         }
+    }
+    
+    private func updateLabel(text: String?, isPairing: Bool = false) {
+        textLabel.text = text
+        navigationItem.leftBarButtonItem?.isEnabled = !isPairing
+        navigationItem.rightBarButtonItem?.isEnabled = !isPairing
+        navigationItem.hidesBackButton = isPairing
     }
     
 

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Alamofire
 
 struct SKServiceManager {
     private init() {}
@@ -14,16 +15,14 @@ struct SKServiceManager {
     static func initialize() {
         if SKServiceManager.isUserLoggedIn == false {
             SKServiceManager.verifyOTP(email: "sachin@kuvrr.com", otp: "159753") { response in
-                SKServiceManager.updateUserDeviceDetailAPI(success: {
-                    SKKuvrrButtonHandler.initializeKuvrrPanicButton()
-                }, failure: { error in
-                    //guard let error = error else { failure(nil); return; }
-                })
+                SKKuvrrButtonHandler.initializeKuvrrPanicButton()
+                SKServiceManager.updateUserDeviceDetailAPI(success: {}, failure: { error in })
             } failure: { error in
                 
             }
         } else {
             SKKuvrrButtonHandler.initializeKuvrrPanicButton()
+            //SKServiceManager.updateUserDeviceDetailAPI(success: {}, failure: { error in })
         }
     }
     
@@ -84,7 +83,7 @@ struct SKServiceManager {
         } else if let mobile = mobile {
             request = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile).dictionary
         }
-        SKService.apiCall(with: SKConstants.API.login, method: .post, parameters: request) { response in
+        SKService.apiCall(with: SKConstants.API.login, method: .post, parameters: request, responseModel: SKMessage.self) { response in
             guard let response = response else { success(nil); return; }
             success(response.message)
         } failure: { error in
@@ -122,7 +121,7 @@ struct SKServiceManager {
         } else if let mobile = mobile {
             request = SKPhoneLoginRequest(countryCode: country, mobileNumber: mobile).dictionary
         }
-        SKService.apiCall(with: SKConstants.API.otpResend, method: .post, parameters: request) { response in
+        SKService.apiCall(with: SKConstants.API.otpResend, method: .post, parameters: request, responseModel: SKMessage.self) { response in
             guard let response = response else { success(nil); return; }
             success(response.message)
         } failure: { error in
@@ -236,10 +235,10 @@ struct SKServiceManager {
         }
     }
     
-    static func eventMediaStop(forEventUUID uuid: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+    static func eventMediaStop(forEventUUID uuid: String, success: @escaping((Empty?) -> Void), failure: @escaping((String?)-> Void)) {
         SKService.apiCall(with: "\(SKConstants.API.incidentMediaStop)/\(uuid)") { response in
             guard let response = response else { success(nil); return; }
-            success(response.message)
+            success(response)
         } failure: { error in
             guard let error = error else { failure(nil); return; }
             failure(error)
@@ -257,11 +256,11 @@ struct SKServiceManager {
         }
     }
     
-    static func sendEventChats(forEventUUID uuid: String?, message: String?, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+    static func sendEventChats(forEventUUID uuid: String?, message: String?, success: @escaping((Empty?) -> Void), failure: @escaping((String?)-> Void)) {
         let request = SKEventChatRequest(eventUUID: uuid, message: message)
         SKService.apiCall(with: SKConstants.API.chat, method: .post, parameters: request.dictionary) { response in
             guard let response = response else { success(nil); return; }
-            success(response.message)
+            success(response)
         } failure: { error in
             guard let error = error else { failure(nil); return; }
             failure(error)
@@ -316,6 +315,36 @@ struct SKServiceManager {
                 guard let error = error else { failure(nil); return; }
                 failure(error)
             }
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
+            failure(error)
+        }
+    }
+    
+    static func pairUnpairKuvrrButton(request: SKKuvrrButtonRegisterDeRegisterRequest, success: @escaping((Empty?) -> Void), failure: @escaping((String?)-> Void)) {
+        SKService.apiCall(with: SKConstants.API.panicButtonPairUnpair, method: .post, parameters: request.dictionary) { response in
+            guard let response = response else { success(nil); return; }
+            success(response)
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
+            failure(error)
+        }
+    }
+    
+    static func batteryStatusKuvrrButton(request: SKKuvrrButtonBatteryStatusRequest, success: @escaping((Empty?) -> Void), failure: @escaping((String?)-> Void)) {
+        SKService.apiCall(with: SKConstants.API.panicButtonBatteryStatus, method: .post, parameters: request.dictionary) { response in
+            guard let response = response else { success(nil); return; }
+            success(response)
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
+            failure(error)
+        }
+    }
+    
+    static func logsKuvrrButton(request: SKKuvrrButtonLogsRequest, success: @escaping((Empty?) -> Void), failure: @escaping((String?)-> Void)) {
+        SKService.apiCall(with: SKConstants.API.panicButtonLogs, method: .post, parameters: request.dictionary) { response in
+            guard let response = response else { success(nil); return; }
+            success(response)
         } failure: { error in
             guard let error = error else { failure(nil); return; }
             failure(error)
