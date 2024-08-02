@@ -203,7 +203,7 @@ struct SKServiceManager {
         }
     }
     
-    static func endEvent(forReason reason: String, andMessage message: String, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+    static func endEvent(forReason reason: String, andMessage message: String?, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
         SKStreaming.eventResponse?.reason = reason
         SKStreaming.eventResponse?.reasonMessage = message
         SKService.apiCall(with: SKConstants.API.incident + SKStreaming.eventResponse!.uuid!, method: .put, parameters: SKStreaming.eventResponse!.dictionary, responseModel: SKEventResponse.self) { response in

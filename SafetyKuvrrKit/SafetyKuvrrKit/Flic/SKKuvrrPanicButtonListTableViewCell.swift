@@ -44,12 +44,12 @@ class SKKuvrrPanicButtonListTableViewCell: UITableViewCell {
 
     @IBAction func unpairAction(_ sender: UIButton) {
         let alertActions = ["Cancel", "Unpair"]
-        let actions = [
-            SKAlertAction.cancel(value: alertActions[0]),
-            SKAlertAction.destructive(value: alertActions[1])
+        let actions: [SKAlertAction] = [
+            .cancel(alertActions[0]),
+            .destructive(alertActions[1])
         ]
-        UIApplication.shared.confirmationAlert(forTitle: "Please confirm", message: "Are you sure you want to unpair this panic button ?", actions: actions) { [weak self] action in
-            if let button = self?.kuvrrButton, action == alertActions[1] {
+        UIApplication.shared.confirmationAlert(forTitle: "Please confirm", message: "Are you sure you want to unpair this panic button ?", actions: actions) { [weak self] (index, action) in
+            if let button = self?.kuvrrButton, index == 1 {
                 SKKuvrrButtonHandler.forget(kuvrrButton: button) {
                     UIApplication.shared.topViewController?.navigationController?.popViewController(animated: true)
                 } failure: {

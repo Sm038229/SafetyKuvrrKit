@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 struct SKStreamingManager {
-    static var chatVC: SKChatTableViewController?
+    static var chatVC: SKChatViewController?
     static func viewController(identifier: String) -> UIViewController? {
-        let vc = UIApplication.viewController(forStoryboardID: "Streaming", viewControllerID: identifier) as? UIViewController
+        let vc = UIApplication.viewController(forStoryboardID: "Streaming", viewControllerID: identifier)
         return vc
     }
     
@@ -22,7 +22,7 @@ struct SKStreamingManager {
     }
     
     static func presentChatViewController(forData data: SKEventChatResponse?) {
-        if let topController = UIApplication.shared.topViewController, let vc = SKStreamingManager.viewController(identifier: "SKChatTableViewController") as? SKChatTableViewController {
+        if let topController = UIApplication.shared.topViewController, let vc = SKStreamingManager.viewController(identifier: "SKChatViewController") as? SKChatViewController {
             SKStreamingManager.chatVC = vc
             vc.chatResponse = data
             topController.present(vc, animated: true)

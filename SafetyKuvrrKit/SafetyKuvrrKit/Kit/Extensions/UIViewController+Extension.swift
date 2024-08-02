@@ -67,3 +67,32 @@ extension UIViewController {
         //vc?.navigationController?.navigationBar.layer.shadowOpacity = 0.7
     }
 }
+
+extension UIViewController: KeyboardNotificationsDelegate {
+    func sharedKeyBoardNotifications() -> KeyboardNotifications {
+        return KeyboardNotifications.shared(withDelegate: self)
+    }
+    
+//    private lazy var keyboardNotifications: KeyboardNotifications! = {
+//        KeyboardNotifications(notifications: [.willShow, .willHide, .didShow, .didHide], delegate: self)
+//    }()
+
+    // If you don't need this func you can remove it
+    func keyboardWillShow(notification: NSNotification) {
+        print("keyboardWillShow")
+        guard   let userInfo = notification.userInfo as? [String: NSObject],
+                let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        print("keyboardFrame: \(keyboardFrame)")
+    }
+    
+    // If you don't need this func you can remove it
+    func keyboardWillHide(notification: NSNotification) {
+        print("keyboardWillHide")
+    }
+    
+    // If you don't need this func you can remove it
+    func keyboardDidShow(notification: NSNotification) { print("keyboardDidShow") }
+    
+    // If you don't need this func you can remove it
+    func keyboardDidHide(notification: NSNotification) { print("keyboardDidHide") }
+}
