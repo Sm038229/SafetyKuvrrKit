@@ -7,6 +7,7 @@
 
 import Foundation
 import Alamofire
+import ProgressHUD
 
 struct SKService {
     private static let baseURL = "https://safety-red5.kuvrr.com/api/v1/"
@@ -39,6 +40,7 @@ struct SKService {
                 headers: headers
             )
         } else {
+            ProgressHUD.animate()
             authRequest = AF.request(
                 SKService.baseURL + urlString,
                 method: method,
@@ -63,11 +65,16 @@ struct SKService {
             //
             switch response.result {
             case .success(let value):
+                ProgressHUD.remove()
                 NSLog("Success: \(value)")
                 success(value)
             case .failure(let error):
-                NSLog("Response Error: " + error.localizedDescription)
-                failure(error.localizedDescription)
+                if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
+                    ProgressHUD.failed(error)
+                } else {
+                    NSLog("Response Error: " + error.localizedDescription)
+                    failure(error.localizedDescription)
+                }
             }
         }
     }

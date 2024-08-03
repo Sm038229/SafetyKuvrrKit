@@ -25,6 +25,8 @@ Pod::Spec.new do |spec|
   spec.dependency 'KeychainSwift'
   spec.dependency 'SDWebImage'
   spec.dependency 'ActiveLabel'
+  spec.dependency 'IQKeyboardManagerSwift'
+  spec.dependency 'ProgressHUD'
   
   spec.framework = "UIKit", "Foundation", "CoreLocation" #, "CoreBluetooth", "ExternalAccessory"
 

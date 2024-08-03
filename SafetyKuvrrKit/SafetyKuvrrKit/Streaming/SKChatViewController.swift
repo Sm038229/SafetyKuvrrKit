@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 class SKChatViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -49,8 +50,10 @@ class SKChatViewController: UIViewController {
         keyboardShared.keyBoardFrame = { [weak self] keyboardFrame, status in
             if status == true {
                 self?.chatViewBottonConstraint.constant = keyboardFrame.height
+                IQKeyboardManager.shared.enable = false
             } else {
                 self?.chatViewBottonConstraint.constant = 0
+                IQKeyboardManager.shared.enable = true
             }
         }
     }

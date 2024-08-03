@@ -13,6 +13,8 @@ def common_pods
   pod 'KeychainSwift'
   pod 'SDWebImage'
   pod 'ActiveLabel'
+  pod 'IQKeyboardManagerSwift'
+  pod 'ProgressHUD'
 end
 
 target 'SafetyKuvrrKit' do
