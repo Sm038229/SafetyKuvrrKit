@@ -14,7 +14,7 @@ struct SKService {
     private static let sessionCookie = "csrftoken"
     private static let sessionIDCookie = "sessionid"
     
-    static func apiCall<T: Decodable>(with urlString: String, method: HTTPMethod = .get, parameters: Parameters? = nil, responseModel: T.Type = Empty.self, success: @escaping((T?)-> Void), failure: @escaping((String?)-> Void)) {
+    static func apiCall<T: Decodable>(with urlString: String, method: HTTPMethod = .get, parameters: Parameters? = nil, responseModel: T.Type = Empty.self, isLoader: Bool = false, success: @escaping((T?)-> Void), failure: @escaping((String?)-> Void)) {
         let headers: HTTPHeaders = [
             "X-CSRFToken": SKUserDefaults.csrfToken ?? "",
             "Accept": "application/json",
@@ -31,6 +31,9 @@ struct SKService {
             print("-------------------------------")
         }
         //
+        if isLoader == true {
+            ProgressHUD.animate()
+        }
         var authRequest: DataRequest!
         if method == .get {
             authRequest = AF.request(
@@ -40,7 +43,6 @@ struct SKService {
                 headers: headers
             )
         } else {
-            ProgressHUD.animate()
             authRequest = AF.request(
                 SKService.baseURL + urlString,
                 method: method,
@@ -70,7 +72,7 @@ struct SKService {
                 success(value)
             case .failure(let error):
                 if let data = response.data, let errorMessage = SKService.getErrorResponse(forData: data) {
-                    ProgressHUD.failed(error)
+                    ProgressHUD.failed(errorMessage)
                 } else {
                     NSLog("Response Error: " + error.localizedDescription)
                     failure(error.localizedDescription)

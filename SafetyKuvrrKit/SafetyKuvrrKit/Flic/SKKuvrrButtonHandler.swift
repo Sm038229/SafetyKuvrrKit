@@ -121,11 +121,7 @@ struct SKKuvrrButtonHandler: SKKuvrrButtonActions {
     
     static func button(_ button: SKKuvrrButton, didReceiveButtonHold queued: Bool, age: Int) {
         print("didReceiveButtonHold")
-        SafetyKuvrr.raiseEvent(isSoS: true) { response in
-            
-        } failure: { error in
-            
-        }
+        SafetyKuvrr.raiseSOS()
     }
     
     static func button(_ button: SKKuvrrButton, didReceiveButtonUp queued: Bool, age: Int) {

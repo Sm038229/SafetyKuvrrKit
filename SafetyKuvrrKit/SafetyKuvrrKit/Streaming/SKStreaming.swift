@@ -26,7 +26,21 @@ final class SKStreaming: UIViewController {
     private static var channelName = "Kuvrr_Demo_8May"
     private static var isTwoWayLiveStream = false
     private static var isRemoteUserJoined = false
-    var chatTimer: Timer?
+    var chatTimer: Timer? = nil {
+        willSet {
+            if newValue == nil {
+                chatTimer?.invalidate()
+                SKStreaming.eventResponse = nil
+                SKStreaming.chatResponse = nil
+                SKStreaming.chatResponse2 = nil
+                SKStreaming.isEventExist = false
+                UIApplication.shared.isIdleTimerDisabled = false
+                SKLocationManager.stopLocationUpdates()
+            }
+        }
+    }
+    static var isEventExist = false
+    var lastLocationSendDate: Date?
     static var chatResponse: SKEventChatResponse?
     static var chatResponse2: SKEventChatResponse?
     static var unreadChatCount: Int = 0
@@ -69,44 +83,14 @@ final class SKStreaming: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.shared.isIdleTimerDisabled = true
         startCamera()
+        sendLocation()
         getChats()
     }
     
-    private func getChats() {
-        self.chatButton.isEnabled = false
-        self.chatCountLabel.isHidden = true
-        chatTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
-            var lastMessge = SKStreaming.chatResponse?.results?.last?.lastMessage
-            SKServiceManager.getEventChats(forEventUUID: SKStreaming.eventResponse?.uuid, lastMessage: lastMessge) { response in
-                SKStreaming.chatResponse = response
-                if let count = SKStreaming.chatResponse?.count, count > 0 {
-                    if self?.chatButton.isEnabled == false {
-                        self?.chatButton.isEnabled = true
-                        SKStreamingManager.presentChatViewController(forData: SKStreaming.chatResponse)
-                    } else if let topVC = UIApplication.shared.topViewController, topVC.isKind(of: SKChatViewController.self) {
-                        SKStreamingManager.setChatData(response)
-                        SKStreaming.chatResponse2 = response
-                        SKStreaming.unreadChatCount = 0
-                        self?.chatCountLabel.isHidden = true
-                    } else {
-                        SKStreaming.unreadChatCount = (SKStreaming.chatResponse?.count ?? 0) - (SKStreaming.chatResponse2?.count ?? 0)
-                        if SKStreaming.unreadChatCount == 0 {
-                            self?.chatCountLabel.isHidden = true
-                        } else {
-                            self?.chatCountLabel.isHidden = false
-                        }
-                    }
-                    self?.chatCountLabel.text = "\(SKStreaming.unreadChatCount)"
-                }
-            } failure: { error in
-                
-            }
-        }
-    }
-    
     private func invalidateTimer() {
-        chatTimer?.invalidate()
+        chatTimer = nil
     }
     
     private func displayEndEventActions() {
@@ -136,15 +120,15 @@ final class SKStreaming: UIViewController {
         UIApplication.shared.confirmationAlert(forTitle: nil, message: "You are closing the SOS Event! Are you Ok?", actions: actions) { [weak self] (index, action) in
             if index < 5 {
                 if index == 4 {
-                    self?.sendEndEvent(reason: eventReasons[index], message: "Custom Message for Testing")
+                    self?.endEvent(forReason : eventReasons[index], andMessage: "Custom Message for Testing")
                 } else {
-                    self?.sendEndEvent(reason: eventReasons[index])
+                    self?.endEvent(forReason : eventReasons[index])
                 }
             }
         }
     }
     
-    private func sendEndEvent(reason: String, message: String? = nil) {
+    private func endEvent(forReason reason: String, andMessage message: String? = nil) {
         SKServiceManager.eventMediaStop(forEventUUID: SKStreaming.eventResponse?.uuid ?? "", success: { [weak self] response in
             SKServiceManager.endEvent(forReason: reason, andMessage: message) { [weak self] response in
                 self?.dismiss(animated: true, completion: {
@@ -192,6 +176,7 @@ final class SKStreaming: UIViewController {
     }
     
     @objc func startCamera() {
+        SKStreaming.isEventExist = true
         let tokenn = SKStreaming.eventResponse?.streamToken ?? SKStreaming.token
         let channel = SKStreaming.eventResponse?.streamChannelName ?? SKStreaming.channelName
         SKCallSDKManager.shared.delegate = self
@@ -214,6 +199,58 @@ final class SKStreaming: UIViewController {
     
     func switchCamera() {
         SKCallSDKManager.shared.agoraEngine.switchCamera()
+    }
+    
+    private func getChats() {
+        self.chatButton.isEnabled = false
+        self.chatCountLabel.isHidden = true
+        chatTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            var lastMessge = SKStreaming.chatResponse?.results?.last?.lastMessage
+            SKServiceManager.getEventChats(forEventUUID: SKStreaming.eventResponse?.uuid, lastMessage: lastMessge) { [weak self] response in
+                SKStreaming.chatResponse = response
+                self?.setupChats(forResponse: response)
+            } failure: { error in
+                
+            }
+        }
+    }
+    
+    private func setupChats(forResponse response: SKEventChatResponse?) {
+        if let count = response?.count, count > 0 {
+            if chatButton.isEnabled == false {
+                chatButton.isEnabled = true
+                SKStreamingManager.presentChatViewController(forData: response)
+            } else if let topVC = UIApplication.shared.topViewController, topVC.isKind(of: SKChatViewController.self) {
+                SKStreamingManager.setChatData(response)
+                SKStreaming.chatResponse2 = response
+                SKStreaming.unreadChatCount = 0
+                chatCountLabel.isHidden = true
+            } else {
+                SKStreaming.unreadChatCount = (response?.count ?? 0) - (SKStreaming.chatResponse2?.count ?? 0)
+                if SKStreaming.unreadChatCount == 0 {
+                    chatCountLabel.isHidden = true
+                } else {
+                    chatCountLabel.isHidden = false
+                }
+            }
+            chatCountLabel.text = "\(SKStreaming.unreadChatCount)"
+        }
+    }
+    
+    private func sendLocation() {
+        lastLocationSendDate = Date()
+        SKLocationManager.startLocationUpdates { [weak self] currentLocation in
+            if let lastDate = self?.lastLocationSendDate, lastDate.timeIntervalSinceNow <= -10 {
+                print("sendLocation : \(lastDate.timeIntervalSinceNow)")
+                SKServiceManager.sendEventLocation(currentLocation) { response in
+                    self?.lastLocationSendDate = Date()
+                } failure: { error in
+                    
+                }
+            }
+        } failure: { error in
+            
+        }
     }
 }
 

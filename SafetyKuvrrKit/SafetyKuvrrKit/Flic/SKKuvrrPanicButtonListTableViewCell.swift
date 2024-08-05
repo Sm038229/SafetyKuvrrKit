@@ -30,7 +30,8 @@ class SKKuvrrPanicButtonListTableViewCell: UITableViewCell {
     func configure(button: SKKuvrrButton, atIndexPath indexPath: IndexPath) {
         self.kuvrrButton = button
         self.indexPath = indexPath
-        self.nameLabel?.setupLabel(text: button.name)
+        self.nameLabel?.numberOfLines = 0
+        self.nameLabel?.setupLabel(text: "Kuvrr Button (\(button.name))")
         let batteryText1 = "Battery Status : "
         let batteryText2 = button.batteryStatus
         let attrStr1 = batteryText1.attributedStringWithColor([batteryText1], color: .lightGray)

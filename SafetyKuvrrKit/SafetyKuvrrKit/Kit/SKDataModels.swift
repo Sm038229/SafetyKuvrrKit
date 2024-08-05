@@ -46,16 +46,18 @@ struct SKLocation: Codable {
     let verticalAccuracy: Double
     let horizontalAccuracy: Double
     let course: Double
-    let directionDegrees: Double?
+    let directionDegrees: Double? = nil
+    let eventUUID: String? = SKStreaming.eventResponse?.uuid
     
     enum CodingKeys: String, CodingKey {
-        case latitude
-        case longitude
-        case altitude
-        case verticalAccuracy
-        case horizontalAccuracy
-        case course
-        case directionDegrees
+        case latitude = "lat"
+        case longitude = "lng"
+        case altitude = "altitude"
+        case verticalAccuracy = "vertical_accuracy"
+        case horizontalAccuracy = "horizontal_accuracy"
+        case course = "course"
+        case directionDegrees = "direction_degrees"
+        case eventUUID = "incident_uuid"
     }
 }
 

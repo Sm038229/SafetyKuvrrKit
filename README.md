@@ -88,36 +88,25 @@ If you install from *CocoaPods*, you have to import the module. If you used drag
 ``` swift
 import SafetyKuvrrKit
 ```
-For login:
-``` swift
-SafetyKuvrr.login(withEmail: "email@example.com") { response in
 
-}, failure: { error in
-
-})
-```
 For 911:
 ``` swift
-SafetyKuvrr.raiseEvent(isEMS: true, emsNumber: 911, success: { response in
-
-}, failure: { error in
-
-})
+SafetyKuvrr.raise911()
 ```
+
 For SoS:
 ``` swift
-SafetyKuvrr.raiseEvent(isSoS: true, success: { response in
-
-}, failure: { error in
-
-})
+SafetyKuvrr.raiseSOS()
 ```
+
 For ERPs:
 ``` swift
 SafetyKuvrr.getERPList()
 ```
+
 For Maps:
 ``` swift
 SafetyKuvrr.getMapList()
 ```
+
 Checkout [`Example Project`](Example/)!

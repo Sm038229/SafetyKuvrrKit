@@ -135,6 +135,11 @@ struct SKServiceManager {
             failure("Please Login first!")
             return
         }
+        
+        if SKStreaming.isEventExist == true {
+            failure("Event already exist!")
+            return
+        }
         //
         var responderType = ""
         if let emsNumber = number, emsNumber > 0, isEMS == true {
@@ -191,23 +196,11 @@ struct SKServiceManager {
     }
     
     private static func raiseEvent(forData params: SKEventRequest, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
-        SKService.apiCall(with: SKConstants.API.incident, method: .post, parameters: params.dictionary, responseModel: SKEventResponse.self) { response in
+        SKService.apiCall(with: SKConstants.API.incident, method: .post, parameters: params.dictionary, responseModel: SKEventResponse.self, isLoader: true) { response in
             guard let response = response else { success(nil); return; }
             SKStreaming.eventResponse = response
             let request = SKStartEventRequest(mediaType: params.mediaType, eventUUID: response.uuid)
             SKServiceManager.startMediaEvent(forRequest: request)
-            success(response.message)
-        } failure: { error in
-            guard let error = error else { failure(nil); return; }
-            failure(error)
-        }
-    }
-    
-    static func endEvent(forReason reason: String, andMessage message: String?, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
-        SKStreaming.eventResponse?.reason = reason
-        SKStreaming.eventResponse?.reasonMessage = message
-        SKService.apiCall(with: SKConstants.API.incident + SKStreaming.eventResponse!.uuid!, method: .put, parameters: SKStreaming.eventResponse!.dictionary, responseModel: SKEventResponse.self) { response in
-            guard let response = response else { success(nil); return; }
             success(response.message)
         } failure: { error in
             guard let error = error else { failure(nil); return; }
@@ -236,9 +229,31 @@ struct SKServiceManager {
     }
     
     static func eventMediaStop(forEventUUID uuid: String, success: @escaping((Empty?) -> Void), failure: @escaping((String?)-> Void)) {
-        SKService.apiCall(with: "\(SKConstants.API.incidentMediaStop)/\(uuid)") { response in
+        SKService.apiCall(with: "\(SKConstants.API.incidentMediaStop)/\(uuid)", isLoader: true) { response in
             guard let response = response else { success(nil); return; }
             success(response)
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
+            failure(error)
+        }
+    }
+    
+    static func endEvent(forReason reason: String, andMessage message: String?, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+        SKStreaming.eventResponse?.reason = reason
+        SKStreaming.eventResponse?.reasonMessage = message
+        SKService.apiCall(with: SKConstants.API.incident + SKStreaming.eventResponse!.uuid!, method: .put, parameters: SKStreaming.eventResponse!.dictionary, responseModel: SKEventResponse.self, isLoader: true) { response in
+            guard let response = response else { success(nil); return; }
+            success(response.message)
+        } failure: { error in
+            guard let error = error else { failure(nil); return; }
+            failure(error)
+        }
+    }
+    
+    static func sendEventLocation(_ params: SKLocation, success: @escaping((String?) -> Void), failure: @escaping((String?)-> Void)) {
+        SKService.apiCall(with: SKConstants.API.incidentLocation, method: .post, parameters: params.dictionary, responseModel: SKEventResponse.self) { response in
+            guard let response = response else { success(nil); return; }
+            success(response.message)
         } failure: { error in
             guard let error = error else { failure(nil); return; }
             failure(error)
@@ -270,7 +285,7 @@ struct SKServiceManager {
     static func erpList(success: @escaping(([SKERPListResponse]?) -> Void), failure: @escaping((String?)-> Void)) {
         SKLocationManager.currentLocation { currentLocation in
             let request = SKERPRequest(plansOnly: "1", latitude: currentLocation.latitude, longitude: currentLocation.longitude)
-            SKService.apiCall(with: SKConstants.API.erp, method: .post, parameters: request.dictionary, responseModel: [SKERPListResponse].self) { response in
+            SKService.apiCall(with: SKConstants.API.erp, method: .post, parameters: request.dictionary, responseModel: [SKERPListResponse].self, isLoader: true) { response in
                 guard let response = response else { success(nil); return; }
                 success(response)
             } failure: { error in
@@ -285,7 +300,7 @@ struct SKServiceManager {
     
     static func erpSelection(forUUID uuid: String, success: @escaping((SKERPListResponse?) -> Void), failure: @escaping((String?)-> Void)) {
         let request = SKERPRequest(plansOnly: "1")
-        SKService.apiCall(with: SKConstants.API.erp + uuid, parameters: request.dictionary, responseModel: SKERPListResponse.self) { response in
+        SKService.apiCall(with: SKConstants.API.erp + uuid, parameters: request.dictionary, responseModel: SKERPListResponse.self, isLoader: true) { response in
             guard let response = response else { success(nil); return; }
             success(response)
         } failure: { error in
@@ -296,7 +311,7 @@ struct SKServiceManager {
     
     static func erpAcknowledgement(forVersion version: Int, andUUID uuid: String, success: @escaping((SKERPAcknowledgementResponse?) -> Void), failure: @escaping((String?)-> Void)) {
         let request = SKERPRequest(version: version)
-        SKService.apiCall(with: SKConstants.API.erp + uuid, method: .put, parameters: request.dictionary, responseModel: SKERPAcknowledgementResponse.self) { response in
+        SKService.apiCall(with: SKConstants.API.erp + uuid, method: .put, parameters: request.dictionary, responseModel: SKERPAcknowledgementResponse.self, isLoader: true) { response in
             guard let response = response else { success(nil); return; }
             success(response)
         } failure: { error in
@@ -308,7 +323,7 @@ struct SKServiceManager {
     static func mapList(success: @escaping((SKMapListResponse?) -> Void), failure: @escaping((String?)-> Void)) {
         SKLocationManager.currentLocation { currentLocation in
             let request = SKMapRequest(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
-            SKService.apiCall(with: SKConstants.API.map, method: .post, parameters: request.dictionary, responseModel: SKMapListResponse.self) { response in
+            SKService.apiCall(with: SKConstants.API.map, method: .post, parameters: request.dictionary, responseModel: SKMapListResponse.self, isLoader: true) { response in
                 guard let response = response else { success(nil); return; }
                 success(response)
             } failure: { error in
@@ -322,7 +337,7 @@ struct SKServiceManager {
     }
     
     static func pairUnpairKuvrrButton(request: SKKuvrrButtonRegisterDeRegisterRequest, success: @escaping((Empty?) -> Void), failure: @escaping((String?)-> Void)) {
-        SKService.apiCall(with: SKConstants.API.panicButtonPairUnpair, method: .post, parameters: request.dictionary) { response in
+        SKService.apiCall(with: SKConstants.API.panicButtonPairUnpair, method: .post, parameters: request.dictionary, isLoader: true) { response in
             guard let response = response else { success(nil); return; }
             success(response)
         } failure: { error in
