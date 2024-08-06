@@ -91,22 +91,22 @@ import SafetyKuvrrKit
 
 For 911:
 ``` swift
-SafetyKuvrr.raise911()
+SafetyKit.raise911()
 ```
 
 For SoS:
 ``` swift
-SafetyKuvrr.raiseSOS()
+SafetyKit.raiseSOS()
 ```
 
 For ERPs:
 ``` swift
-SafetyKuvrr.getERPList()
+SafetyKit.getERPList()
 ```
 
 For Maps:
 ``` swift
-SafetyKuvrr.getMapList()
+SafetyKit.getMapList()
 ```
 
 Checkout [`Example Project`](Example/)!

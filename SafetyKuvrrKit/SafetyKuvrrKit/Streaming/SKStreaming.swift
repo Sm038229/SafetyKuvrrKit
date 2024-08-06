@@ -205,7 +205,7 @@ final class SKStreaming: UIViewController {
         self.chatButton.isEnabled = false
         self.chatCountLabel.isHidden = true
         chatTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            var lastMessge = SKStreaming.chatResponse?.results?.last?.lastMessage
+            let lastMessge = SKStreaming.chatResponse?.results?.last?.lastMessage
             SKServiceManager.getEventChats(forEventUUID: SKStreaming.eventResponse?.uuid, lastMessage: lastMessge) { [weak self] response in
                 SKStreaming.chatResponse = response
                 self?.setupChats(forResponse: response)

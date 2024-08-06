@@ -7,20 +7,20 @@
 
 import Foundation
 
-public struct SafetyKuvrr: SKKit {
+struct SafetyKuvrr: SKKit {
     private init() {}
     
-    public static var isUserLoggedIn: Bool {
+    static var isUserLoggedIn: Bool {
         get {
             return SKServiceManager.isUserLoggedIn
         }
     }
     
-    public static func initialize() {
+    static func initialize() {
         SKServiceManager.initialize()
     }
     
-    public static func raiseSOS() {
+    static func raiseSOS() {
         SKServiceManager.raiseEvent(isSoS: true) { response in
             
         } failure: { error in
@@ -28,7 +28,7 @@ public struct SafetyKuvrr: SKKit {
         }
     }
     
-    public static func raise911() {
+    static func raise911() {
         SKServiceManager.raiseEvent(isEMS: true, emsNumber: 911) { response in
             
         } failure: { error in
@@ -36,15 +36,15 @@ public struct SafetyKuvrr: SKKit {
         }
     }
     
-    public static func getERPList() {
+    static func getERPList() {
         SKERPManager.presentERPListViewController()
     }
     
-    public static func getMapList() {
+    static func getMapList() {
         SKMapManager.presentMapListViewController()
     }
     
-    public static func getKuvrrPanicButtonList() {
+    static func getKuvrrPanicButtonList() {
         SKKuvrrPanicButtonManager.presentKuvrrPanicButtonViewController()
     }
 }

@@ -8,40 +8,8 @@
 import Foundation
 import UIKit
 
-extension UIImage {
-    static func named(_ name: String) -> UIImage? {
-        return UIImage(named: name, in: Bundle.defaultBundle, compatibleWith: nil)
-    }
-}
-
-extension UIColor {
-    static var appDefaultColor: UIColor? {
-        return UIColor(named: "appDefaultColor", in: Bundle.defaultBundle, compatibleWith: nil)
-    }
-    //
-    static var appTableViewColor: UIColor? {
-        return UIColor(named: "appTableViewColor", in: Bundle.defaultBundle, compatibleWith: nil)
-    }
-    //
-    static var appBlueColor: UIColor? {
-        return UIColor(named: "appBlueColor", in: Bundle.defaultBundle, compatibleWith: nil)
-    }
-    //
-    static var batteryStatusHigh: UIColor? {
-        return UIColor(named: "batteryStatusHigh", in: Bundle.defaultBundle, compatibleWith: nil)
-    }
-    //
-    static var batteryStatusLow: UIColor? {
-        return UIColor(named: "batteryStatusLow", in: Bundle.defaultBundle, compatibleWith: nil)
-    }
-    //
-    static var batteryStatusMedium: UIColor? {
-        return UIColor(named: "batteryStatusMedium", in: Bundle.defaultBundle, compatibleWith: nil)
-    }
-    //
-    static var batteryStatusUnknown: UIColor? {
-        return UIColor(named: "batteryStatusUnknown", in: Bundle.defaultBundle, compatibleWith: nil)
-    }
+final class SKBundle: NSObject {
+    private override init() { }
 }
 
 extension Bundle {
@@ -53,6 +21,44 @@ extension Bundle {
     }
 }
 
-final class SKBundle: NSObject {
-    private override init() { }
+extension UIImage {
+    static func named(_ name: String) -> UIImage? {
+        return UIImage(named: name, in: Bundle.defaultBundle, compatibleWith: nil)
+    }
+}
+
+extension UIColor {
+    static func named(_ name: String) -> UIColor? {
+        return UIColor(named: name, in: Bundle.defaultBundle, compatibleWith: nil)
+    }
+}
+
+extension UIColor {
+    static var appDefaultColor: UIColor? {
+        return UIColor.named("appDefaultColor")
+    }
+    //
+    static var appTableViewColor: UIColor? {
+        return UIColor.named("appTableViewColor")
+    }
+    //
+    static var appBlueColor: UIColor? {
+        return UIColor.named("appBlueColor")
+    }
+    //
+    static var batteryStatusHigh: UIColor? {
+        return UIColor.named("batteryHigh")
+    }
+    //
+    static var batteryStatusLow: UIColor? {
+        return UIColor.named("batteryLow")
+    }
+    //
+    static var batteryStatusMedium: UIColor? {
+        return UIColor.named("batteryMedium")
+    }
+    //
+    static var batteryStatusUnknown: UIColor? {
+        return UIColor.named("batteryUnknown")
+    }
 }

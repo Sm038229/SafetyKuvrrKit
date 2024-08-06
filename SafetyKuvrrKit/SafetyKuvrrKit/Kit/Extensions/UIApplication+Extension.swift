@@ -190,7 +190,7 @@ extension KeyboardNotifications {
     
     private func setKeyBoardFrame(forNotification notification: NSNotification, isKeyboardShowing: Bool) {
         guard   let userInfo = notification.userInfo as? [String: NSObject],
-                var keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+                let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
         keyBoardFrame(keyboardFrame, isKeyboardShowing)
     }
 }

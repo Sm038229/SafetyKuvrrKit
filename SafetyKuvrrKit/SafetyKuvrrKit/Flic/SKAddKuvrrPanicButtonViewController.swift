@@ -17,7 +17,7 @@ class SKAddKuvrrPanicButtonViewController: UIViewController {
     }
     
     private func addButton() {
-        var rightItem = UIBarButtonItem(title: "+", style: .plain, target: self, action: #selector(actionAdd(sender:)))
+        let rightItem = UIBarButtonItem(title: "+", style: .plain, target: self, action: #selector(actionAdd(sender:)))
         rightItem.setTitleTextAttributes([.foregroundColor : UIColor.white, .font: UIFont.regularFontXXXLargeSize()], for: .normal)
         navigationItem.rightBarButtonItem = rightItem
     }

@@ -38,7 +38,7 @@ final class SKFlic1_0: NSObject {
     static func getConectedButtons() -> [SKKuvrrButton] {
         var connectedButtons: [SKKuvrrButton] = []
         if let buttons = SCLFlicManager.shared()?.knownButtons() {
-            for (uuid, button) in buttons {
+            for (_, button) in buttons {
                 connectedButtons.append(SKFlic1_0.kuvrrButton(from: button))
             }
         }
