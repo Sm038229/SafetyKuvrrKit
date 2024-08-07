@@ -109,4 +109,9 @@ For Maps:
 SafetyKit.getMapList()
 ```
 
+For Kuvrr Panic Buttons:
+``` swift
+SafetyKit.getKuvrrPanicButtonList()
+```
+
 Checkout [`Example Project`](Example/)!
