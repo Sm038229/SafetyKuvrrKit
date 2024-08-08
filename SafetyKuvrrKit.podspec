@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name           = "SafetyKuvrrKit"
-  spec.version        = "1.0.20"
+  spec.version        = "1.0.21"
   spec.swift_versions = "5.0"
   spec.platform       = :ios, "13.0"
 #=================================================================================================
