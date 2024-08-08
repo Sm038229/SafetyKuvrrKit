@@ -77,6 +77,9 @@ The app requires permissions of location. In the `info.plist` file, click `+` to
 | Key                                    | Type   | Value                                                        |
 | -------------------------------------- | ------ | ------------------------------------------------------------ |
 | Privacy - Location Always and When in use usage description | String | The description, like "SafetyKuvrrKit needs to use your location." |
+| Privacy - Camera Usage Description | String | The description, like "SafetyKuvrrKit needs to use your Camera." |
+| Privacy - Microphone Usage Description | String | The description, like "SafetyKuvrrKit needs to use your Microphone." |
+| Privacy - Bluetooth Always Usage Description | String | The description, like "SafetyKuvrrKit needs to use your Bluetooth." |
 
 If you hope to run `SafetyKuvrrKit` in the background, you also need to add the permission to get location in the background:
 
@@ -87,6 +90,11 @@ If you hope to run `SafetyKuvrrKit` in the background, you also need to add the 
 If you install from *CocoaPods*, you have to import the module. If you used drag and drop then there is no need of import
 ``` swift
 import SafetyKuvrrKit
+```
+
+Initialize it in your AppDelegate file:
+``` swift
+SafetyKit.initialize()
 ```
 
 For 911:
